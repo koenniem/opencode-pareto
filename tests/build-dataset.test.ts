@@ -20,6 +20,7 @@ const snapshot: AASnapshot = {
     {
       slug: 'kimi-k3',
       name: 'Kimi K3 (Max)',
+      variant: 'Max',
       scores: {
         artificial_analysis_intelligence_index: 47,
         artificial_analysis_coding_index: 44,
@@ -28,6 +29,7 @@ const snapshot: AASnapshot = {
     {
       slug: 'glm-5-3',
       name: 'GLM-5.3 (Max)',
+      variant: 'Max',
       scores: {
         artificial_analysis_intelligence_index: 45,
         artificial_analysis_coding_index: null,

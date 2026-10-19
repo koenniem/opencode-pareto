@@ -42,13 +42,19 @@ export function blendedPrice(prices: Prices, mix: Mix): number | null {
     [mix.cacheWrite, prices.cachedWrite],
   ];
 
+  const totalWeight = weights.reduce((sum, [weight]) => sum + weight, 0);
+  // A mix with no weight prices nothing. Returning 0 here would render a real
+  // model as free, which is the exact class of error this project exists to
+  // avoid.
+  if (totalWeight === 0) return null;
+
   let total = 0;
   for (const [weight, price] of weights) {
     if (weight === 0) continue;
     if (price === null || !Number.isFinite(price)) return null;
     total += weight * price;
   }
-  return total;
+  return total / totalWeight;
 }
 
 /** Allowance in dollars divided by the monthly subscription price. */

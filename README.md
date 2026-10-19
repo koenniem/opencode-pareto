@@ -38,7 +38,7 @@ Blended price needs a token mix. The default is the median of OpenCode's own
 published per-request profiles:
 
 ```text
-input 1.14%   cached read 98.45%   output 0.36%
+input 1.14%   cached read 98.50%   output 0.36%
 ```
 
 That is extremely cache-heavy, and deliberately so: agentic coding re-reads a

@@ -8,6 +8,8 @@ const MAX_PAGES = 20;
 export interface AAModel {
   slug: string;
   name: string;
+  /** The configuration in the trailing parentheses of `name`, if any. */
+  variant: string | null;
   scores: Partial<Record<IndexKey, number | null>>;
 }
 
@@ -24,12 +26,20 @@ function scoreOf(value: unknown): number | null {
   return value;
 }
 
+function variantOf(name: string): string | null {
+  const match = /\(([^()]+)\)\s*$/.exec(name);
+  return match ? match[1].trim() : null;
+}
+
 /**
  * Read one page of the Free-tier response.
  *
  * `null` in AA's data means "not measured". It stays `null` all the way to the
  * chart, where it becomes an "unscored" bucket — never a zero, which would
  * plot the model at the bottom of the axis as if it had been measured.
+ *
+ * An empty model list is rejected: writing it would silently replace good
+ * scores with nothing and make the site look like AA has no data.
  */
 export function parseAAResponse(body: unknown): AASnapshot {
   if (typeof body !== 'object' || body === null) {
@@ -60,9 +70,14 @@ export function parseAAResponse(body: unknown): AASnapshot {
     return {
       slug: model.slug,
       name: typeof model.name === 'string' ? model.name : model.slug,
+      variant: variantOf(typeof model.name === 'string' ? model.name : ''),
       scores,
     };
   });
+
+  if (models.length === 0) {
+    throw new Error('AA response contained no models; refusing to write an empty snapshot');
+  }
 
   const version = root.intelligence_index_version;
 

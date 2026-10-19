@@ -25,6 +25,21 @@ export function buildDataset(
     const priceRow = entry.priceRow ? pricing.rows[entry.priceRow] : undefined;
     const aa = entry.aaSlug ? bySlug.get(entry.aaSlug) : undefined;
 
+    // The roster names the AA configuration it means ("Max", "0902", …). If AA
+    // scores a different one, the score is not the one we claim to plot, so the
+    // build stops rather than silently attaching the wrong number.
+    if (aa && entry.aaVariant !== null) {
+      const declared = entry.aaVariant.trim().toLowerCase();
+      const actual = (aa.variant ?? '').trim().toLowerCase();
+      if (declared !== actual) {
+        throw new Error(
+          `Variant mismatch for ${entry.display} (${entry.goId}): roster declares "${entry.aaVariant}", ` +
+            `Artificial Analysis returned ${aa.variant === null ? 'no variant' : `"${aa.variant}"`}. ` +
+            `Update data/roster.yaml.`,
+        );
+      }
+    }
+
     const scores: Partial<Record<IndexKey, number | null>> = {};
     if (aa) {
       for (const [key, value] of Object.entries(aa.scores)) {

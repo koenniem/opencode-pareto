@@ -134,9 +134,17 @@ export function parseGoDocs(html: string): GoPricing {
     const goLimit = parseLimitCell(goCells[5]);
     const plusLimit = parseLimitCell(plusCells[5]);
 
+    const input = parsePriceCell(goCells[1]);
+    const output = parsePriceCell(goCells[2]);
+    // Input and output always carry a price. A `null` here means the cell was
+    // unreadable, not that the model is free — coalescing it to 0 would invent
+    // a suspiciously cheap model.
+    if (input === null) throw new Error(`"${name}" has an unreadable input price`);
+    if (output === null) throw new Error(`"${name}" has an unreadable output price`);
+
     rows[name] = {
-      input: parsePriceCell(goCells[1]) ?? 0,
-      output: parsePriceCell(goCells[2]) ?? 0,
+      input,
+      output,
       cachedRead: parsePriceCell(goCells[3]),
       cachedWrite: parsePriceCell(goCells[4]),
       allowance: { go: goLimit.allowance, 'go-plus': plusLimit.allowance },
