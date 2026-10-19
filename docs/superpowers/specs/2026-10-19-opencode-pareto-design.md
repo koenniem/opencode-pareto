@@ -67,6 +67,9 @@ These would make the site a failure even if it technically works:
 | Token mix | One global mix, applied to every model, adjustable in UI |
 | Multiplier | `allowance ÷ subscription` as a discount |
 | Plans | Go and Go Plus, toggle |
+| Repo | Public. GitHub Pages on a free account. |
+| Default mix | 98.45% cached read, as derived |
+| AA key | Not available yet. Build against fixtures; first CI run validates the roster. |
 
 ## The maths
 
@@ -410,6 +413,42 @@ recomputed in CI — that would need a second, more fragile scrape. Instead the
 published request-per-month counts for a handful of models are encoded as
 tests: if someone changes the constant or the blend maths, those counts stop
 reproducing and the test fails.
+
+**Repo is public.** GitHub Pages on a free account. Consequence, accepted: the
+committed AA snapshot is publicly downloadable, which sits closer to
+§2.4 (bulk data) than §2.3(b) (sharing a chart). The deployed `dataset.json` is
+publicly fetchable regardless, because the browser has to fetch it. Committing
+the snapshot buys reviewable data diffs, which is worth more than the marginal
+exposure.
+
+**The AA key does not exist yet.** This changes the build order, not the
+design. It means:
+
+1. Development runs against a hand-built fixture of the AA Free response,
+   shaped exactly per the appendix. The fixture is committed.
+2. The fetch step is written, but its first real validation happens on the
+   first CI run after the key is added.
+3. Because the roster is the highest-risk component and cannot be verified
+   without a live response, **the first CI run is a gate, not a formality.**
+   The workflow must fail loudly and print every unmatched slug, every
+   unmatched Go model, and every roster entry that resolved to nothing. A
+   green run with warnings is not acceptable.
+
+Adding the key is one command, performed by the user:
+
+```text
+gh secret set AA_API_KEY --repo <owner>/opencode-pareto
+```
+
+## Repo and deployment
+
+- Public repo `<owner>/opencode-pareto`. `gh` is already authenticated as
+  `koenniem` on this machine; no remote is configured yet.
+- GitHub Pages served from a build artifact via `actions/deploy-pages`, not a
+  `gh-pages` branch.
+- Vite `base` must be set to `/opencode-pareto/` for a project-page URL.
+- Deploy workflow: `push` to `main` plus the daily data cron. The cron job
+  commits; that commit triggers deploy, avoiding a recursive trigger.
 
 ## Open question, deferred
 
