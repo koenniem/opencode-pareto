@@ -57,7 +57,7 @@ describe('buildDataset', () => {
   });
 
   it('keeps unscored models with empty scores', () => {
-    const m = buildDataset(roster, pricing, snapshot).models.find((x) => x.goId === 'space-bunny')!;
+    const m = buildDataset(roster, pricing, snapshot).models.find((x) => x.goId === 'hy3')!;
     expect(m.scores).toEqual({});
     expect(m.tier).toBe('standard');
   });
@@ -82,8 +82,8 @@ describe('buildDataset', () => {
     expect(m.promoLabel).toContain('4x');
   });
 
-  it('emits all 37 models in roster order', () => {
-    expect(buildDataset(roster, pricing, snapshot).models).toHaveLength(37);
+  it('emits every roster model in order', () => {
+    expect(buildDataset(roster, pricing, snapshot).models).toHaveLength(38);
   });
 
   it('produces an empty-scores dataset when AA data is absent', () => {

@@ -184,13 +184,13 @@
   priceRow: Hy3
   notes: slug unverified — confirm on first AA fetch
 
-- goId: space-bunny
-  display: Space Bunny
-  aaSlug: space-bunny
+- goId: minimax-m3.1-flash-free
+  display: MiniMax M3.1 Flash Free
+  aaSlug: minimax-m3-1-flash-free
   aaVariant: null
-  tier: standard
-  priceRow: Space Bunny
-  notes: slug unverified — confirm on first AA fetch
+  tier: free
+  priceRow: MiniMax M3.1 Flash Free
+  notes: unlimited allowance; slug unverified — confirm on first AA fetch
 
 - goId: grok-4.7
   display: Grok 4.7
@@ -264,3 +264,4 @@
 - { goId: omen-alpha, display: Omen Alpha, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
 - { goId: qwen3.6-plus, display: Qwen3.6 Plus, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
 - { goId: qwen3.7-max, display: Qwen3.7 Max, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: space-bunny, display: Space Bunny, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }

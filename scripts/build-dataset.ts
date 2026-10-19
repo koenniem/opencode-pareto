@@ -85,9 +85,9 @@ function main(): void {
   const roster = loadRoster();
   const pricing = loadPricing();
 
-  const problems = validateRoster(roster, roster.map((r) => r.goId), pricing, loadAASlugs());
+  const problems = validateRoster(roster, loadAASlugs());
   if (problems.length > 0) {
-    console.error(`Refusing to build with an inconsistent roster:`);
+    console.error('Refusing to build with an inconsistent roster:');
     for (const problem of problems) console.error(`  ${problem}`);
     process.exit(1);
   }

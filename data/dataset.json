@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T10:52:27.066Z",
+  "generatedAt": "2026-10-19T11:44:28.589Z",
   "aaFetchedAt": null,
   "intelligenceIndexVersion": null,
   "plans": {
@@ -434,22 +434,22 @@
       "scores": {}
     },
     {
-      "goId": "space-bunny",
-      "display": "Space Bunny",
-      "aaSlug": "space-bunny",
+      "goId": "minimax-m3.1-flash-free",
+      "display": "MiniMax M3.1 Flash Free",
+      "aaSlug": "minimax-m3-1-flash-free",
       "aaName": null,
-      "tier": "standard",
-      "priceRow": "Space Bunny",
-      "promoLabel": null,
+      "tier": "free",
+      "priceRow": "MiniMax M3.1 Flash Free",
+      "promoLabel": "limited time",
       "prices": {
-        "input": 0.15,
-        "output": 0.6,
-        "cachedRead": 0.03,
+        "input": 0,
+        "output": 0,
+        "cachedRead": 0,
         "cachedWrite": null
       },
       "allowances": {
-        "go": 30,
-        "go-plus": 120
+        "go": "unlimited",
+        "go-plus": "unlimited"
       },
       "scores": {}
     },
@@ -680,6 +680,18 @@
     {
       "goId": "qwen3.7-max",
       "display": "Qwen3.7 Max",
+      "aaSlug": null,
+      "aaName": null,
+      "tier": "unpriced",
+      "priceRow": null,
+      "promoLabel": null,
+      "prices": null,
+      "allowances": null,
+      "scores": {}
+    },
+    {
+      "goId": "space-bunny",
+      "display": "Space Bunny",
       "aaSlug": null,
       "aaName": null,
       "tier": "unpriced",
