@@ -1,6 +1,7 @@
+---
 name: Build and deploy
 
-on:
+'on':
   push:
     branches: [main]
   schedule:
@@ -32,11 +33,11 @@ jobs:
       # Data refresh runs only on the schedule or by hand. A push builds
       # whatever is committed, so a code change never silently re-prices.
       - name: Check Go pricing for drift
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name != 'push'
         run: npm run scrape:go
 
       - name: Fetch Artificial Analysis scores
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name != 'push'
         env:
           AA_API_KEY: ${{ secrets.AA_API_KEY }}
         run: npm run fetch:aa
@@ -48,7 +49,7 @@ jobs:
         run: npm run data:build
 
       - name: Commit refreshed data
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name != 'push'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
