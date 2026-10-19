@@ -1,0 +1,25 @@
+{
+  "name": "opencode-pareto",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Cost vs capability Pareto chart for the OpenCode Go subscription",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "scrape:go": "tsx scripts/scrape-go.ts",
+    "fetch:aa": "tsx scripts/fetch-aa.ts",
+    "validate:roster": "tsx scripts/validate-roster.ts",
+    "data:build": "tsx scripts/build-dataset.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8",
+    "yaml": "^2.6.1"
+  }
+}
