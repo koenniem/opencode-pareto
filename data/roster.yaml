@@ -1,0 +1,266 @@
+# The Roster — the only place OpenCode's vocabulary and Artificial Analysis's meet.
+#
+# One entry per model id served by https://opencode.ai/inference/go/v1/models.
+# Every field here is a human decision. Nothing is inferred from a name.
+#
+#   goId       exact id from the Go models endpoint
+#   display    how the model is written on the site
+#   aaSlug     Artificial Analysis slug, or null when AA has no counterpart
+#   aaVariant  which AA configuration the score describes (informational)
+#   tier       standard | free | unpriced | incomplete
+#   priceRow   exact row name in data/go-pricing.json, or null when unpriced
+#
+# Rules enforced at build time (scripts/validate-roster.ts):
+#   - every id from the Go endpoint must appear here
+#   - every priceRow must exist in data/go-pricing.json
+#   - tier: unpriced must have priceRow: null
+#   - tier: standard|free must have a priceRow
+#
+# When OpenCode adds or removes a model, the build fails. Update this file.
+# Context-tiered and peak/off-peak models use the cheaper row — the price the
+# majority of requests pay. The tooltip says which row was used.
+
+# --- Priced models ---------------------------------------------------------
+
+- goId: glm-5.3-flash
+  display: GLM-5.3-Flash
+  aaSlug: glm-5-3-flash
+  aaVariant: null
+  tier: standard
+  priceRow: GLM-5.3-Flash
+
+- goId: glm-5.3
+  display: GLM-5.3
+  aaSlug: glm-5-3
+  aaVariant: Max
+  tier: standard
+  priceRow: GLM-5.3
+
+- goId: glm-5.2
+  display: GLM-5.2
+  aaSlug: glm-5-2
+  aaVariant: null
+  tier: standard
+  priceRow: GLM-5.2
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: kimi-k3
+  display: Kimi K3
+  aaSlug: kimi-k3
+  aaVariant: Max
+  tier: standard
+  priceRow: Kimi K3
+
+- goId: kimi-k2.7-code
+  display: Kimi K2.7 Code
+  aaSlug: kimi-k2-7-code
+  aaVariant: null
+  tier: standard
+  priceRow: Kimi K2.7 Code
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: longcat-2.0
+  display: LongCat-2.0
+  aaSlug: longcat-2-0
+  aaVariant: null
+  tier: standard
+  priceRow: LongCat-2.0
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: step-5-preview
+  display: Step 5 Preview
+  aaSlug: step-5-preview
+  aaVariant: null
+  tier: standard
+  priceRow: Step 5 Preview
+
+- goId: mimo-v2.6-flash
+  display: MiMo-V2.6-Flash
+  aaSlug: mimo-v2-6-flash
+  aaVariant: null
+  tier: standard
+  priceRow: MiMo-V2.6-Flash
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: mimo-v2.6-pro
+  display: MiMo-V2.6-Pro
+  aaSlug: mimo-v2-6-pro
+  aaVariant: null
+  tier: standard
+  priceRow: MiMo-V2.6-Pro
+
+- goId: mimo-v2.5
+  display: MiMo-V2.5
+  aaSlug: mimo-v2-5
+  aaVariant: null
+  tier: standard
+  priceRow: MiMo-V2.5
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: mimo-v2.5-pro
+  display: MiMo-V2.5-Pro
+  aaSlug: mimo-v2-5-pro
+  aaVariant: null
+  tier: standard
+  priceRow: MiMo-V2.5-Pro
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: minimax-m3
+  display: MiniMax M3
+  aaSlug: minimax-m3
+  aaVariant: null
+  tier: standard
+  priceRow: MiniMax M3
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: muse-spark-1.3-contributor
+  display: Muse Spark 1.3 Contributor
+  aaSlug: muse-spark-1-3-contributor
+  aaVariant: null
+  tier: standard
+  priceRow: Muse Spark 1.3 Contributor
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: muse-spark-1.2-contributor
+  display: Muse Spark 1.2 Contributor
+  aaSlug: muse-spark-1-2-contributor
+  aaVariant: null
+  tier: standard
+  priceRow: Muse Spark 1.2 Contributor
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: qwen3.8-max
+  display: Qwen3.8 Max
+  aaSlug: qwen3-8-max
+  aaVariant: "0902"
+  tier: standard
+  priceRow: Qwen3.8 Max
+
+- goId: qwen3.8-flash
+  display: Qwen3.8 Flash
+  aaSlug: qwen3-8-flash
+  aaVariant: null
+  tier: standard
+  priceRow: Qwen3.8 Flash
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: qwen3.7-plus
+  display: Qwen3.7 Plus
+  aaSlug: qwen3-7-plus
+  aaVariant: null
+  tier: standard
+  priceRow: Qwen3.7 Plus (≤ 256K tokens)
+  notes: uses the ≤256K tier; >256K is priced separately in Go's table
+
+- goId: deepseek-v4.1-flash
+  display: DeepSeek V4.1 Flash
+  aaSlug: deepseek-v4-1-flash
+  aaVariant: null
+  tier: standard
+  priceRow: DeepSeek V4.1 Flash (Off-Peak)
+  notes: off-peak pricing; peak hours are 01:00-04:00 and 06:00-10:00 UTC Mon-Fri
+
+- goId: deepseek-v4-pro
+  display: DeepSeek V4 Pro
+  aaSlug: deepseek-v4-pro
+  aaVariant: null
+  tier: standard
+  priceRow: DeepSeek V4 Pro (Off-Peak)
+  notes: off-peak pricing; peak hours are 01:00-04:00 and 06:00-10:00 UTC Mon-Fri
+
+- goId: hy4-preview
+  display: Hy4 preview
+  aaSlug: hy4-preview
+  aaVariant: null
+  tier: standard
+  priceRow: Hy4 preview
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: hy3
+  display: Hy3
+  aaSlug: hy3
+  aaVariant: null
+  tier: standard
+  priceRow: Hy3
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: space-bunny
+  display: Space Bunny
+  aaSlug: space-bunny
+  aaVariant: null
+  tier: standard
+  priceRow: Space Bunny
+  notes: slug unverified — confirm on first AA fetch
+
+- goId: grok-4.7
+  display: Grok 4.7
+  aaSlug: grok-4-7
+  aaVariant: Xhigh
+  tier: standard
+  priceRow: Grok 4.7 (≤ 200K tokens)
+  notes: uses the ≤200K tier
+
+- goId: gpt-6-luna
+  display: GPT 6 Luna
+  aaSlug: gpt-6-luna
+  aaVariant: Max
+  tier: standard
+  priceRow: GPT 6 Luna (≤ 272K tokens)
+  notes: uses the ≤272K tier
+
+- goId: gpt-5.6-luna
+  display: GPT 5.6 Luna
+  aaSlug: gpt-5-6-luna
+  aaVariant: null
+  tier: standard
+  priceRow: GPT 5.6 Luna (≤ 272K tokens)
+  notes: uses the ≤272K tier; slug unverified — confirm on first AA fetch
+
+- goId: claude-haiku-5-5
+  display: Claude Haiku 5.5
+  aaSlug: claude-haiku-5-5
+  aaVariant: Max
+  tier: standard
+  priceRow: Claude Haiku 5.5 (≤ 100K tokens)
+  notes: uses the ≤100K tier
+
+- goId: gemini-4-argon-contributor
+  display: Gemini 4 Argon Contributor
+  aaSlug: gemini-4-argon-contributor
+  aaVariant: null
+  tier: standard
+  priceRow: Gemini 4 Argon Contributor
+  notes: contributor tier — prompts may be used for training; 2x allowance is limited-time
+
+# --- Free models -----------------------------------------------------------
+# Unlimited allowance, zero token price. Shown in their own rail and excluded
+# from the Pareto frontier, which they would otherwise flatten to nothing.
+
+- goId: longcat-2.5-preview-free
+  display: LongCat 2.5 Preview Free
+  aaSlug: longcat-2-5-preview-free
+  aaVariant: null
+  tier: free
+  priceRow: LongCat 2.5 Preview Free
+  notes: limited time; slug unverified — confirm on first AA fetch
+
+- goId: beam-free
+  display: Beam Free
+  aaSlug: beam-free
+  aaVariant: null
+  tier: free
+  priceRow: Beam Free
+  notes: limited time and limited regions; slug unverified — confirm on first AA fetch
+
+# --- Served by Go, but absent from its published pricing table -------------
+# These cannot be priced, so they cannot be plotted. They are listed on the
+# site rather than silently dropped.
+
+- { goId: glm-5.1, display: GLM-5.1, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: grok-4.6, display: Grok 4.6, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: kimi-k2.6, display: Kimi K2.6, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: minimax-m2.5, display: MiniMax M2.5, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: minimax-m2.7, display: MiniMax M2.7, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: omen-alpha, display: Omen Alpha, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: qwen3.6-plus, display: Qwen3.6 Plus, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+- { goId: qwen3.7-max, display: Qwen3.7 Max, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }

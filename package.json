@@ -14,8 +14,8 @@
     "validate:roster": "tsx scripts/validate-roster.ts",
     "data:build": "tsx scripts/build-dataset.ts"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@types/node": "^26.6.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",

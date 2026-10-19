@@ -1,0 +1,49 @@
+{
+  "_note": "Synthetic fixture shaped per Appendix A of the design doc. NOT real measurement data. Tests only — never copied to data/aa-snapshot.json.",
+  "tier": "free",
+  "intelligence_index_version": "4.1",
+  "pagination": { "page": 1, "page_size": 200, "total_pages": 1, "has_more": false },
+  "data": [
+    {
+      "id": "36f73aaf-d38a-4b56-a2b3-d04d17186910",
+      "name": "fixture-model-a (high)",
+      "slug": "fixture-model-a",
+      "release_date": "2026-01-05",
+      "model_creator": { "id": "e67e56e3", "name": "OpenAI" },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 24.5,
+        "artificial_analysis_coding_index": 18.5,
+        "artificial_analysis_agentic_index": 27.6,
+        "artificial_analysis_finance_and_accounting_index": 7.3,
+        "artificial_analysis_strategy_and_ops_index": 4.8,
+        "artificial_analysis_legal_index": 7.3,
+        "artificial_analysis_healthcare_and_medical_index": 6.6,
+        "artificial_analysis_engineering_index": 11.7,
+        "artificial_analysis_economics_index": 11.3
+      },
+      "pricing": {
+        "price_1m_input_tokens": 0.06,
+        "price_1m_output_tokens": 0.2,
+        "price_1m_cache_hit_tokens": 0.015,
+        "price_1m_cache_write_tokens": 0.075
+      }
+    },
+    {
+      "id": "11111111-2222-3333-4444-555555555555",
+      "name": "fixture-model-b",
+      "slug": "fixture-model-b",
+      "release_date": "2026-02-01",
+      "model_creator": { "id": "aaaa", "name": "Anthropic" },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 40.1,
+        "artificial_analysis_coding_index": null
+      },
+      "pricing": {
+        "price_1m_input_tokens": 1.0,
+        "price_1m_output_tokens": 3.0,
+        "price_1m_cache_hit_tokens": 0.1,
+        "price_1m_cache_write_tokens": null
+      }
+    }
+  ]
+}
