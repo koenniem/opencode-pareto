@@ -164,3 +164,68 @@ describe('buildScene', () => {
     }
   });
 });
+
+describe('near-frontier band', () => {
+  const frontier = [
+    { id: 'cheap', label: 'Cheap', cost: 0.001, score: 48, frontier: true },
+    { id: 'dear', label: 'Dear', cost: 0.05, score: 53, frontier: true },
+    { id: 'near', label: 'Near', cost: 0.01, score: 47, frontier: false, near: true },
+    { id: 'far', label: 'Far', cost: 0.2, score: 30, frontier: false },
+  ];
+
+  it('draws the admitted region rather than implying it through opacity', () => {
+    const shapes = buildScene(frontier, { ...OPTS, tolerance: 3 }).shapes;
+    expect(shapes.some((s) => s.kind === 'path' && s.cls === 'band')).toBe(true);
+  });
+
+  it('draws no band at zero tolerance', () => {
+    const shapes = buildScene(frontier, { ...OPTS, tolerance: 0 }).shapes;
+    expect(shapes.some((s) => s.kind === 'path' && s.cls === 'band')).toBe(false);
+  });
+
+  it('draws the band beneath the points so dots stay readable', () => {
+    const shapes = buildScene(frontier, { ...OPTS, tolerance: 3 }).shapes;
+    const band = shapes.findIndex((s) => s.cls === 'band');
+    const firstPoint = shapes.findIndex((s) => s.kind === 'circle');
+    expect(band).toBeGreaterThanOrEqual(0);
+    expect(band).toBeLessThan(firstPoint);
+  });
+
+  it('draws no band when there is no frontier to hang it from', () => {
+    const shapes = buildScene(
+      [
+        { id: 'a', label: 'A', cost: 0.001, score: 40, frontier: false },
+        { id: 'b', label: 'B', cost: 0.01, score: 50, frontier: false },
+      ],
+      { ...OPTS, tolerance: 5 },
+    ).shapes;
+    expect(shapes.some((s) => s.cls === 'band')).toBe(false);
+  });
+});
+
+describe('label leaders', () => {
+  it('connects every placed label to its dot', () => {
+    const scene = buildScene(pts, OPTS);
+    const labels = textShapes(scene).filter((s) => s.cls === 'point-label');
+    const leaders = scene.shapes.filter((s) => s.kind === 'line' && s.cls === 'leader');
+    expect(labels.length).toBeGreaterThan(0);
+    expect(leaders).toHaveLength(labels.length);
+  });
+
+  it('starts each leader outside the dot instead of through it', () => {
+    const scene = buildScene(pts, OPTS);
+    const dots = circles(scene);
+    for (const leader of scene.shapes.filter((s) => s.kind === 'line' && s.cls === 'leader')) {
+      if (leader.kind !== 'line') continue;
+      const distances = dots.map((d) => Math.hypot(leader.x1 - d.cx, leader.y1 - d.cy));
+      expect(Math.min(...distances)).toBeGreaterThanOrEqual(6);
+    }
+  });
+
+  it('keeps leaders underneath their labels', () => {
+    const scene = buildScene(pts, OPTS);
+    const lastLeader = scene.shapes.map((s) => s.cls).lastIndexOf('leader');
+    const firstLabel = scene.shapes.findIndex((s) => s.cls === 'point-label');
+    expect(lastLeader).toBeLessThan(firstLabel);
+  });
+});

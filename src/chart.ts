@@ -19,6 +19,8 @@ export interface SceneOptions {
   height: number;
   xLabel: string;
   yLabel: string;
+  /** Score points below the best-at-price level that still count as near. */
+  tolerance?: number;
 }
 
 export type Shape =
@@ -98,6 +100,47 @@ function stepPath(ordered: Array<{ x: number; y: number }>): string {
   return d;
 }
 
+const POINT_R = 6;
+
+/**
+ * Shade the region that the band admits: everything between the best score
+ * available at each price and `tolerance` points below it.
+ *
+ * Without this the band is invisible — at a tight tolerance it moves a single
+ * dot's opacity, which reads as "the control does nothing".
+ */
+function bandPath(
+  steps: Array<{ x: number; score: number }>,
+  plot: { left: number; right: number },
+  y: (score: number) => number,
+  tolerance: number,
+  floor: number,
+): string {
+  if (steps.length < 2 || tolerance <= 0) return '';
+
+  const levels = [
+    { x: plot.left, score: steps[0].score },
+    ...steps,
+    { x: plot.right, score: steps[steps.length - 1].score },
+  ];
+
+  const corners: Array<{ x: number; score: number }> = [];
+  for (let i = 0; i < levels.length - 1; i += 1) {
+    corners.push({ x: levels[i].x, score: levels[i].score });
+    corners.push({ x: levels[i + 1].x, score: levels[i].score });
+  }
+
+  const at = (point: { x: number; score: number }, lower: boolean) => {
+    const score = lower ? point.score - tolerance : point.score;
+    return `${point.x.toFixed(2)} ${Math.min(y(score), floor).toFixed(2)}`;
+  };
+
+  const top = corners.map((point) => at(point, false));
+  const bottom = [...corners].reverse().map((point) => at(point, true));
+
+  return `M ${top.join(' L ')} L ${bottom.join(' L ')} Z`;
+}
+
 interface LabelCandidate {
   text: string;
   x: number;
@@ -119,17 +162,18 @@ function placeLabels(
   occupied: Box[],
 ): Shape[] {
   const placed: Shape[] = [];
+  const leaders: Shape[] = [];
   const taken: Box[] = [...occupied];
 
   for (const candidate of [...candidates].sort((a, b) => b.priority - a.priority)) {
     const width = candidate.text.length * CHAR_WIDTH;
     const offsets: Array<{ dx: number; dy: number; anchor: 'start' | 'middle' | 'end' }> = [
-      { dx: 9, dy: 4, anchor: 'start' },
-      { dx: 9, dy: -9, anchor: 'start' },
-      { dx: -9, dy: 4, anchor: 'end' },
-      { dx: -9, dy: -9, anchor: 'end' },
-      { dx: 0, dy: -12, anchor: 'middle' },
-      { dx: 0, dy: 16, anchor: 'middle' },
+      { dx: 14, dy: 4, anchor: 'start' },
+      { dx: 14, dy: -10, anchor: 'start' },
+      { dx: -14, dy: 4, anchor: 'end' },
+      { dx: -14, dy: -10, anchor: 'end' },
+      { dx: 0, dy: -16, anchor: 'middle' },
+      { dx: 0, dy: 20, anchor: 'middle' },
     ];
 
     for (const offset of offsets) {
@@ -148,6 +192,25 @@ function placeLabels(
       if (taken.some((other) => overlaps(box, other))) continue;
 
       taken.push(box);
+
+      // A leader makes ownership explicit: with twenty-odd labels, "nearest
+      // dot" is a guess the reader should not have to make.
+      const lx = Math.max(box.x, Math.min(candidate.x, box.x + box.w));
+      const ly = Math.max(box.y, Math.min(candidate.y, box.y + box.h));
+      const gap = Math.hypot(lx - candidate.x, ly - candidate.y);
+      if (gap > POINT_R + 2) {
+        const ux = (lx - candidate.x) / gap;
+        const uy = (ly - candidate.y) / gap;
+        leaders.push({
+          kind: 'line',
+          x1: candidate.x + ux * (POINT_R + 2),
+          y1: candidate.y + uy * (POINT_R + 2),
+          x2: lx,
+          y2: ly,
+          cls: 'leader',
+        });
+      }
+
       // For anchor="end" the SVG origin is the right edge, so the emitted x is
       // the box's right edge — not its left.
       placed.push({
@@ -162,7 +225,7 @@ function placeLabels(
     }
   }
 
-  return placed;
+  return [...leaders, ...placed];
 }
 
 /**
@@ -257,6 +320,20 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     anchor: 'start',
   });
 
+  const frontier = usable
+    .filter((p) => p.frontier)
+    .sort((a, b) => a.cost - b.cost)
+    .map((p) => ({ x: x(p.cost), y: y(Math.min(p.score, SCORE_MAX)), score: Math.min(p.score, SCORE_MAX) }));
+
+  const band = bandPath(
+    frontier,
+    { left: PAD.left, right: width - PAD.right },
+    y,
+    opts.tolerance ?? 0,
+    height - PAD.bottom,
+  );
+  if (band) shapes.push({ kind: 'path', d: band, cls: 'band' });
+
   const occupied: Box[] = [];
 
   for (const point of usable) {
@@ -279,11 +356,6 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
 
     occupied.push({ x: cx - 7, y: cy - 7, w: 14, h: 14 });
   }
-
-  const frontier = usable
-    .filter((p) => p.frontier)
-    .sort((a, b) => a.cost - b.cost)
-    .map((p) => ({ x: x(p.cost), y: y(Math.min(p.score, SCORE_MAX)) }));
 
   if (frontier.length >= 2) {
     shapes.push({ kind: 'path', d: stepPath(frontier), cls: 'frontier' });

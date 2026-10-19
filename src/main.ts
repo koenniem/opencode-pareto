@@ -184,11 +184,21 @@ function render(): void {
     height: 460,
     xLabel: 'Effective $ per 1M blended tokens (log scale)',
     yLabel: INDEX_LABELS[state.index],
+    tolerance: state.tolerance,
   });
 
   paintScene(svg, scene);
   empty.hidden = scene.empty === null;
   if (scene.empty) empty.textContent = scene.empty;
+
+  const bandCount = document.getElementById('band-count');
+  if (bandCount) {
+    const tol = state.tolerance.toFixed(1);
+    bandCount.textContent =
+      nearSet.size === 0
+        ? 'No model is inside the band.'
+        : `${nearSet.size} of ${points.length} models within ${tol} points of the best at their price.`;
+  }
 
   renderLegend([...new Set(points.map((p) => p.lab ?? 'other'))].sort());
 
@@ -261,17 +271,16 @@ function wireControls(): void {
   });
 
   const tolerance = document.getElementById('tolerance') as HTMLInputElement | null;
-  const toleranceOut = document.getElementById('tolerance-value');
   if (tolerance) {
     state.tolerance = Number(tolerance.value);
-    tolerance.addEventListener('input', () => {
+    const applyTolerance = () => {
       const value = Number(tolerance.value);
       state.tolerance = Number.isFinite(value) ? Math.max(0, value) : 0;
-      if (toleranceOut) toleranceOut.textContent = state.tolerance.toFixed(1);
       render();
-    });
+    };
+    tolerance.addEventListener('input', applyTolerance);
+    tolerance.addEventListener('change', applyTolerance);
   }
-  if (toleranceOut) toleranceOut.textContent = state.tolerance.toFixed(1);
 }
 
 function renderFreshness(): void {
