@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { INDEX_KEYS, type IndexKey } from '../src/types';
+import { loadRoster } from './validate-roster';
 
 const BASE_URL = 'https://artificialanalysis.ai/api/v2/language/models/free';
 const PAGE_SIZE = 200;
@@ -130,6 +131,19 @@ export async function fetchAA(
   throw new Error(`AA pagination did not terminate within ${MAX_PAGES} pages`);
 }
 
+/**
+ * Keep only the models the roster actually references.
+ *
+ * The full AA list is 700+ models. Committing all of it is bulk redistribution
+ * of their dataset; committing the two dozen scores we plot is citation. The
+ * untrimmed response is still written for debugging and uploaded as a CI
+ * artifact, it just is not published.
+ */
+export function trimToRoster(snapshot: AASnapshot, slugs: string[]): AASnapshot {
+  const wanted = new Set(slugs);
+  return { ...snapshot, models: snapshot.models.filter((m) => wanted.has(m.slug)) };
+}
+
 async function main(): Promise<void> {
   const apiKey = process.env.AA_API_KEY;
   if (!apiKey) {
@@ -140,10 +154,19 @@ async function main(): Promise<void> {
   }
 
   const snapshot = await fetchAA(apiKey);
-  writeFileSync('data/aa-snapshot.json', `${JSON.stringify(snapshot, null, 2)}\n`);
+  writeFileSync('data/aa-full.json', `${JSON.stringify(snapshot, null, 2)}\n`);
+
+  const wanted = loadRoster()
+    .map((entry) => entry.aaSlug)
+    .filter((slug): slug is string => slug !== null);
+  const trimmed = trimToRoster(snapshot, wanted);
+  writeFileSync('data/aa-snapshot.json', `${JSON.stringify(trimmed, null, 2)}\n`);
+
   console.log(
-    `Wrote ${snapshot.models.length} AA models (index v${snapshot.intelligenceIndexVersion ?? '?'}) to data/aa-snapshot.json`,
+    `Fetched ${snapshot.models.length} AA models; committed ${trimmed.models.length} referenced by the roster.`,
   );
+  const missing = wanted.filter((slug) => !trimmed.models.some((m) => m.slug === slug));
+  for (const slug of missing) console.warn(`  roster slug not found at AA: ${slug}`);
 }
 
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('fetch-aa.ts')) {

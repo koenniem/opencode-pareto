@@ -7,3 +7,5 @@ dist/
 *.log
 
 .review/
+.snap/
+data/aa-full.json

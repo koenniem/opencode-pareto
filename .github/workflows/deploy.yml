@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: aa-snapshot
-          path: data/aa-snapshot.json
+          path: data/aa-full.json
           if-no-files-found: ignore
 
       - name: Validate the roster

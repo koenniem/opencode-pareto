@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { fetchAA, parseAAResponse } from '../scripts/fetch-aa';
+import { fetchAA, parseAAResponse, trimToRoster } from '../scripts/fetch-aa';
 
 const fixture = JSON.parse(
   readFileSync(new URL('./fixtures/aa-free.sample.json', import.meta.url), 'utf8'),
@@ -35,6 +35,19 @@ describe('parseAAResponse', () => {
   it('tolerates a missing index version', () => {
     const { intelligence_index_version: _, ...rest } = fixture;
     expect(parseAAResponse(rest).intelligenceIndexVersion).toBeNull();
+  });
+});
+
+describe('trimToRoster', () => {
+  it('keeps only the slugs the roster references', () => {
+    const snap = parseAAResponse(fixture);
+    expect(trimToRoster(snap, ['fixture-model-b']).models.map((m) => m.slug)).toEqual([
+      'fixture-model-b',
+    ]);
+  });
+
+  it('drops everything when the roster references nothing', () => {
+    expect(trimToRoster(parseAAResponse(fixture), []).models).toEqual([]);
   });
 });
 
