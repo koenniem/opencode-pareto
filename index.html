@@ -8,48 +8,75 @@
       name="description"
       content="Which model gives the most capability per dollar on the OpenCode Go subscription. Effective price against Artificial Analysis scores, with the Pareto frontier."
     />
+    <meta name="theme-color" content="#f4f2ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d0c0b" media="(prefers-color-scheme: dark)" />
     <link rel="stylesheet" href="/src/style.css" />
+    <script>
+      // Set before first paint so a dark-mode visitor never sees a white flash.
+      (() => {
+        try {
+          const stored = localStorage.getItem('opencode-pareto-theme');
+          const dark =
+            stored === 'dark' ||
+            (stored !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
       <div class="wrap">
         <div class="masthead">
-          <div>
+          <div class="brand">
             <h1>OpenCode Pareto</h1>
             <p class="tagline">
               Capability per dollar on the OpenCode Go subscription — not list price.
             </p>
           </div>
-          <div class="controls" role="group" aria-label="Chart controls">
-            <div class="control">
-              <label for="plan">Plan</label>
-              <select id="plan">
-                <option value="go">Go — $10/mo</option>
-                <option value="go-plus">Go Plus — $40/mo</option>
-              </select>
+          <div class="header-side">
+            <div class="controls" role="group" aria-label="Chart controls">
+              <div class="control">
+                <label for="plan">Plan</label>
+                <select id="plan">
+                  <option value="go">Go — $10/mo</option>
+                  <option value="go-plus">Go Plus — $40/mo</option>
+                </select>
+              </div>
+              <div class="control">
+                <label for="index">Score</label>
+                <select id="index">
+                  <option value="artificial_analysis_intelligence_index">
+                    Intelligence Index
+                  </option>
+                  <option value="artificial_analysis_coding_index">Coding Index</option>
+                  <option value="artificial_analysis_agentic_index">Agentic Index</option>
+                  <option value="artificial_analysis_finance_and_accounting_index">
+                    Finance &amp; Accounting
+                  </option>
+                  <option value="artificial_analysis_strategy_and_ops_index">
+                    Strategy &amp; Ops
+                  </option>
+                  <option value="artificial_analysis_legal_index">Legal</option>
+                  <option value="artificial_analysis_healthcare_and_medical_index">
+                    Healthcare &amp; Medical
+                  </option>
+                  <option value="artificial_analysis_engineering_index">Engineering</option>
+                  <option value="artificial_analysis_economics_index">Economics</option>
+                </select>
+              </div>
             </div>
-            <div class="control">
-              <label for="index">Score</label>
-              <select id="index">
-                <option value="artificial_analysis_intelligence_index">
-                  Intelligence Index
-                </option>
-                <option value="artificial_analysis_coding_index">Coding Index</option>
-                <option value="artificial_analysis_agentic_index">Agentic Index</option>
-                <option value="artificial_analysis_finance_and_accounting_index">
-                  Finance &amp; Accounting
-                </option>
-                <option value="artificial_analysis_strategy_and_ops_index">
-                  Strategy &amp; Ops
-                </option>
-                <option value="artificial_analysis_legal_index">Legal</option>
-                <option value="artificial_analysis_healthcare_and_medical_index">
-                  Healthcare &amp; Medical
-                </option>
-                <option value="artificial_analysis_engineering_index">Engineering</option>
-                <option value="artificial_analysis_economics_index">Economics</option>
-              </select>
-            </div>
+            <button type="button" class="theme-toggle" id="theme-toggle" hidden>
+              <svg class="icon-sun" viewBox="0 0 16 16" aria-hidden="true">
+                <circle cx="8" cy="8" r="3.1" />
+                <path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1" />
+              </svg>
+              <svg class="icon-moon" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6a5.9 5.9 0 1 0 7.1 7.1Z" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

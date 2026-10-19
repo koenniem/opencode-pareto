@@ -61,6 +61,11 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
   cheaper, so there is a shortlist instead of a single answer. N is adjustable
   and shown next to the control — a band you cannot see is a band that flatters
   bad value.
+- **Light and dark.** The palette is warm-monochrome so the fourteen lab hues
+  are the only colour in the chart; switching theme re-tints surfaces, not data.
+  The choice follows the OS until you pick one, is stored locally, and is
+  applied before first paint so there is no white flash. A test asserts every
+  text and point colour clears WCAG AA against its surface in both themes.
 - **The table sorts.** Every column header is a button; values sort numerically
   with unpriceable models always last.
 

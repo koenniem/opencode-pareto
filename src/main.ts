@@ -5,6 +5,7 @@ import { computeFrontier, nearFrontier, type Bucket } from './frontier';
 import { LAB_NAMES, labOf } from './labs';
 import { paintScene } from './render';
 import { mountTable, type SortState } from './table';
+import { wireThemeToggle } from './theme';
 import type { Dataset, DatasetModel, IndexKey, Mix, Plan } from './types';
 
 // SAFETY: data/dataset.json is produced by scripts/build-dataset.ts from the
@@ -283,5 +284,6 @@ function renderFreshness(): void {
 }
 
 wireControls();
+wireThemeToggle(document.getElementById('theme-toggle') as HTMLButtonElement | null);
 render();
 renderFreshness();
