@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { parse as parseYaml } from 'yaml';
 import { describe, expect, it } from 'vitest';
-import { rosterWarnings, validateRoster } from '../scripts/validate-roster';
+import { rosterWarnings, suggestSlugs, validateRoster } from '../scripts/validate-roster';
 import type { GoPricing } from '../scripts/scrape-go';
 import type { RosterEntry } from '../src/types';
 
@@ -56,6 +56,21 @@ describe('validateRoster (fatal errors only)', () => {
 
   it('tolerates a null aaSlug', () => {
     expect(validateRoster([entry('kimi-k3', { aaSlug: null })], [])).toEqual([]);
+  });
+});
+
+describe('suggestSlugs', () => {
+  it('offers the real slug when the guess is wrong', () => {
+    const close = suggestSlugs('glm-5-2', ['glm-5-2-max', 'glm-5-3', 'kimi-k3']);
+    expect(close[0]).toBe('glm-5-2-max');
+  });
+
+  it('prefers an exact match', () => {
+    expect(suggestSlugs('kimi-k3', ['kimi-k2-7-code', 'kimi-k3'])[0]).toBe('kimi-k3');
+  });
+
+  it('never throws on an empty candidate list', () => {
+    expect(suggestSlugs('anything', [])).toEqual([]);
   });
 });
 

@@ -13,6 +13,35 @@ const GO_MODELS_URL = 'https://opencode.ai/inference/go/v1/models';
  * slug that does not exist. The AA slug list may be empty — the site has to
  * build before the API key exists.
  */
+/**
+ * Closest AA slugs to `target`, best first.
+ *
+ * When a guessed slug is wrong, the useful output is the right one, not just
+ * a rejection — the person fixing the roster may not have the AA list in front
+ * of them.
+ */
+export function suggestSlugs(target: string, candidates: string[]): string[] {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const needle = norm(target);
+
+  const scored = candidates.map((slug) => {
+    const hay = norm(slug);
+    if (hay === needle) return { slug, score: 1000 };
+
+    let prefix = 0;
+    while (prefix < hay.length && prefix < needle.length && hay[prefix] === needle[prefix]) {
+      prefix += 1;
+    }
+    const contains = hay.includes(needle) || needle.includes(hay) ? 100 : 0;
+    return { slug, score: prefix + contains };
+  });
+
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map((entry) => entry.slug);
+}
+
 export function validateRoster(roster: RosterEntry[], aaSlugs: string[]): string[] {
   const errors: string[] = [];
   const aaSlugSet = new Set(aaSlugs);
@@ -41,7 +70,11 @@ export function validateRoster(roster: RosterEntry[], aaSlugs: string[]): string
     if (entry.aaSlug === '') {
       errors.push(`aaSlug must be null rather than empty: ${entry.goId}`);
     } else if (entry.aaSlug !== null && aaSlugSet.size > 0 && !aaSlugSet.has(entry.aaSlug)) {
-      errors.push(`aaSlug not in the AA snapshot: ${entry.goId} -> ${entry.aaSlug}`);
+      const close = suggestSlugs(entry.aaSlug, aaSlugs);
+      errors.push(
+        `aaSlug not in the AA snapshot: ${entry.goId} -> ${entry.aaSlug}` +
+          (close.length > 0 ? ` (closest: ${close.join(', ')})` : ''),
+      );
     }
   }
 
