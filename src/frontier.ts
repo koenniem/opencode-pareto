@@ -86,3 +86,37 @@ export function computeFrontier(
   const { inputs, buckets } = toFrontierInputs(models, plan, index, mix, planPrice);
   return { inputs, buckets, frontier: paretoFrontier(inputs) };
 }
+
+/**
+ * Points close enough to the frontier to be worth considering.
+ *
+ * A strict frontier is the truth, but when one subsidised model dominates
+ * everything it collapses to a couple of points and stops answering "what is
+ * good value at the performance I need". A point is near when its score is
+ * within `tolerance` of the best score available at its price or cheaper.
+ *
+ * The tolerance is deliberately caller-supplied and shown in the UI: a band
+ * that cannot be seen is a band that flatters bad-value models.
+ */
+export function nearFrontier(
+  inputs: FrontierInput[],
+  frontierIds: string[],
+  tolerance: number,
+): Set<string> {
+  const byId = new Map(inputs.map((point) => [point.id, point]));
+  const frontier = frontierIds
+    .map((id) => byId.get(id))
+    .filter((point): point is FrontierInput => point !== undefined)
+    .sort((a, b) => a.cost - b.cost);
+
+  const near = new Set(frontierIds);
+  for (const point of inputs) {
+    let bestAtPrice = Number.NEGATIVE_INFINITY;
+    for (const candidate of frontier) {
+      if (candidate.cost <= point.cost) bestAtPrice = Math.max(bestAtPrice, candidate.score);
+    }
+    if (bestAtPrice === Number.NEGATIVE_INFINITY) continue;
+    if (point.score >= bestAtPrice - Math.max(tolerance, 0)) near.add(point.id);
+  }
+  return near;
+}

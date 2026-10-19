@@ -5,7 +5,12 @@ export interface ChartPoint {
   label: string;
   cost: number;
   score: number;
+  /** On the strict Pareto frontier. */
   frontier: boolean;
+  /** Inside the near-frontier band but not on the frontier. */
+  near?: boolean;
+  /** Lab key, used as a CSS class for colour. */
+  lab?: string;
   title?: string;
 }
 
@@ -17,7 +22,15 @@ export interface SceneOptions {
 }
 
 export type Shape =
-  | { kind: 'circle'; cx: number; cy: number; r: number; cls: string; id: string; title?: string }
+  | {
+      kind: 'circle';
+      cx: number;
+      cy: number;
+      r: number;
+      cls: string;
+      id: string;
+      title?: string;
+    }
   | { kind: 'path'; d: string; cls: string }
   | { kind: 'line'; x1: number; y1: number; x2: number; y2: number; cls: string }
   | {
@@ -39,6 +52,21 @@ export interface Scene {
 const PAD = { top: 20, right: 24, bottom: 56, left: 72 };
 const SCORE_MAX = 100;
 
+/** Rough glyph metrics for collision estimation; no text measurement needed. */
+const CHAR_WIDTH = 6.3;
+const LABEL_HEIGHT = 13;
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+function overlaps(a: Box, b: Box): boolean {
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
 /** Powers of ten strictly inside the domain. */
 export function logTicks(min: number, max: number): number[] {
   if (!(min > 0) || !(max > min)) return [];
@@ -59,9 +87,7 @@ export function formatPrice(value: number): string {
   return `$${value.toFixed(4)}`;
 }
 
-function stepPath(
-  ordered: Array<{ x: number; y: number }>,
-): string {
+function stepPath(ordered: Array<{ x: number; y: number }>): string {
   if (ordered.length < 2) return '';
   let d = `M ${ordered[0].x.toFixed(2)} ${ordered[0].y.toFixed(2)}`;
   for (let i = 1; i < ordered.length; i += 1) {
@@ -70,6 +96,73 @@ function stepPath(
     d += ` L ${next.x.toFixed(2)} ${prev.y.toFixed(2)} L ${next.x.toFixed(2)} ${next.y.toFixed(2)}`;
   }
   return d;
+}
+
+interface LabelCandidate {
+  text: string;
+  x: number;
+  y: number;
+  priority: number;
+}
+
+/**
+ * Place labels without overlapping each other, the points, or the axes.
+ *
+ * Greedy in priority order (frontier first, then highest score): each label
+ * tries six offsets and takes the first that fits. A label with nowhere to go
+ * is dropped rather than drawn on top of something else — the point keeps its
+ * tooltip, so no information is lost.
+ */
+function placeLabels(
+  candidates: LabelCandidate[],
+  bounds: Box,
+  occupied: Box[],
+): Shape[] {
+  const placed: Shape[] = [];
+  const taken: Box[] = [...occupied];
+
+  for (const candidate of [...candidates].sort((a, b) => b.priority - a.priority)) {
+    const width = candidate.text.length * CHAR_WIDTH;
+    const offsets: Array<{ dx: number; dy: number; anchor: 'start' | 'middle' | 'end' }> = [
+      { dx: 9, dy: 4, anchor: 'start' },
+      { dx: 9, dy: -9, anchor: 'start' },
+      { dx: -9, dy: 4, anchor: 'end' },
+      { dx: -9, dy: -9, anchor: 'end' },
+      { dx: 0, dy: -12, anchor: 'middle' },
+      { dx: 0, dy: 16, anchor: 'middle' },
+    ];
+
+    for (const offset of offsets) {
+      const anchorX =
+        offset.anchor === 'start'
+          ? candidate.x + offset.dx
+          : offset.anchor === 'end'
+            ? candidate.x + offset.dx - width
+            : candidate.x - width / 2;
+      const anchorY = candidate.y + offset.dy;
+      const box: Box = { x: anchorX, y: anchorY - LABEL_HEIGHT + 3, w: width, h: LABEL_HEIGHT };
+
+      const inside =
+        box.x >= bounds.x && box.y >= bounds.y && box.x + box.w <= bounds.x + bounds.w && box.y + box.h <= bounds.y + bounds.h;
+      if (!inside) continue;
+      if (taken.some((other) => overlaps(box, other))) continue;
+
+      taken.push(box);
+      // For anchor="end" the SVG origin is the right edge, so the emitted x is
+      // the box's right edge — not its left.
+      placed.push({
+        kind: 'text',
+        x: offset.anchor === 'end' ? anchorX + width : anchorX,
+        y: anchorY,
+        text: candidate.text,
+        cls: 'point-label',
+        anchor: offset.anchor,
+      });
+      break;
+    }
+  }
+
+  return placed;
 }
 
 /**
@@ -104,7 +197,6 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
 
   const shapes: Shape[] = [];
 
-  // Axes.
   shapes.push({
     kind: 'line',
     x1: PAD.left,
@@ -122,7 +214,6 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     cls: 'axis',
   });
 
-  // Y ticks.
   for (const value of [0, 25, 50, 75, 100]) {
     const py = y(value);
     shapes.push({ kind: 'line', x1: PAD.left, y1: py, x2: width - PAD.right, y2: py, cls: 'grid' });
@@ -136,7 +227,6 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     });
   }
 
-  // X ticks.
   for (const value of logTicks(xDomain[0], xDomain[1])) {
     const px = x(value);
     shapes.push({ kind: 'line', x1: px, y1: PAD.top, x2: px, y2: height - PAD.bottom, cls: 'grid' });
@@ -167,23 +257,29 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     anchor: 'start',
   });
 
-  // Points.
+  const occupied: Box[] = [];
+
   for (const point of usable) {
     const cx = x(point.cost);
     const cy = y(Math.min(point.score, SCORE_MAX));
+    const classes = ['point'];
+    if (point.frontier) classes.push('frontier');
+    else if (point.near) classes.push('near');
+    if (point.lab) classes.push(`lab-${point.lab}`);
+
     shapes.push({
       kind: 'circle',
       cx,
       cy,
-      r: point.frontier ? 6 : 4,
-      cls: point.frontier ? 'point frontier' : 'point',
+      r: point.frontier ? 6 : point.near ? 5 : 4,
+      cls: classes.join(' '),
       id: point.id,
-      title:
-        point.title ?? `${point.label}: ${formatPrice(point.cost)}/1M · score ${point.score}`,
+      title: point.title ?? `${point.label}: ${formatPrice(point.cost)}/1M · score ${point.score}`,
     });
+
+    occupied.push({ x: cx - 7, y: cy - 7, w: 14, h: 14 });
   }
 
-  // Frontier, drawn as a monotone staircase through the non-dominated points.
   const frontier = usable
     .filter((p) => p.frontier)
     .sort((a, b) => a.cost - b.cost)
@@ -193,16 +289,16 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     shapes.push({ kind: 'path', d: stepPath(frontier), cls: 'frontier' });
   }
 
-  for (const point of usable.filter((p) => p.frontier)) {
-    shapes.push({
-      kind: 'text',
-      x: x(point.cost) + 8,
-      y: y(Math.min(point.score, SCORE_MAX)) - 8,
+  const labels = placeLabels(
+    usable.map((point) => ({
       text: point.label,
-      cls: 'point-label',
-      anchor: 'start',
-    });
-  }
+      x: x(point.cost),
+      y: y(Math.min(point.score, SCORE_MAX)),
+      priority: (point.frontier ? 1000 : point.near ? 500 : 0) + point.score,
+    })),
+    { x: PAD.left, y: PAD.top, w: width - PAD.left - PAD.right, h: height - PAD.top - PAD.bottom },
+    occupied,
+  );
 
-  return { width, height, shapes, empty: null };
+  return { width, height, shapes: [...shapes, ...labels], empty: null };
 }

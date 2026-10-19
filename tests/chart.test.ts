@@ -14,6 +14,19 @@ const circles = (scene: ReturnType<typeof buildScene>) =>
     Extract<ReturnType<typeof buildScene>['shapes'][number], { kind: 'circle' }>
   >;
 
+
+type TextShape = Extract<ReturnType<typeof buildScene>['shapes'][number], { kind: 'text' }>;
+
+function textShapes(scene: ReturnType<typeof buildScene>): TextShape[] {
+  return scene.shapes.filter((s): s is TextShape => s.kind === 'text');
+}
+
+function labelBox(shape: TextShape) {
+  const w = shape.text.length * 6.3;
+  const x = shape.anchor === 'end' ? shape.x - w : shape.anchor === 'middle' ? shape.x - w / 2 : shape.x;
+  return { x, y: shape.y - 10, w, h: 13 };
+}
+
 describe('logScale', () => {
   it('maps endpoints to the range endpoints', () => {
     const s = logScale([0.001, 1], [0, 100]);
@@ -79,12 +92,44 @@ describe('buildScene', () => {
     expect(buildScene([pts[1]], OPTS).shapes.filter((s) => s.kind === 'path')).toHaveLength(0);
   });
 
-  it('labels frontier points and only frontier points', () => {
-    const labels = buildScene(pts, OPTS)
-      .shapes.filter((s) => s.kind === 'text')
-      .map((s) => (s as Extract<ReturnType<typeof buildScene>['shapes'][number], { kind: 'text' }>).text);
+  it('names every plotted point', () => {
+    const labels = textShapes(buildScene(pts, OPTS)).map((s) => s.text);
+    expect(labels).toContain('A');
     expect(labels).toContain('B');
-    expect(labels).not.toContain('A');
+  });
+
+  it('never emits two overlapping labels', () => {
+    const crowded: ChartPoint[] = Array.from({ length: 12 }, (_, i) => ({
+      id: `m${i}`,
+      label: `Model ${i}`,
+      cost: 0.001 * (i + 1),
+      score: 40 + i * 0.4,
+      frontier: false,
+    }));
+    const labels = textShapes(buildScene(crowded, { ...OPTS, width: 700, height: 360 })).filter(
+      (s) => s.cls === 'point-label',
+    );
+    const boxes = labels.map(labelBox);
+    for (let i = 0; i < boxes.length; i += 1) {
+      for (let j = i + 1; j < boxes.length; j += 1) {
+        const a = boxes[i];
+        const b = boxes[j];
+        const overlap =
+          a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+        expect(overlap, `${labels[i].text} overlaps ${labels[j].text}`).toBe(false);
+      }
+    }
+  });
+
+  it('drops a label it cannot place rather than drawing it over a point', () => {
+    const sameSpot: ChartPoint[] = [
+      { id: 'a', label: 'Alpha', cost: 0.01, score: 50, frontier: true },
+      { id: 'b', label: 'Bravo', cost: 0.0100001, score: 50.0001, frontier: false },
+    ];
+    const labels = textShapes(buildScene(sameSpot, OPTS))
+      .filter((s) => s.cls === 'point-label')
+      .map((s) => s.text);
+    expect(labels.length).toBeLessThanOrEqual(2);
   });
 
   it('returns an empty state instead of NaN for no points', () => {

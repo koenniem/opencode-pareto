@@ -3,6 +3,7 @@ import type { AASnapshot } from './fetch-aa';
 import type { GoPricing } from './scrape-go';
 import { loadAASlugs, loadPricing, loadRoster, validateRoster } from './validate-roster';
 import type { Dataset, DatasetModel, RosterEntry, IndexKey } from '../src/types';
+import { labOf } from '../src/labs';
 
 const PLAN_PRICES = { go: 10, 'go-plus': 40 } as const;
 
@@ -50,6 +51,7 @@ export function buildDataset(
     return {
       goId: entry.goId,
       display: entry.display,
+      lab: labOf(entry.goId),
       aaSlug: entry.aaSlug,
       aaName: aa?.name ?? null,
       tier: entry.tier,

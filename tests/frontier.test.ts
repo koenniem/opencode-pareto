@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { paretoFrontier, toFrontierInputs } from '../src/frontier';
+import { nearFrontier, paretoFrontier, toFrontierInputs } from '../src/frontier';
 import { DEFAULT_MIX } from '../src/compute';
 import type { DatasetModel, IndexKey } from '../src/types';
 
@@ -9,6 +9,7 @@ function model(over: Partial<DatasetModel>): DatasetModel {
   return {
     goId: 'm',
     display: 'M',
+    lab: 'other',
     aaSlug: 'm',
     aaName: 'M',
     tier: 'standard',
@@ -150,5 +151,46 @@ describe('toFrontierInputs', () => {
     const go = toFrontierInputs([m], 'go', IDX, DEFAULT_MIX, 10).inputs[0];
     const plus = toFrontierInputs([m], 'go-plus', IDX, DEFAULT_MIX, 40).inputs[0];
     expect(plus.cost).toBeCloseTo(go.cost / 2, 10);
+  });
+});
+
+describe('nearFrontier', () => {
+  const points = [
+    { id: 'cheap', cost: 1, score: 50 },
+    { id: 'best', cost: 10, score: 52 },
+    { id: 'close', cost: 20, score: 51 },
+    { id: 'far', cost: 30, score: 40 },
+  ];
+  const frontier = paretoFrontier(points);
+
+  it('includes the frontier itself', () => {
+    const near = nearFrontier(points, frontier, 0);
+    expect([...near].sort()).toEqual(frontier.slice().sort());
+  });
+
+  it('includes a dominated model within the tolerance of the best score at its price', () => {
+    expect(nearFrontier(points, frontier, 2).has('close')).toBe(true);
+  });
+
+  it('excludes a dominated model beyond the tolerance', () => {
+    expect(nearFrontier(points, frontier, 2).has('far')).toBe(false);
+  });
+
+  it('admits more models as the tolerance grows', () => {
+    expect(nearFrontier(points, frontier, 12).has('far')).toBe(true);
+  });
+
+  it('treats an equal-score dearer model as near', () => {
+    const tied = [
+      { id: 'a', cost: 1, score: 10 },
+      { id: 'b', cost: 9, score: 10 },
+    ];
+    expect(nearFrontier(tied, paretoFrontier(tied), 0).has('b')).toBe(true);
+  });
+
+  it('never drops a frontier point', () => {
+    for (const tol of [0, 1, 5]) {
+      for (const id of frontier) expect(nearFrontier(points, frontier, tol).has(id)).toBe(true);
+    }
   });
 });

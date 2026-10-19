@@ -1,9 +1,10 @@
 import datasetJson from '../data/dataset.json';
 import { DEFAULT_MIX, blendedPrice, effectivePrice, multiplier, normalizeMix } from './compute';
 import { buildScene, formatPrice, type ChartPoint } from './chart';
-import { computeFrontier, type Bucket } from './frontier';
+import { computeFrontier, nearFrontier, type Bucket } from './frontier';
+import { LAB_NAMES, labOf } from './labs';
 import { paintScene } from './render';
-import { mountTable } from './table';
+import { mountTable, type SortState } from './table';
 import type { Dataset, DatasetModel, IndexKey, Mix, Plan } from './types';
 
 // SAFETY: data/dataset.json is produced by scripts/build-dataset.ts from the
@@ -16,12 +17,16 @@ interface UiState {
   plan: Plan;
   index: IndexKey;
   mix: Mix;
+  tolerance: number;
+  sort: SortState | null;
 }
 
 const state: UiState = {
   plan: 'go',
   index: 'artificial_analysis_intelligence_index',
   mix: { ...DEFAULT_MIX },
+  tolerance: 2,
+  sort: null,
 };
 
 const INDEX_LABELS: Record<IndexKey, string> = {
@@ -56,10 +61,6 @@ function el<K extends keyof HTMLElementTagNameMap>(
   return node;
 }
 
-function detailRow(term: string, value: string, strong = false): [HTMLElement, HTMLElement] {
-  return [el('dt', term), el('dd', value, strong ? 'strong' : undefined)];
-}
-
 function renderDetails(goId: string): void {
   const host = document.getElementById('details');
   const model = byId(goId);
@@ -80,6 +81,7 @@ function renderDetails(goId: string): void {
 
   const dl = el('dl', undefined, 'detail-grid');
   const pairs: Array<[string, string, boolean?]> = [
+    ['Lab', LAB_NAMES[labOf(model.goId)]],
     [
       'Score',
       `${score === null ? 'not scored on this index' : score.toFixed(1)} (${INDEX_LABELS[state.index]})`,
@@ -99,7 +101,12 @@ function renderDetails(goId: string): void {
     ['List blended', listBlended === null ? 'incomplete price' : `${formatPrice(listBlended)}/1M`],
     ['Effective', effective === null ? '—' : `${formatPrice(effective)}/1M`, true],
   ];
-  for (const [term, value, strong] of pairs) dl.append(...detailRow(term, value, strong));
+  for (const [term, value, strong] of pairs) {
+    const dt = el('dt', term);
+    const dd = el('dd', value);
+    if (strong) dd.className = 'strong';
+    dl.append(dt, dd);
+  }
   frag.append(dl);
 
   if (model.aaName) frag.append(el('p', `Artificial Analysis model: ${model.aaName}`, 'note'));
@@ -127,6 +134,20 @@ function renderBucket(id: string, names: Bucket[], buckets: Record<string, Bucke
   host.replaceChildren(frag);
 }
 
+function renderLegend(labs: string[]): void {
+  const host = document.getElementById('legend');
+  if (!host) return;
+  const frag = document.createDocumentFragment();
+  for (const lab of labs) {
+    const item = el('li', undefined, 'legend-item');
+    const swatch = el('span', undefined, `legend-swatch lab-${lab}`);
+    swatch.setAttribute('aria-hidden', 'true');
+    item.append(swatch, el('span', LAB_NAMES[lab as keyof typeof LAB_NAMES] ?? lab));
+    frag.append(item);
+  }
+  host.replaceChildren(frag);
+}
+
 function render(): void {
   const planPrice = dataset.plans[state.plan].price;
   const { inputs, buckets, frontier } = computeFrontier(
@@ -138,6 +159,8 @@ function render(): void {
   );
 
   const frontierSet = new Set(frontier);
+  const nearSet = nearFrontier(inputs, frontier, state.tolerance);
+
   const points: ChartPoint[] = inputs.map((input) => {
     const model = byId(input.id);
     return {
@@ -146,6 +169,8 @@ function render(): void {
       cost: input.cost,
       score: input.score,
       frontier: frontierSet.has(input.id),
+      near: !frontierSet.has(input.id) && nearSet.has(input.id),
+      lab: model?.lab ?? 'other',
     };
   });
 
@@ -164,12 +189,19 @@ function render(): void {
   empty.hidden = scene.empty === null;
   if (scene.empty) empty.textContent = scene.empty;
 
+  renderLegend([...new Set(points.map((p) => p.lab ?? 'other'))].sort());
+
   renderBucket('bucket-free', ['free'], buckets);
   renderBucket('bucket-unscored', ['unscored'], buckets);
   renderBucket('bucket-unpriced', ['unpriced', 'incomplete'], buckets);
 
   const tableHost = document.getElementById('table-host');
-  if (tableHost) mountTable(tableHost, dataset, state);
+  if (tableHost) {
+    mountTable(tableHost, dataset, state, state.sort, (next) => {
+      state.sort = next;
+      render();
+    });
+  }
 
   svg.querySelectorAll<SVGCircleElement>('circle[data-id]').forEach((circle) => {
     const id = circle.dataset.id ?? '';
@@ -206,6 +238,7 @@ function wireControls(): void {
 
   for (const [elementId, key] of fields) {
     const field = document.getElementById(elementId) as HTMLInputElement | null;
+    if (field) field.value = (DEFAULT_MIX[key] * 100).toFixed(2);
     field?.addEventListener('input', () => {
       state.mix = normalizeMix({
         input: key === 'input' ? percentToShare(field.value) : state.mix.input,
@@ -226,6 +259,19 @@ function wireControls(): void {
     }
     render();
   });
+
+  const tolerance = document.getElementById('tolerance') as HTMLInputElement | null;
+  const toleranceOut = document.getElementById('tolerance-value');
+  if (tolerance) {
+    state.tolerance = Number(tolerance.value);
+    tolerance.addEventListener('input', () => {
+      const value = Number(tolerance.value);
+      state.tolerance = Number.isFinite(value) ? Math.max(0, value) : 0;
+      if (toleranceOut) toleranceOut.textContent = state.tolerance.toFixed(1);
+      render();
+    });
+  }
+  if (toleranceOut) toleranceOut.textContent = state.tolerance.toFixed(1);
 }
 
 function renderFreshness(): void {

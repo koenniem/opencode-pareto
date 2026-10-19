@@ -70,6 +70,8 @@ export interface RosterEntry {
 export interface DatasetModel {
   goId: string;
   display: string;
+  /** Lab that built the model, for chart colour. */
+  lab: string;
   aaSlug: string | null;
   aaName: string | null;
   tier: RosterTier;

@@ -49,6 +49,21 @@ The mix is adjustable on the site. Changing it moves the frontier — models wit
 cheap cache reads (`MiMo-V2.6-Flash` at $0.0028/1M) gain a lot, models with
 expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
 
+### Reading the chart
+
+- **Colour = lab.** Every dot is coloured by who built the model, with the
+  legend under the chart. Names are placed on the chart itself and never
+  overlap: a name with nowhere to go is dropped rather than stacked, and its
+  tooltip still has it.
+- **The band.** A strict frontier says Muse Spark 1.3 Contributor dominates
+  everything, which is true but leaves nothing to choose between. The band
+  flags models within N score points of the best available at their price or
+  cheaper, so there is a shortlist instead of a single answer. N is adjustable
+  and shown next to the control — a band you cannot see is a band that flatters
+  bad value.
+- **The table sorts.** Every column header is a button; values sort numerically
+  with unpriceable models always last.
+
 ### What is not modelled
 
 - **The 5-hour window.** Go caps you at 20% of the monthly allowance per 5

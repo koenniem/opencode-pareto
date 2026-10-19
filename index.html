@@ -60,6 +60,7 @@
         <h2 id="chart-heading" class="visually-hidden">Effective price against score</h2>
         <div id="chart-empty" class="empty" hidden></div>
         <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
+        <ul id="legend" class="legend" aria-label="Labs"></ul>
         <noscript>
           <p class="note">
             The chart needs JavaScript. The full table below has the same numbers.
@@ -86,6 +87,21 @@
           <h3>Served by Go, no published price</h3>
           <p class="note">In OpenCode's model list but absent from its pricing table.</p>
           <ul id="bucket-unpriced"></ul>
+        </div>
+      </section>
+
+      <section class="display" aria-labelledby="display-heading">
+        <h2 id="display-heading">Near-frontier band</h2>
+        <p class="note">
+          When one model dominates everything, the strict frontier collapses to a couple of points.
+          The band flags models whose score is within this many points of the best available at their
+          price or cheaper — candidates worth a look, not equals.
+        </p>
+        <div class="mix-controls">
+          <div class="control">
+            <label for="tolerance">Band ± points</label>
+            <input id="tolerance" type="number" min="0" max="20" step="0.5" value="2" />
+          </div>
         </div>
       </section>
 
