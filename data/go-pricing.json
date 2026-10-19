@@ -1,6 +1,6 @@
 {
   "source": "https://opencode.ai/docs/go/",
-  "scrapedAt": "2026-10-19T10:44:51.019Z",
+  "scrapedAt": "2026-10-19T11:34:04.106Z",
   "rows": {
     "GLM-5.3-Flash": {
       "input": 0.15,
@@ -166,6 +166,24 @@
       },
       "promo": null
     },
+    "MiniMax M3.1 Flash Free": {
+      "input": 0,
+      "output": 0,
+      "cachedRead": 0,
+      "cachedWrite": null,
+      "allowance": {
+        "go": "unlimited",
+        "go-plus": "unlimited"
+      },
+      "promo": {
+        "label": "limited time",
+        "baseAllowance": {
+          "go": null,
+          "go-plus": null
+        }
+      },
+      "note": "limited time"
+    },
     "MiniMax M3": {
       "input": 0.3,
       "output": 1.2,
@@ -306,17 +324,6 @@
       "allowance": {
         "go": 60,
         "go-plus": 240
-      },
-      "promo": null
-    },
-    "Space Bunny": {
-      "input": 0.15,
-      "output": 0.6,
-      "cachedRead": 0.03,
-      "cachedWrite": null,
-      "allowance": {
-        "go": 30,
-        "go-plus": 120
       },
       "promo": null
     },
