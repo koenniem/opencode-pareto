@@ -58,7 +58,7 @@ These would make the site a failure even if it technically works:
 ## Decisions already made (by the user)
 
 | Decision | Choice |
-|---|---|
+| --- | --- |
 | AA licensing | Publish with attribution now (§2.3(b) chart sharing, §5.1 attribution). User accepts residual §2.5 risk. |
 | Cost axis | Effective $/1M blended tokens, log scale |
 | Score axis | Intelligence Index default, toggle to Coding Index, more later |
@@ -72,7 +72,7 @@ These would make the site a failure even if it technically works:
 
 ### Effective price
 
-```
+```text
 multiplier(m)  = allowance(m) / subscription(plan)
 effective(m)   = list_blended(m) / multiplier(m)
                = list_blended(m) * subscription(plan) / allowance(m)
@@ -81,7 +81,7 @@ effective(m)   = list_blended(m) / multiplier(m)
 Where `list_blended(m)` is the model's Go token prices combined with the global
 token mix:
 
-```
+```text
 list_blended(m) = mix.in * price_in(m)
                 + mix.cached * price_cached(m)
                 + mix.out * price_out(m)
@@ -95,7 +95,7 @@ All prices per 1M tokens. `mix` components sum to 1.
 Derived from OpenCode's own published per-request token estimates (the 24
 models in their docs that carry token counts), taking the median share:
 
-```
+```text
 in 1.14%   cached 98.45%   out 0.36%   cache_write 0%
 ```
 
@@ -141,7 +141,7 @@ sufficient. Pro is not required.
 
 ### Committed artifacts
 
-```
+```text
 data/
   roster.yaml          # hand-curated Go ↔ AA mapping (the join)
   go-pricing.json      # Go allowances + token prices, both plans (curated)
@@ -169,7 +169,7 @@ will produce silent, confident errors.
   aa_variant: max                  # which AA variant to score, documented
   tier: standard                   # standard | free | unpriced
   notes: "AA scores the Max variant"
-```
+```text
 
 Build-time rules, all hard failures:
 
@@ -196,7 +196,7 @@ frontier.
 
 Static site, no backend, no runtime API calls.
 
-```
+```text
 GitHub Actions (daily cron + manual)
   ├─ fetch AA /language/models/free     (secret: AA_API_KEY)
   ├─ fetch opencode.ai/inference/go/v1/models
@@ -236,7 +236,7 @@ artifact (not a `gh-pages` branch).
 
 Single page, single chart.
 
-```
+```text
 ┌──────────────────────────────────────────────────────────┐
 │  OpenCode Pareto                      [Go $10] [Go+ $40] │
 │                                                          │
