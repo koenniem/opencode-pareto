@@ -112,13 +112,24 @@ npm run data:build
 That is intended: the committed file is the reviewed source of truth, so a
 price change lands as a visible diff rather than a silent re-pricing.
 
+### What counts as "on Go"
+
+Only models in OpenCode's **published Go pricing table** count. The inference
+endpoint at `/inference/go/v1/models` is a superset — it lists legacy and
+infrastructure models that a Go subscription cannot actually use, so it is not
+used as a source of truth and those models are deliberately absent from the
+roster.
+
 ### When OpenCode adds a model
 
-The build fails with `Go model has no roster entry: <id>`. Add an entry to
-`data/roster.yaml` with the AA slug, then run `npm run data:build`.
+A new priced row appears in CI as a warning: `priced model missing from the
+roster, not shown: <name>`. Add an entry to `data/roster.yaml` with the AA slug,
+then run `npm run data:build`.
 
 If AA has never scored the model, set `aaSlug: null` and it appears in the
-"priced but not scored" list rather than on the chart.
+"priced but not scored" list rather than on the chart. If AA scores a *different*
+model (for example `Qwen3.8-Flash-Next` is not `Qwen3.8 Flash`), leave it null —
+attaching another model's score is worse than showing no score.
 
 ## Development
 

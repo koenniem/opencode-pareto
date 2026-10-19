@@ -48,14 +48,6 @@ describe('buildDataset', () => {
     expect(m.scores.artificial_analysis_intelligence_index).toBe(47);
   });
 
-  it('keeps unpriced models with null prices', () => {
-    const m = buildDataset(roster, pricing, snapshot).models.find((x) => x.goId === 'glm-5.1')!;
-    expect(m.prices).toBeNull();
-    expect(m.allowances).toBeNull();
-    expect(m.priceRow).toBeNull();
-    expect(m.tier).toBe('unpriced');
-  });
-
   it('keeps unscored models with empty scores', () => {
     const m = buildDataset(roster, pricing, snapshot).models.find((x) => x.goId === 'hy3')!;
     expect(m.scores).toEqual({});
@@ -83,7 +75,7 @@ describe('buildDataset', () => {
   });
 
   it('emits every roster model in order', () => {
-    expect(buildDataset(roster, pricing, snapshot).models).toHaveLength(38);
+    expect(buildDataset(roster, pricing, snapshot).models).toHaveLength(29);
   });
 
   it('produces an empty-scores dataset when AA data is absent', () => {

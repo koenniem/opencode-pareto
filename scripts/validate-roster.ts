@@ -3,8 +3,6 @@ import { parse as parseYaml } from 'yaml';
 import type { RosterEntry } from '../src/types';
 import type { GoPricing } from './scrape-go';
 
-const GO_MODELS_URL = 'https://opencode.ai/inference/go/v1/models';
-
 /**
  * Errors that must stop the build.
  *
@@ -90,33 +88,25 @@ export function validateRoster(roster: RosterEntry[], aaSlugs: string[]): string
  * deploy over that would keep a stale site online, which is worse than showing
  * one fewer point.
  */
-export function rosterWarnings(
-  roster: RosterEntry[],
-  goIds: string[],
-  pricing: GoPricing,
-): string[] {
+export function rosterWarnings(roster: RosterEntry[], pricing: GoPricing): string[] {
   const warnings: string[] = [];
-  const goIdSet = new Set(goIds);
-  const seen = new Set(roster.map((entry) => entry.goId));
+  // Tier rows ("Qwen3.7 Plus (> 256K tokens)") are deliberately unclaimed: the
+  // roster points at the cheaper tier. Treat any row sharing a base name with a
+  // claimed row as accounted for.
+  const base = (name: string) => name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  const claimedBases = new Set(
+    roster.map((entry) => entry.priceRow).filter((row): row is string => Boolean(row)).map(base),
+  );
 
-  for (const goId of goIds) {
-    if (!seen.has(goId)) {
-      warnings.push(`Go serves a model with no roster entry, excluding it: ${goId}`);
+  for (const entry of roster) {
+    if (entry.priceRow !== null && !(entry.priceRow in pricing.rows)) {
+      warnings.push(`pricing row vanished, showing as unpriced: ${entry.goId} -> ${entry.priceRow}`);
     }
   }
 
-  for (const entry of roster) {
-    if (!goIdSet.has(entry.goId)) {
-      warnings.push(`roster entry no longer served by Go, ignoring it: ${entry.goId}`);
-    }
-    if (
-      entry.tier !== 'unpriced' &&
-      entry.priceRow !== null &&
-      !(entry.priceRow in pricing.rows)
-    ) {
-      warnings.push(
-        `pricing row vanished, showing as unpriced: ${entry.goId} -> ${entry.priceRow}`,
-      );
+  for (const row of Object.keys(pricing.rows)) {
+    if (!claimedBases.has(base(row))) {
+      warnings.push(`priced model missing from the roster, not shown: ${row}`);
     }
   }
 
@@ -146,20 +136,11 @@ export function loadAASlugs(path = 'data/aa-snapshot.json'): string[] {
   }
 }
 
-async function fetchGoIds(): Promise<string[]> {
-  const response = await fetch(GO_MODELS_URL);
-  if (!response.ok) throw new Error(`Go models endpoint failed: ${response.status}`);
-  const body = (await response.json()) as { data?: Array<{ id: string }> };
-  if (!body.data) throw new Error('Go models endpoint returned no data array');
-  return body.data.map((m) => m.id);
-}
-
-async function main(): Promise<void> {
+function main(): void {
   const roster = loadRoster();
   const pricing = loadPricing();
-  const goIds = await fetchGoIds();
 
-  for (const warning of rosterWarnings(roster, goIds, pricing)) {
+  for (const warning of rosterWarnings(roster, pricing)) {
     console.warn(`warning: ${warning}`);
   }
 
@@ -174,8 +155,5 @@ async function main(): Promise<void> {
 }
 
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('validate-roster.ts')) {
-  main().catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+  main();
 }

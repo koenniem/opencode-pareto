@@ -20,16 +20,14 @@ describe('renderTableHtml', () => {
     expect(rows).toHaveLength(1 + dataset.models.length);
   });
 
-  it('lists every model, including the unpriced ones', () => {
+  it('lists every model in the roster', () => {
     const html = renderTableHtml(dataset, OPTS);
     expect(html).toContain('GLM-5.2');
-    expect(html).toContain('GLM-5.1');
+    expect(html).toContain('Kimi K3');
   });
 
-  it('marks unpriced models instead of rendering a zero', () => {
-    const html = renderTableHtml(dataset, OPTS);
-    expect(html).toContain('no published price');
-    expect(html).not.toMatch(/<td>\$0\.0000<\/td>/);
+  it('never renders a zero price', () => {
+    expect(renderTableHtml(dataset, OPTS)).not.toMatch(/<td>\$0\.0000<\/td>/);
   });
 
   it('marks free models as free rather than as a price', () => {

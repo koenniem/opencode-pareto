@@ -35,7 +35,6 @@ export const LAB_BY_GO_ID: Record<string, Lab> = {
   'gemini-4-argon-contributor': 'google',
 
   'grok-4.7': 'xai',
-  'grok-4.6': 'xai',
 
   'muse-spark-1.3-contributor': 'meta',
   'muse-spark-1.2-contributor': 'meta',
@@ -46,17 +45,13 @@ export const LAB_BY_GO_ID: Record<string, Lab> = {
   'qwen3.8-max': 'alibaba',
   'qwen3.8-flash': 'alibaba',
   'qwen3.7-plus': 'alibaba',
-  'qwen3.7-max': 'alibaba',
-  'qwen3.6-plus': 'alibaba',
 
   'glm-5.3-flash': 'zhipu',
   'glm-5.3': 'zhipu',
   'glm-5.2': 'zhipu',
-  'glm-5.1': 'zhipu',
 
   'kimi-k3': 'moonshot',
   'kimi-k2.7-code': 'moonshot',
-  'kimi-k2.6': 'moonshot',
 
   'mimo-v2.6-flash': 'xiaomi',
   'mimo-v2.6-pro': 'xiaomi',
@@ -65,8 +60,6 @@ export const LAB_BY_GO_ID: Record<string, Lab> = {
 
   'minimax-m3': 'minimax',
   'minimax-m3.1-flash-free': 'minimax',
-  'minimax-m2.5': 'minimax',
-  'minimax-m2.7': 'minimax',
 
   'longcat-2.0': 'longcat',
   'longcat-2.5-preview-free': 'longcat',
@@ -77,8 +70,6 @@ export const LAB_BY_GO_ID: Record<string, Lab> = {
   'step-5-preview': 'stepfun',
 
   'beam-free': 'other',
-  'space-bunny': 'other',
-  'omen-alpha': 'other',
 };
 
 export function labOf(goId: string): Lab {

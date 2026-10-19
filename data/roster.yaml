@@ -252,16 +252,6 @@
   priceRow: Beam Free
   notes: limited time and limited regions; no Artificial Analysis counterpart
 
-# --- Served by Go, but absent from its published pricing table -------------
-# These cannot be priced, so they cannot be plotted. They are listed on the
-# site rather than silently dropped.
-
-- { goId: glm-5.1, display: GLM-5.1, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: grok-4.6, display: Grok 4.6, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: kimi-k2.6, display: Kimi K2.6, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: minimax-m2.5, display: MiniMax M2.5, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: minimax-m2.7, display: MiniMax M2.7, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: omen-alpha, display: Omen Alpha, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: qwen3.6-plus, display: Qwen3.6 Plus, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: qwen3.7-max, display: Qwen3.7 Max, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
-- { goId: space-bunny, display: Space Bunny, aaSlug: null, aaVariant: null, tier: unpriced, priceRow: null }
+# Models that appeared in the inference endpoint but are NOT part of the Go plan
+# are deliberately absent here. The endpoint lists infrastructure and legacy
+# models; the docs pricing table is what the subscription actually offers.

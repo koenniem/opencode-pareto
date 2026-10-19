@@ -74,26 +74,23 @@ describe('suggestSlugs', () => {
   });
 });
 
-describe('rosterWarnings (churn, never fatal)', () => {
-  it('warns about a Go id with no roster entry', () => {
-    expect(rosterWarnings([], ['kimi-k3'], pricing)).toContainEqual(
-      expect.stringContaining('kimi-k3'),
-    );
-  });
+const committedRoster = parseYaml(
+  readFileSync(new URL('../data/roster.yaml', import.meta.url), 'utf8'),
+) as RosterEntry[];
 
-  it('warns about a roster entry whose Go id no longer exists', () => {
-    expect(rosterWarnings([entry('gone')], [], pricing)).toContainEqual(
-      expect.stringContaining('gone'),
-    );
+describe('rosterWarnings (churn, never fatal)', () => {
+  it('warns about a priced model with no roster entry', () => {
+    const warnings = rosterWarnings([], pricing);
+    expect(warnings).toContainEqual(expect.stringContaining('GLM-5.3-Flash'));
   });
 
   it('warns when a pricing row vanishes, rather than failing the deploy', () => {
-    const warnings = rosterWarnings([entry('kimi-k3', { priceRow: 'Nope' })], ['kimi-k3'], pricing);
+    const warnings = rosterWarnings([entry('kimi-k3', { priceRow: 'Nope' })], pricing);
     expect(warnings).toContainEqual(expect.stringContaining('Nope'));
   });
 
   it('stays quiet on a consistent roster', () => {
-    expect(rosterWarnings([entry('kimi-k3')], ['kimi-k3'], pricing)).toEqual([]);
+    expect(rosterWarnings(committedRoster, pricing)).toEqual([]);
   });
 });
 
@@ -102,8 +99,8 @@ describe('the committed roster', () => {
     readFileSync(new URL('../data/roster.yaml', import.meta.url), 'utf8'),
   ) as RosterEntry[];
 
-  it('covers every model the Go endpoint currently serves', () => {
-    expect(roster).toHaveLength(38);
+  it('covers every model in the published pricing table', () => {
+    expect(roster).toHaveLength(29);
   });
 
   it('has no duplicates', () => {
@@ -118,8 +115,8 @@ describe('the committed roster', () => {
     }
   });
 
-  it('marks exactly nine models as unpriced', () => {
-    expect(roster.filter((r) => r.tier === 'unpriced')).toHaveLength(9);
+  it('has no unpriced entries: unpriced means not offered on Go', () => {
+    expect(roster.filter((r) => r.tier === 'unpriced')).toHaveLength(0);
   });
 
   it('marks exactly three models as free', () => {

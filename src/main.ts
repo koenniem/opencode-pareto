@@ -193,7 +193,6 @@ function render(): void {
 
   renderBucket('bucket-free', ['free'], buckets);
   renderBucket('bucket-unscored', ['unscored'], buckets);
-  renderBucket('bucket-unpriced', ['unpriced', 'incomplete'], buckets);
 
   const tableHost = document.getElementById('table-host');
   if (tableHost) {
