@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenCode Pareto — cost vs capability for OpenCode Go</title>
+    <meta
+      name="description"
+      content="Which model gives the most capability per dollar on the OpenCode Go subscription. Effective price against Artificial Analysis scores, with the Pareto frontier."
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <div class="masthead">
+          <div>
+            <h1>OpenCode Pareto</h1>
+            <p class="tagline">
+              Capability per dollar on the OpenCode Go subscription — not list price.
+            </p>
+          </div>
+          <div class="controls" role="group" aria-label="Chart controls">
+            <div class="control">
+              <label for="plan">Plan</label>
+              <select id="plan">
+                <option value="go">Go — $10/mo</option>
+                <option value="go-plus">Go Plus — $40/mo</option>
+              </select>
+            </div>
+            <div class="control">
+              <label for="index">Score</label>
+              <select id="index">
+                <option value="artificial_analysis_intelligence_index">
+                  Intelligence Index
+                </option>
+                <option value="artificial_analysis_coding_index">Coding Index</option>
+                <option value="artificial_analysis_agentic_index">Agentic Index</option>
+                <option value="artificial_analysis_finance_and_accounting_index">
+                  Finance &amp; Accounting
+                </option>
+                <option value="artificial_analysis_strategy_and_ops_index">
+                  Strategy &amp; Ops
+                </option>
+                <option value="artificial_analysis_legal_index">Legal</option>
+                <option value="artificial_analysis_healthcare_and_medical_index">
+                  Healthcare &amp; Medical
+                </option>
+                <option value="artificial_analysis_engineering_index">Engineering</option>
+                <option value="artificial_analysis_economics_index">Economics</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="chart-card" aria-labelledby="chart-heading">
+        <h2 id="chart-heading" class="visually-hidden">Effective price against score</h2>
+        <div id="chart-empty" class="empty" hidden></div>
+        <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
+        <noscript>
+          <p class="note">
+            The chart needs JavaScript. The full table below has the same numbers.
+          </p>
+        </noscript>
+      </section>
+
+      <section class="details" id="details" aria-live="polite">
+        <p class="note">Hover or focus a point to see how its price was calculated.</p>
+      </section>
+
+      <section class="buckets" aria-label="Models not on the chart">
+        <div class="bucket">
+          <h3>Free (unlimited allowance)</h3>
+          <p class="note">Not on the frontier — they would flatten it to nothing.</p>
+          <ul id="bucket-free"></ul>
+        </div>
+        <div class="bucket">
+          <h3>Priced but not scored</h3>
+          <p class="note">Artificial Analysis publishes no score for this index.</p>
+          <ul id="bucket-unscored"></ul>
+        </div>
+        <div class="bucket">
+          <h3>Served by Go, no published price</h3>
+          <p class="note">In OpenCode's model list but absent from its pricing table.</p>
+          <ul id="bucket-unpriced"></ul>
+        </div>
+      </section>
+
+      <section class="mix" aria-labelledby="mix-heading">
+        <h2 id="mix-heading">Token mix</h2>
+        <p class="note">
+          Every model is priced on one global mix. The default is the median of OpenCode's own
+          published per-request token profiles — extremely cache-heavy, because agentic coding
+          re-reads a large context every turn. Change it to see how the frontier moves.
+        </p>
+        <div class="mix-controls">
+          <div class="control">
+            <label for="mix-input">Input %</label>
+            <input id="mix-input" type="number" min="0" max="100" step="0.1" value="1.14" />
+          </div>
+          <div class="control">
+            <label for="mix-cached">Cached read %</label>
+            <input id="mix-cached" type="number" min="0" max="100" step="0.1" value="98.45" />
+          </div>
+          <div class="control">
+            <label for="mix-output">Output %</label>
+            <input id="mix-output" type="number" min="0" max="100" step="0.1" value="0.36" />
+          </div>
+          <button type="button" id="mix-reset" class="button">Reset to default</button>
+        </div>
+      </section>
+
+      <section class="data" aria-labelledby="table-heading">
+        <h2 id="table-heading">All models</h2>
+        <div id="table-host"><!--DATASET_TABLE--></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Scores:
+          <a href="https://artificialanalysis.ai" rel="noopener">Source: Artificial Analysis
+          (artificialanalysis.ai)</a>. Scores are reproduced unaltered; effective prices are our
+          own calculation and are not endorsed by Artificial Analysis.
+        </p>
+        <p>
+          Prices from the <a href="https://opencode.ai/docs/go/" rel="noopener">OpenCode Go
+          documentation</a>. <span id="freshness"></span>
+        </p>
+        <p class="note">
+          Not affiliated with OpenCode or Artificial Analysis. The effective price assumes you use
+          your full monthly allowance on that one model; per-model allowances do not pool.
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
