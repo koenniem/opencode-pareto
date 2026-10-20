@@ -32,6 +32,13 @@ function variantOf(name: string): string | null {
   return match ? match[1].trim() : null;
 }
 
+/** AA documents the index version as a number; older responses used a string. */
+function indexVersionOf(value: unknown): string | null {
+  if (typeof value === 'string' && value.trim() !== '') return value.trim();
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value);
+  return null;
+}
+
 /**
  * Read one page of the Free-tier response.
  *
@@ -80,11 +87,11 @@ export function parseAAResponse(body: unknown): AASnapshot {
     throw new Error('AA response contained no models; refusing to write an empty snapshot');
   }
 
-  const version = root.intelligence_index_version;
+  const versionText = indexVersionOf(root.intelligence_index_version);
 
   return {
     fetchedAt: new Date().toISOString(),
-    intelligenceIndexVersion: typeof version === 'string' ? version : null,
+    intelligenceIndexVersion: versionText,
     models,
   };
 }
@@ -135,7 +142,7 @@ export async function fetchAA(
  * Keep only the models the roster actually references.
  *
  * The full AA list is 700+ models. Committing all of it is bulk redistribution
- * of their dataset; committing the two dozen scores we plot is citation. The
+ * of their dataset; committing only the configurations we plot is citation. The
  * untrimmed response is still written for debugging and uploaded as a CI
  * artifact, it just is not published.
  */
@@ -156,9 +163,14 @@ async function main(): Promise<void> {
   const snapshot = await fetchAA(apiKey);
   writeFileSync('data/aa-full.json', `${JSON.stringify(snapshot, null, 2)}\n`);
 
-  const wanted = loadRoster()
-    .map((entry) => entry.aaSlug)
-    .filter((slug): slug is string => slug !== null);
+  const wanted = [
+    ...new Set(
+      loadRoster().flatMap((entry) => [
+        ...(entry.aaSlug ? [entry.aaSlug] : []),
+        ...(entry.efforts ?? []).map((rung) => rung.aaSlug),
+      ]),
+    ),
+  ];
   const trimmed = trimToRoster(snapshot, wanted);
   writeFileSync('data/aa-snapshot.json', `${JSON.stringify(trimmed, null, 2)}\n`);
 

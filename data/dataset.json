@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-19T13:32:36.657Z",
-  "aaFetchedAt": "2026-10-19T13:08:13.812Z",
-  "intelligenceIndexVersion": null,
+  "generatedAt": "2026-10-20T09:32:21.754Z",
+  "aaFetchedAt": "2026-10-20T09:32:20.867Z",
+  "intelligenceIndexVersion": "4.3",
   "plans": {
     "go": {
       "label": "Go",
@@ -42,7 +42,27 @@
         "artificial_analysis_healthcare_and_medical_index": 44.8,
         "artificial_analysis_engineering_index": 43.8,
         "artificial_analysis_economics_index": 48.9
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "glm-5-3-flash",
+          "aaName": "GLM-5.3-Flash",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 41.8,
+            "artificial_analysis_coding_index": 71.5,
+            "artificial_analysis_agentic_index": 50.9,
+            "artificial_analysis_finance_and_accounting_index": 42,
+            "artificial_analysis_strategy_and_ops_index": 45.1,
+            "artificial_analysis_legal_index": 39.9,
+            "artificial_analysis_healthcare_and_medical_index": 44.8,
+            "artificial_analysis_engineering_index": 43.8,
+            "artificial_analysis_economics_index": 48.9
+          }
+        }
+      ],
+      "defaultVariant": "glm-5-3-flash"
     },
     {
       "goId": "glm-5.3",
@@ -73,7 +93,44 @@
         "artificial_analysis_healthcare_and_medical_index": 46.7,
         "artificial_analysis_engineering_index": 47.1,
         "artificial_analysis_economics_index": 51.2
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "glm-5-3-low",
+          "aaName": "GLM-5.3 (Low)",
+          "effort": "Low",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 34.3,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 35.5,
+            "artificial_analysis_strategy_and_ops_index": 39,
+            "artificial_analysis_legal_index": 33.1,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 38,
+            "artificial_analysis_economics_index": 40.5
+          }
+        },
+        {
+          "aaSlug": "glm-5-3",
+          "aaName": "GLM-5.3 (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 44.8,
+            "artificial_analysis_coding_index": 74.8,
+            "artificial_analysis_agentic_index": 53.1,
+            "artificial_analysis_finance_and_accounting_index": 44.7,
+            "artificial_analysis_strategy_and_ops_index": 47.6,
+            "artificial_analysis_legal_index": 42,
+            "artificial_analysis_healthcare_and_medical_index": 46.7,
+            "artificial_analysis_engineering_index": 47.1,
+            "artificial_analysis_economics_index": 51.2
+          }
+        }
+      ],
+      "defaultVariant": "glm-5-3"
     },
     {
       "goId": "glm-5.2",
@@ -104,7 +161,44 @@
         "artificial_analysis_healthcare_and_medical_index": 32.4,
         "artificial_analysis_engineering_index": 37.2,
         "artificial_analysis_economics_index": 45.6
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "glm-5-2-non-reasoning",
+          "aaName": "GLM-5.2 (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 22.4,
+            "artificial_analysis_coding_index": 46.5,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
+          }
+        },
+        {
+          "aaSlug": "glm-5-2",
+          "aaName": "GLM-5.2 (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 33.7,
+            "artificial_analysis_coding_index": 68.8,
+            "artificial_analysis_agentic_index": 38.4,
+            "artificial_analysis_finance_and_accounting_index": 33.3,
+            "artificial_analysis_strategy_and_ops_index": 30.6,
+            "artificial_analysis_legal_index": 34.3,
+            "artificial_analysis_healthcare_and_medical_index": 32.4,
+            "artificial_analysis_engineering_index": 37.2,
+            "artificial_analysis_economics_index": 45.6
+          }
+        }
+      ],
+      "defaultVariant": "glm-5-2"
     },
     {
       "goId": "kimi-k3",
@@ -135,7 +229,44 @@
         "artificial_analysis_healthcare_and_medical_index": 45,
         "artificial_analysis_engineering_index": 43.3,
         "artificial_analysis_economics_index": 53.4
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "kimi-k3-low",
+          "aaName": "Kimi K3 (Low)",
+          "effort": "Low",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 30.1,
+            "artificial_analysis_coding_index": 72,
+            "artificial_analysis_agentic_index": 29.3,
+            "artificial_analysis_finance_and_accounting_index": 32.3,
+            "artificial_analysis_strategy_and_ops_index": 38.9,
+            "artificial_analysis_legal_index": 34.3,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 29.7,
+            "artificial_analysis_economics_index": 37
+          }
+        },
+        {
+          "aaSlug": "kimi-k3",
+          "aaName": "Kimi K3 (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 43.6,
+            "artificial_analysis_coding_index": 76.2,
+            "artificial_analysis_agentic_index": 50,
+            "artificial_analysis_finance_and_accounting_index": 46.9,
+            "artificial_analysis_strategy_and_ops_index": 50.5,
+            "artificial_analysis_legal_index": 48.6,
+            "artificial_analysis_healthcare_and_medical_index": 45,
+            "artificial_analysis_engineering_index": 43.3,
+            "artificial_analysis_economics_index": 53.4
+          }
+        }
+      ],
+      "defaultVariant": "kimi-k3"
     },
     {
       "goId": "kimi-k2.7-code",
@@ -166,7 +297,27 @@
         "artificial_analysis_healthcare_and_medical_index": 26.5,
         "artificial_analysis_engineering_index": 29.1,
         "artificial_analysis_economics_index": 36.5
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "kimi-k2-7-code",
+          "aaName": "Kimi K2.7 Code",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 25.8,
+            "artificial_analysis_coding_index": 60.8,
+            "artificial_analysis_agentic_index": 21,
+            "artificial_analysis_finance_and_accounting_index": 28.9,
+            "artificial_analysis_strategy_and_ops_index": 28,
+            "artificial_analysis_legal_index": 27.7,
+            "artificial_analysis_healthcare_and_medical_index": 26.5,
+            "artificial_analysis_engineering_index": 29.1,
+            "artificial_analysis_economics_index": 36.5
+          }
+        }
+      ],
+      "defaultVariant": "kimi-k2-7-code"
     },
     {
       "goId": "longcat-2.0",
@@ -197,7 +348,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 24.1,
         "artificial_analysis_economics_index": 31.1
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "longcat-2-0",
+          "aaName": "LongCat 2.0",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 19.1,
+            "artificial_analysis_coding_index": 45.3,
+            "artificial_analysis_agentic_index": 14,
+            "artificial_analysis_finance_and_accounting_index": 21.9,
+            "artificial_analysis_strategy_and_ops_index": 15.8,
+            "artificial_analysis_legal_index": 22.8,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 24.1,
+            "artificial_analysis_economics_index": 31.1
+          }
+        }
+      ],
+      "defaultVariant": "longcat-2-0"
     },
     {
       "goId": "step-5-preview",
@@ -228,7 +399,27 @@
         "artificial_analysis_healthcare_and_medical_index": 40.8,
         "artificial_analysis_engineering_index": 45,
         "artificial_analysis_economics_index": 52.8
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "step-5",
+          "aaName": "Step 5 Preview",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 43.7,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 45.4,
+            "artificial_analysis_strategy_and_ops_index": 47.1,
+            "artificial_analysis_legal_index": 46.2,
+            "artificial_analysis_healthcare_and_medical_index": 40.8,
+            "artificial_analysis_engineering_index": 45,
+            "artificial_analysis_economics_index": 52.8
+          }
+        }
+      ],
+      "defaultVariant": "step-5"
     },
     {
       "goId": "mimo-v2.6-flash",
@@ -259,7 +450,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 37.3,
         "artificial_analysis_economics_index": 43.6
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "mimo-v2-6-flash",
+          "aaName": "MiMo-V2.6-Flash",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 37.9,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 40.3,
+            "artificial_analysis_strategy_and_ops_index": 46.1,
+            "artificial_analysis_legal_index": 37.2,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 37.3,
+            "artificial_analysis_economics_index": 43.6
+          }
+        }
+      ],
+      "defaultVariant": "mimo-v2-6-flash"
     },
     {
       "goId": "mimo-v2.6-pro",
@@ -290,7 +501,27 @@
         "artificial_analysis_healthcare_and_medical_index": 41.8,
         "artificial_analysis_engineering_index": 46.9,
         "artificial_analysis_economics_index": 53.2
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "mimo-v2-6-pro",
+          "aaName": "MiMo-V2.6-Pro",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 46.3,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 46.1,
+            "artificial_analysis_strategy_and_ops_index": 47.8,
+            "artificial_analysis_legal_index": 44.8,
+            "artificial_analysis_healthcare_and_medical_index": 41.8,
+            "artificial_analysis_engineering_index": 46.9,
+            "artificial_analysis_economics_index": 53.2
+          }
+        }
+      ],
+      "defaultVariant": "mimo-v2-6-pro"
     },
     {
       "goId": "mimo-v2.5",
@@ -321,7 +552,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 24.6,
         "artificial_analysis_economics_index": 33.9
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "mimo-v2-5-0424",
+          "aaName": "MiMo-V2.5",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 21.8,
+            "artificial_analysis_coding_index": 56.8,
+            "artificial_analysis_agentic_index": 15.8,
+            "artificial_analysis_finance_and_accounting_index": 22.2,
+            "artificial_analysis_strategy_and_ops_index": 18.9,
+            "artificial_analysis_legal_index": 24.4,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 24.6,
+            "artificial_analysis_economics_index": 33.9
+          }
+        }
+      ],
+      "defaultVariant": "mimo-v2-5-0424"
     },
     {
       "goId": "mimo-v2.5-pro",
@@ -352,7 +603,44 @@
         "artificial_analysis_healthcare_and_medical_index": 25.5,
         "artificial_analysis_engineering_index": 28.6,
         "artificial_analysis_economics_index": 40.5
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "mimo-v2-5-pro-non-reasoning",
+          "aaName": "MiMo-V2.5-Pro (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 18.3,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
+          }
+        },
+        {
+          "aaSlug": "mimo-v2-5-pro",
+          "aaName": "MiMo-V2.5-Pro (Reasoning)",
+          "effort": "Reasoning",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 26,
+            "artificial_analysis_coding_index": 60.2,
+            "artificial_analysis_agentic_index": 21.3,
+            "artificial_analysis_finance_and_accounting_index": 27,
+            "artificial_analysis_strategy_and_ops_index": 20.2,
+            "artificial_analysis_legal_index": 29.6,
+            "artificial_analysis_healthcare_and_medical_index": 25.5,
+            "artificial_analysis_engineering_index": 28.6,
+            "artificial_analysis_economics_index": 40.5
+          }
+        }
+      ],
+      "defaultVariant": "mimo-v2-5-pro"
     },
     {
       "goId": "minimax-m3",
@@ -383,7 +671,27 @@
         "artificial_analysis_healthcare_and_medical_index": 29.7,
         "artificial_analysis_engineering_index": 31.2,
         "artificial_analysis_economics_index": 43.7
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "minimax-m3",
+          "aaName": "MiniMax-M3",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 29.2,
+            "artificial_analysis_coding_index": 58.6,
+            "artificial_analysis_agentic_index": 29.5,
+            "artificial_analysis_finance_and_accounting_index": 30.1,
+            "artificial_analysis_strategy_and_ops_index": 25,
+            "artificial_analysis_legal_index": 31.5,
+            "artificial_analysis_healthcare_and_medical_index": 29.7,
+            "artificial_analysis_engineering_index": 31.2,
+            "artificial_analysis_economics_index": 43.7
+          }
+        }
+      ],
+      "defaultVariant": "minimax-m3"
     },
     {
       "goId": "muse-spark-1.3-contributor",
@@ -414,7 +722,44 @@
         "artificial_analysis_healthcare_and_medical_index": 49.7,
         "artificial_analysis_engineering_index": 49.4,
         "artificial_analysis_economics_index": 56.3
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "muse-spark-1-3-xhigh",
+          "aaName": "Muse Spark 1.3 (Xhigh)",
+          "effort": "Xhigh",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 45.1,
+            "artificial_analysis_coding_index": 76.5,
+            "artificial_analysis_agentic_index": 51.5,
+            "artificial_analysis_finance_and_accounting_index": 47.8,
+            "artificial_analysis_strategy_and_ops_index": 49.1,
+            "artificial_analysis_legal_index": 48.8,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 45.6,
+            "artificial_analysis_economics_index": 54.9
+          }
+        },
+        {
+          "aaSlug": "muse-spark-1-3",
+          "aaName": "Muse Spark 1.3 (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 48.1,
+            "artificial_analysis_coding_index": 75.8,
+            "artificial_analysis_agentic_index": 55.5,
+            "artificial_analysis_finance_and_accounting_index": 49.8,
+            "artificial_analysis_strategy_and_ops_index": 51.2,
+            "artificial_analysis_legal_index": 50.9,
+            "artificial_analysis_healthcare_and_medical_index": 49.7,
+            "artificial_analysis_engineering_index": 49.4,
+            "artificial_analysis_economics_index": 56.3
+          }
+        }
+      ],
+      "defaultVariant": "muse-spark-1-3"
     },
     {
       "goId": "muse-spark-1.2-contributor",
@@ -445,7 +790,27 @@
         "artificial_analysis_healthcare_and_medical_index": 43.8,
         "artificial_analysis_engineering_index": 41.6,
         "artificial_analysis_economics_index": 52.9
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "muse-spark-1-2",
+          "aaName": "Muse Spark 1.2 (Xhigh)",
+          "effort": "Xhigh",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 39.6,
+            "artificial_analysis_coding_index": 72.2,
+            "artificial_analysis_agentic_index": 43.2,
+            "artificial_analysis_finance_and_accounting_index": 44.3,
+            "artificial_analysis_strategy_and_ops_index": 42.8,
+            "artificial_analysis_legal_index": 46.8,
+            "artificial_analysis_healthcare_and_medical_index": 43.8,
+            "artificial_analysis_engineering_index": 41.6,
+            "artificial_analysis_economics_index": 52.9
+          }
+        }
+      ],
+      "defaultVariant": "muse-spark-1-2"
     },
     {
       "goId": "qwen3.8-max",
@@ -476,7 +841,27 @@
         "artificial_analysis_healthcare_and_medical_index": 41.4,
         "artificial_analysis_engineering_index": 46.4,
         "artificial_analysis_economics_index": 52.3
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "qwen3-8-max",
+          "aaName": "Qwen3.8 Max (0902)",
+          "effort": "0902",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 45.4,
+            "artificial_analysis_coding_index": 76.2,
+            "artificial_analysis_agentic_index": 56,
+            "artificial_analysis_finance_and_accounting_index": 45.6,
+            "artificial_analysis_strategy_and_ops_index": 47.3,
+            "artificial_analysis_legal_index": 46.1,
+            "artificial_analysis_healthcare_and_medical_index": 41.4,
+            "artificial_analysis_engineering_index": 46.4,
+            "artificial_analysis_economics_index": 52.3
+          }
+        }
+      ],
+      "defaultVariant": "qwen3-8-max"
     },
     {
       "goId": "qwen3.8-flash",
@@ -497,7 +882,9 @@
         "go": 30,
         "go-plus": 90
       },
-      "scores": {}
+      "scores": {},
+      "variants": [],
+      "defaultVariant": null
     },
     {
       "goId": "qwen3.7-plus",
@@ -528,7 +915,27 @@
         "artificial_analysis_healthcare_and_medical_index": 23,
         "artificial_analysis_engineering_index": 28.8,
         "artificial_analysis_economics_index": 37.3
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "qwen3-7-plus",
+          "aaName": "Qwen3.7 Plus",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 25.2,
+            "artificial_analysis_coding_index": 55.9,
+            "artificial_analysis_agentic_index": 17.5,
+            "artificial_analysis_finance_and_accounting_index": 24.5,
+            "artificial_analysis_strategy_and_ops_index": 18.7,
+            "artificial_analysis_legal_index": 27.3,
+            "artificial_analysis_healthcare_and_medical_index": 23,
+            "artificial_analysis_engineering_index": 28.8,
+            "artificial_analysis_economics_index": 37.3
+          }
+        }
+      ],
+      "defaultVariant": "qwen3-7-plus"
     },
     {
       "goId": "deepseek-v4.1-flash",
@@ -559,7 +966,44 @@
         "artificial_analysis_healthcare_and_medical_index": 40.6,
         "artificial_analysis_engineering_index": 39.3,
         "artificial_analysis_economics_index": 44.4
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "deepseek-v4-1-flash-non-reasoning",
+          "aaName": "DeepSeek V4.1 Flash (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 24.7,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 29.6,
+            "artificial_analysis_strategy_and_ops_index": 35.6,
+            "artificial_analysis_legal_index": 29.7,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 24.7,
+            "artificial_analysis_economics_index": 32
+          }
+        },
+        {
+          "aaSlug": "deepseek-v4-1-flash",
+          "aaName": "DeepSeek V4.1 Flash (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 39.5,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 45,
+            "artificial_analysis_strategy_and_ops_index": 51.7,
+            "artificial_analysis_legal_index": 41.3,
+            "artificial_analysis_healthcare_and_medical_index": 40.6,
+            "artificial_analysis_engineering_index": 39.3,
+            "artificial_analysis_economics_index": 44.4
+          }
+        }
+      ],
+      "defaultVariant": "deepseek-v4-1-flash"
     },
     {
       "goId": "deepseek-v4-pro",
@@ -590,7 +1034,44 @@
         "artificial_analysis_healthcare_and_medical_index": 38.2,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 43.7
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "deepseek-v4-pro-non-reasoning",
+          "aaName": "DeepSeek V4 Pro 0813 (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 20.4,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 25.5,
+            "artificial_analysis_strategy_and_ops_index": 31.8,
+            "artificial_analysis_legal_index": 27.3,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 21.9,
+            "artificial_analysis_economics_index": 26.2
+          }
+        },
+        {
+          "aaSlug": "deepseek-v4-pro",
+          "aaName": "DeepSeek V4 Pro 0813 (Max)",
+          "effort": "Max",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 36,
+            "artificial_analysis_coding_index": 68.8,
+            "artificial_analysis_agentic_index": 41.3,
+            "artificial_analysis_finance_and_accounting_index": 41.4,
+            "artificial_analysis_strategy_and_ops_index": 46.5,
+            "artificial_analysis_legal_index": 41.1,
+            "artificial_analysis_healthcare_and_medical_index": 38.2,
+            "artificial_analysis_engineering_index": 37.1,
+            "artificial_analysis_economics_index": 43.7
+          }
+        }
+      ],
+      "defaultVariant": "deepseek-v4-pro"
     },
     {
       "goId": "hy4-preview",
@@ -611,7 +1092,9 @@
         "go": 30,
         "go-plus": 120
       },
-      "scores": {}
+      "scores": {},
+      "variants": [],
+      "defaultVariant": null
     },
     {
       "goId": "hy3",
@@ -642,7 +1125,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 26.7,
         "artificial_analysis_economics_index": 35.2
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "hy3",
+          "aaName": "Hy3",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 25.3,
+            "artificial_analysis_coding_index": 58.8,
+            "artificial_analysis_agentic_index": 24.1,
+            "artificial_analysis_finance_and_accounting_index": 27.3,
+            "artificial_analysis_strategy_and_ops_index": 23.9,
+            "artificial_analysis_legal_index": 26.5,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 26.7,
+            "artificial_analysis_economics_index": 35.2
+          }
+        }
+      ],
+      "defaultVariant": "hy3"
     },
     {
       "goId": "minimax-m3.1-flash-free",
@@ -664,7 +1167,7 @@
         "go-plus": "unlimited"
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 42.4,
+        "artificial_analysis_intelligence_index": 42.7,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
         "artificial_analysis_finance_and_accounting_index": 49,
@@ -673,7 +1176,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 43.4,
         "artificial_analysis_economics_index": 50
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "minimax-m3-1-flash",
+          "aaName": "MiniMax-M3.1-Flash",
+          "effort": "Default",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 42.7,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 49,
+            "artificial_analysis_strategy_and_ops_index": 54.6,
+            "artificial_analysis_legal_index": 46.8,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 43.4,
+            "artificial_analysis_economics_index": 50
+          }
+        }
+      ],
+      "defaultVariant": "minimax-m3-1-flash"
     },
     {
       "goId": "grok-4.7",
@@ -704,7 +1227,61 @@
         "artificial_analysis_healthcare_and_medical_index": 47.2,
         "artificial_analysis_engineering_index": 47.4,
         "artificial_analysis_economics_index": 55.7
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "grok-4-7-low",
+          "aaName": "Grok 4.7 (Low)",
+          "effort": "Low",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 42.2,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 48,
+            "artificial_analysis_strategy_and_ops_index": 50.8,
+            "artificial_analysis_legal_index": 50.7,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 42.5,
+            "artificial_analysis_economics_index": 52.8
+          }
+        },
+        {
+          "aaSlug": "grok-4-7-high",
+          "aaName": "Grok 4.7 (High)",
+          "effort": "High",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 46.3,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 51.7,
+            "artificial_analysis_strategy_and_ops_index": 54.4,
+            "artificial_analysis_legal_index": 54.2,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 46.6,
+            "artificial_analysis_economics_index": 55.3
+          }
+        },
+        {
+          "aaSlug": "grok-4-7",
+          "aaName": "Grok 4.7 (Xhigh)",
+          "effort": "Xhigh",
+          "order": 2,
+          "scores": {
+            "artificial_analysis_intelligence_index": 46.4,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 51.9,
+            "artificial_analysis_strategy_and_ops_index": 54.4,
+            "artificial_analysis_legal_index": 54.1,
+            "artificial_analysis_healthcare_and_medical_index": 47.2,
+            "artificial_analysis_engineering_index": 47.4,
+            "artificial_analysis_economics_index": 55.7
+          }
+        }
+      ],
+      "defaultVariant": "grok-4-7"
     },
     {
       "goId": "gpt-6-luna",
@@ -735,7 +1312,112 @@
         "artificial_analysis_healthcare_and_medical_index": 37.4,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 45.2
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "gpt-6-luna-non-reasoning",
+          "aaName": "GPT-6 Luna (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 18.5,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 20.2,
+            "artificial_analysis_strategy_and_ops_index": 19.8,
+            "artificial_analysis_legal_index": 19.3,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 20.7,
+            "artificial_analysis_economics_index": 24.2
+          }
+        },
+        {
+          "aaSlug": "gpt-6-luna-low",
+          "aaName": "GPT-6 Luna (Low)",
+          "effort": "Low",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 21.5,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 24.3,
+            "artificial_analysis_strategy_and_ops_index": 22.8,
+            "artificial_analysis_legal_index": 25.5,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 22.8,
+            "artificial_analysis_economics_index": 30.1
+          }
+        },
+        {
+          "aaSlug": "gpt-6-luna-medium",
+          "aaName": "GPT-6 Luna (Medium)",
+          "effort": "Medium",
+          "order": 2,
+          "scores": {
+            "artificial_analysis_intelligence_index": 29.9,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 32.9,
+            "artificial_analysis_strategy_and_ops_index": 37.5,
+            "artificial_analysis_legal_index": 33,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 29.4,
+            "artificial_analysis_economics_index": 37.1
+          }
+        },
+        {
+          "aaSlug": "gpt-6-luna-high",
+          "aaName": "GPT-6 Luna (High)",
+          "effort": "High",
+          "order": 3,
+          "scores": {
+            "artificial_analysis_intelligence_index": 32.9,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 36.4,
+            "artificial_analysis_strategy_and_ops_index": 41.2,
+            "artificial_analysis_legal_index": 35.4,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 31.8,
+            "artificial_analysis_economics_index": 40
+          }
+        },
+        {
+          "aaSlug": "gpt-6-luna-xhigh",
+          "aaName": "GPT-6 Luna (Xhigh)",
+          "effort": "Xhigh",
+          "order": 4,
+          "scores": {
+            "artificial_analysis_intelligence_index": 34.6,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 37.2,
+            "artificial_analysis_strategy_and_ops_index": 42.6,
+            "artificial_analysis_legal_index": 37.2,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 33.7,
+            "artificial_analysis_economics_index": 41.6
+          }
+        },
+        {
+          "aaSlug": "gpt-6-luna",
+          "aaName": "GPT-6 Luna (Max)",
+          "effort": "Max",
+          "order": 5,
+          "scores": {
+            "artificial_analysis_intelligence_index": 38.1,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 40.3,
+            "artificial_analysis_strategy_and_ops_index": 45.7,
+            "artificial_analysis_legal_index": 40.3,
+            "artificial_analysis_healthcare_and_medical_index": 37.4,
+            "artificial_analysis_engineering_index": 37.1,
+            "artificial_analysis_economics_index": 45.2
+          }
+        }
+      ],
+      "defaultVariant": "gpt-6-luna"
     },
     {
       "goId": "gpt-5.6-luna",
@@ -766,7 +1448,112 @@
         "artificial_analysis_healthcare_and_medical_index": 35.7,
         "artificial_analysis_engineering_index": 36.2,
         "artificial_analysis_economics_index": 42.7
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "gpt-5-6-luna-non-reasoning",
+          "aaName": "GPT-5.6 Luna (Non-reasoning)",
+          "effort": "Non-reasoning",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 15.5,
+            "artificial_analysis_coding_index": 39.3,
+            "artificial_analysis_agentic_index": 13.4,
+            "artificial_analysis_finance_and_accounting_index": 16.1,
+            "artificial_analysis_strategy_and_ops_index": 14.7,
+            "artificial_analysis_legal_index": 17,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 18.3,
+            "artificial_analysis_economics_index": 21.6
+          }
+        },
+        {
+          "aaSlug": "gpt-5-6-luna-low",
+          "aaName": "GPT-5.6 Luna (Low)",
+          "effort": "Low",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 21,
+            "artificial_analysis_coding_index": 44.2,
+            "artificial_analysis_agentic_index": 16.1,
+            "artificial_analysis_finance_and_accounting_index": 23,
+            "artificial_analysis_strategy_and_ops_index": 21.7,
+            "artificial_analysis_legal_index": 24,
+            "artificial_analysis_healthcare_and_medical_index": 19.9,
+            "artificial_analysis_engineering_index": 22.7,
+            "artificial_analysis_economics_index": 27.9
+          }
+        },
+        {
+          "aaSlug": "gpt-5-6-luna-medium",
+          "aaName": "GPT-5.6 Luna (Medium)",
+          "effort": "Medium",
+          "order": 2,
+          "scores": {
+            "artificial_analysis_intelligence_index": 25,
+            "artificial_analysis_coding_index": 50.7,
+            "artificial_analysis_agentic_index": 23.9,
+            "artificial_analysis_finance_and_accounting_index": 27,
+            "artificial_analysis_strategy_and_ops_index": 28.5,
+            "artificial_analysis_legal_index": 27.7,
+            "artificial_analysis_healthcare_and_medical_index": 24.2,
+            "artificial_analysis_engineering_index": 26.2,
+            "artificial_analysis_economics_index": 32
+          }
+        },
+        {
+          "aaSlug": "gpt-5-6-luna-high",
+          "aaName": "GPT-5.6 Luna (High)",
+          "effort": "High",
+          "order": 3,
+          "scores": {
+            "artificial_analysis_intelligence_index": 32.1,
+            "artificial_analysis_coding_index": 63.3,
+            "artificial_analysis_agentic_index": 34.6,
+            "artificial_analysis_finance_and_accounting_index": 34.1,
+            "artificial_analysis_strategy_and_ops_index": 36.8,
+            "artificial_analysis_legal_index": 33,
+            "artificial_analysis_healthcare_and_medical_index": 29.7,
+            "artificial_analysis_engineering_index": 31.7,
+            "artificial_analysis_economics_index": 38
+          }
+        },
+        {
+          "aaSlug": "gpt-5-6-luna-xhigh",
+          "aaName": "GPT-5.6 Luna (Xhigh)",
+          "effort": "Xhigh",
+          "order": 4,
+          "scores": {
+            "artificial_analysis_intelligence_index": 34.6,
+            "artificial_analysis_coding_index": 68.6,
+            "artificial_analysis_agentic_index": 38.7,
+            "artificial_analysis_finance_and_accounting_index": 37.2,
+            "artificial_analysis_strategy_and_ops_index": 40.6,
+            "artificial_analysis_legal_index": 34.8,
+            "artificial_analysis_healthcare_and_medical_index": 33,
+            "artificial_analysis_engineering_index": 34,
+            "artificial_analysis_economics_index": 40.6
+          }
+        },
+        {
+          "aaSlug": "gpt-5-6-luna",
+          "aaName": "GPT-5.6 Luna (Max)",
+          "effort": "Max",
+          "order": 5,
+          "scores": {
+            "artificial_analysis_intelligence_index": 37.3,
+            "artificial_analysis_coding_index": 71.4,
+            "artificial_analysis_agentic_index": 42.1,
+            "artificial_analysis_finance_and_accounting_index": 40.1,
+            "artificial_analysis_strategy_and_ops_index": 44.1,
+            "artificial_analysis_legal_index": 36.9,
+            "artificial_analysis_healthcare_and_medical_index": 35.7,
+            "artificial_analysis_engineering_index": 36.2,
+            "artificial_analysis_economics_index": 42.7
+          }
+        }
+      ],
+      "defaultVariant": "gpt-5-6-luna"
     },
     {
       "goId": "claude-haiku-5-5",
@@ -797,7 +1584,95 @@
         "artificial_analysis_healthcare_and_medical_index": 44.1,
         "artificial_analysis_engineering_index": 44.9,
         "artificial_analysis_economics_index": 51.2
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "claude-haiku-5-5-low",
+          "aaName": "Claude Haiku 5.5 (Low)",
+          "effort": "Low",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 29.5,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 28.8,
+            "artificial_analysis_strategy_and_ops_index": 28,
+            "artificial_analysis_legal_index": 30.6,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 31.2,
+            "artificial_analysis_economics_index": 37.5
+          }
+        },
+        {
+          "aaSlug": "claude-haiku-5-5-medium",
+          "aaName": "Claude Haiku 5.5 (Medium)",
+          "effort": "Medium",
+          "order": 1,
+          "scores": {
+            "artificial_analysis_intelligence_index": 34.5,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 35.4,
+            "artificial_analysis_strategy_and_ops_index": 33.5,
+            "artificial_analysis_legal_index": 35.5,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 35.2,
+            "artificial_analysis_economics_index": 43.3
+          }
+        },
+        {
+          "aaSlug": "claude-haiku-5-5-high",
+          "aaName": "Claude Haiku 5.5 (High)",
+          "effort": "High",
+          "order": 2,
+          "scores": {
+            "artificial_analysis_intelligence_index": 37.8,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 37.7,
+            "artificial_analysis_strategy_and_ops_index": 37.5,
+            "artificial_analysis_legal_index": 37.6,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 39.2,
+            "artificial_analysis_economics_index": 45.8
+          }
+        },
+        {
+          "aaSlug": "claude-haiku-5-5-xhigh",
+          "aaName": "Claude Haiku 5.5 (Xhigh)",
+          "effort": "Xhigh",
+          "order": 3,
+          "scores": {
+            "artificial_analysis_intelligence_index": 41.2,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 40.8,
+            "artificial_analysis_strategy_and_ops_index": 39.3,
+            "artificial_analysis_legal_index": 39.9,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 43.1,
+            "artificial_analysis_economics_index": 48.7
+          }
+        },
+        {
+          "aaSlug": "claude-haiku-5-5",
+          "aaName": "Claude Haiku 5.5 (Max)",
+          "effort": "Max",
+          "order": 4,
+          "scores": {
+            "artificial_analysis_intelligence_index": 43.4,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 43.9,
+            "artificial_analysis_strategy_and_ops_index": 40.4,
+            "artificial_analysis_legal_index": 42.3,
+            "artificial_analysis_healthcare_and_medical_index": 44.1,
+            "artificial_analysis_engineering_index": 44.9,
+            "artificial_analysis_economics_index": 51.2
+          }
+        }
+      ],
+      "defaultVariant": "claude-haiku-5-5"
     },
     {
       "goId": "gemini-4-argon-contributor",
@@ -828,7 +1703,27 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 55.2,
         "artificial_analysis_economics_index": 60.4
-      }
+      },
+      "variants": [
+        {
+          "aaSlug": "gemini-4-argon",
+          "aaName": "Gemini 4 Argon (High)",
+          "effort": "High",
+          "order": 0,
+          "scores": {
+            "artificial_analysis_intelligence_index": 52.6,
+            "artificial_analysis_coding_index": null,
+            "artificial_analysis_agentic_index": null,
+            "artificial_analysis_finance_and_accounting_index": 53.8,
+            "artificial_analysis_strategy_and_ops_index": 56.2,
+            "artificial_analysis_legal_index": 60,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": 55.2,
+            "artificial_analysis_economics_index": 60.4
+          }
+        }
+      ],
+      "defaultVariant": "gemini-4-argon"
     },
     {
       "goId": "longcat-2.5-preview-free",
@@ -849,7 +1744,9 @@
         "go": "unlimited",
         "go-plus": "unlimited"
       },
-      "scores": {}
+      "scores": {},
+      "variants": [],
+      "defaultVariant": null
     },
     {
       "goId": "beam-free",
@@ -870,7 +1767,9 @@
         "go": "unlimited",
         "go-plus": "unlimited"
       },
-      "scores": {}
+      "scores": {},
+      "variants": [],
+      "defaultVariant": null
     }
   ]
 }

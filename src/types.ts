@@ -52,6 +52,21 @@ export interface Allowances {
 /** Pricing completeness of a Go model. */
 export type RosterTier = 'standard' | 'free' | 'unpriced' | 'incomplete';
 
+/** Which thinking modes the chart may draw. */
+export type EffortSelection = 'default' | 'all';
+
+/**
+ * One rung of a model's hand-reviewed effort ladder.
+ *
+ * Artificial Analysis publishes effort levels as separate models with their
+ * own slugs and scores. The roster names the rungs it wants, lowest thinking
+ * first; nothing is inferred from the trailing parenthesis.
+ */
+export interface RosterEffort {
+  aaSlug: string;
+  label: string;
+}
+
 /**
  * A hand-reviewed row mapping one Go model to its Artificial Analysis
  * counterpart. This file is the only place the two vocabularies meet.
@@ -64,7 +79,24 @@ export interface RosterEntry {
   tier: RosterTier;
   /** Exact display name of the row in `data/go-pricing.json`, or null. */
   priceRow: string | null;
+  /**
+   * Optional ladder of AA configurations, lowest thinking first. When absent
+   * the default configuration is the only variant. The default `aaSlug` must
+   * appear here, so the primary point is always part of its own ladder.
+   */
+  efforts?: RosterEffort[];
   notes?: string;
+}
+
+/** One scored Artificial Analysis configuration of a Go model. */
+export interface ModelVariant {
+  aaSlug: string;
+  aaName: string;
+  /** Human label from the roster, e.g. "Low", "Max", "Non-reasoning". */
+  effort: string;
+  /** Position in the roster ladder; 0 is the least thinking. */
+  order: number;
+  scores: Partial<Record<IndexKey, number | null>>;
 }
 
 export interface DatasetModel {
@@ -79,7 +111,16 @@ export interface DatasetModel {
   promoLabel: string | null;
   prices: Prices | null;
   allowances: Allowances | null;
+  /** Scores of the default configuration. Kept as the primary view. */
   scores: Partial<Record<IndexKey, number | null>>;
+  /**
+   * Every scored configuration the roster names, lowest thinking first. Empty
+   * when Artificial Analysis has no counterpart. `scores` is always the
+   * `defaultVariant` rung.
+   */
+  variants: ModelVariant[];
+  /** AA slug of the primary configuration, or null. */
+  defaultVariant: string | null;
 }
 
 export interface Dataset {

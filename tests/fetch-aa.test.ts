@@ -23,6 +23,14 @@ describe('parseAAResponse', () => {
     expect(parseAAResponse(fixture).intelligenceIndexVersion).toBe('4.1');
   });
 
+  it('accepts the numeric index version the API documents', () => {
+    const parsed = parseAAResponse({
+      intelligence_index_version: 4.3,
+      data: [{ slug: 'x', name: 'X', evaluations: {} }],
+    });
+    expect(parsed.intelligenceIndexVersion).toBe('4.3');
+  });
+
   it('records the AA display name so the site can show which variant was scored', () => {
     expect(parseAAResponse(fixture).models[0].name).toBe('fixture-model-a (high)');
   });

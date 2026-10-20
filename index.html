@@ -6,10 +6,10 @@
     <title>OpenCode Pareto — cost vs capability for OpenCode Go</title>
     <meta
       name="description"
-      content="Which model gives the most capability per dollar on the OpenCode Go subscription. Effective price against Artificial Analysis scores, with the Pareto frontier."
+      content="Which model gives the most capability per dollar on the OpenCode Go subscription. Effective price against Artificial Analysis scores, with the Pareto frontier and effort levels."
     />
-    <meta name="theme-color" content="#f4f2ee" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0d0c0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f4f0e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12110e" media="(prefers-color-scheme: dark)" />
     <link rel="stylesheet" href="/src/style.css" />
     <script>
       // Set before first paint so a dark-mode visitor never sees a white flash.
@@ -28,80 +28,123 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="wrap">
-        <div class="masthead">
-          <div class="brand">
-            <h1>OpenCode Pareto</h1>
-            <p class="tagline">
-              Capability per dollar on the OpenCode Go subscription — not list price.
-            </p>
-          </div>
-          <div class="header-side">
-            <div class="controls" role="group" aria-label="Chart controls">
-              <div class="control">
-                <label for="plan">Plan</label>
-                <select id="plan">
-                  <option value="go">Go — $10/mo</option>
-                  <option value="go-plus">Go Plus — $40/mo</option>
-                </select>
-              </div>
-              <div class="control">
-                <label for="index">Score</label>
-                <select id="index">
-                  <option value="artificial_analysis_intelligence_index">
-                    Intelligence Index
-                  </option>
-                  <option value="artificial_analysis_coding_index">Coding Index</option>
-                  <option value="artificial_analysis_agentic_index">Agentic Index</option>
-                  <option value="artificial_analysis_finance_and_accounting_index">
-                    Finance &amp; Accounting
-                  </option>
-                  <option value="artificial_analysis_strategy_and_ops_index">
-                    Strategy &amp; Ops
-                  </option>
-                  <option value="artificial_analysis_legal_index">Legal</option>
-                  <option value="artificial_analysis_healthcare_and_medical_index">
-                    Healthcare &amp; Medical
-                  </option>
-                  <option value="artificial_analysis_engineering_index">Engineering</option>
-                  <option value="artificial_analysis_economics_index">Economics</option>
-                </select>
-              </div>
+      <div class="wrap header-row">
+        <a class="wordmark" href="#top">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          OpenCode Pareto
+        </a>
+        <div class="header-side">
+          <div class="controls" role="group" aria-label="Chart controls">
+            <div class="control">
+              <label for="plan">Plan</label>
+              <select id="plan">
+                <option value="go">Go — $10/mo</option>
+                <option value="go-plus">Go Plus — $40/mo</option>
+              </select>
             </div>
-            <button type="button" class="theme-toggle" id="theme-toggle" hidden>
-              <svg class="icon-sun" viewBox="0 0 16 16" aria-hidden="true">
-                <circle cx="8" cy="8" r="3.1" />
-                <path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1" />
-              </svg>
-              <svg class="icon-moon" viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6a5.9 5.9 0 1 0 7.1 7.1Z" />
-              </svg>
-            </button>
+            <div class="control">
+              <label for="index">Score</label>
+              <select id="index">
+                <option value="artificial_analysis_intelligence_index">
+                  Intelligence Index
+                </option>
+                <option value="artificial_analysis_coding_index">Coding Index</option>
+                <option value="artificial_analysis_agentic_index">Agentic Index</option>
+                <option value="artificial_analysis_finance_and_accounting_index">
+                  Finance &amp; Accounting
+                </option>
+                <option value="artificial_analysis_strategy_and_ops_index">
+                  Strategy &amp; Ops
+                </option>
+                <option value="artificial_analysis_legal_index">Legal</option>
+                <option value="artificial_analysis_healthcare_and_medical_index">
+                  Healthcare &amp; Medical
+                </option>
+                <option value="artificial_analysis_engineering_index">Engineering</option>
+                <option value="artificial_analysis_economics_index">Economics</option>
+              </select>
+            </div>
           </div>
+          <button type="button" class="theme-toggle" id="theme-toggle" hidden>
+            <svg class="icon-sun" viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="3.1" />
+              <path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1" />
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6a5.9 5.9 0 1 0 7.1 7.1Z" />
+            </svg>
+          </button>
         </div>
       </div>
     </header>
 
-    <main class="wrap">
-      <section class="chart-card" aria-labelledby="chart-heading">
-        <h2 id="chart-heading" class="visually-hidden">Effective price against score</h2>
-        <div id="chart-empty" class="empty" hidden></div>
-        <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
-        <ul id="legend" class="legend" aria-label="Labs"></ul>
-        <noscript>
-          <p class="note">
-            The chart needs JavaScript. The full table below has the same numbers.
+    <main class="wrap" id="top">
+      <section class="hero">
+        <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>OpenCode Go · cost vs capability</p>
+        <h1>Which model is actually worth your <em>$10</em>?</h1>
+        <p class="standfirst">
+          Go sells monthly dollar allowances, not tokens, and the discount is different on every
+          model. This chart prices each model by what it actually costs you, then asks which one
+          gives the most capability for the money.
+        </p>
+        <dl class="stat-line">
+          <div class="stat">
+            <dt>Models</dt>
+            <dd id="stat-models">—</dd>
+          </div>
+          <div class="stat">
+            <dt>On the frontier</dt>
+            <dd id="stat-frontier">—</dd>
+          </div>
+          <div class="stat">
+            <dt>Scores</dt>
+            <dd id="stat-freshness">—</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="chart-section" aria-labelledby="chart-heading">
+        <div class="section-head">
+          <div>
+            <p class="section-index">01 — The chart</p>
+            <h2 id="chart-heading">Effective price vs capability</h2>
+          </div>
+          <div class="chart-options">
+            <label class="switch" for="show-efforts">
+              <input type="checkbox" id="show-efforts" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+              <span class="switch-label">All effort levels</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div id="chart-empty" class="empty" hidden></div>
+          <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
+          <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true" hidden></div>
+          <p class="chart-footnote">
+            Log price axis · higher is better · hover or focus a point for its calculation. Effort
+            changes the score, not the published per-token rate: thinking harder spends more tokens
+            per task, so the rungs share one price.
           </p>
-        </noscript>
+          <ul id="legend" class="legend" aria-label="Labs"></ul>
+          <noscript>
+            <p class="note">
+              The chart needs JavaScript. The full table below has the same numbers.
+            </p>
+          </noscript>
+        </div>
       </section>
 
       <section class="details" id="details" aria-live="polite">
-        <p class="note">Hover or focus a point to see how its price was calculated.</p>
+        <p class="note">
+          Hover, focus or click a point to see its effort, allowance and effective price.
+        </p>
       </section>
 
       <section class="buckets" aria-label="Models not on the chart">
         <div class="bucket">
-          <h3>Free (unlimited allowance)</h3>
+          <h3>Free · unlimited allowance</h3>
           <p class="note">Not on the frontier — they would flatten it to nothing.</p>
           <ul id="bucket-free"></ul>
         </div>
@@ -112,48 +155,56 @@
         </div>
       </section>
 
-      <section class="display" aria-labelledby="display-heading">
-        <h2 id="display-heading">Near-frontier band</h2>
-        <p class="note">
-          When one model dominates everything, the strict frontier collapses to a couple of points.
-          The band flags models whose score is within this many points of the best available at their
-          price or cheaper — candidates worth a look, not equals.
-        </p>
-        <div class="mix-controls">
-          <div class="control">
+      <div class="settings-grid">
+        <section class="panel display" aria-labelledby="display-heading">
+          <p class="section-index">02 — Near-frontier band</p>
+          <h2 id="display-heading">How wide is “close”?</h2>
+          <p class="note">
+            When one model dominates, the strict frontier collapses to a couple of points. The
+            corridor flags models within this many points of the best available at their price or
+            cheaper — candidates worth a look, not equals.
+          </p>
+          <div class="slider-row">
             <label for="tolerance">Band ± points</label>
-            <input id="tolerance" type="number" min="0" max="20" step="0.5" value="2" />
+            <input id="tolerance" type="range" min="0" max="20" step="0.5" value="2" />
+            <output id="tolerance-value" for="tolerance">±2</output>
           </div>
           <output id="band-count" class="band-count" for="tolerance"></output>
-        </div>
-      </section>
+        </section>
 
-      <section class="mix" aria-labelledby="mix-heading">
-        <h2 id="mix-heading">Token mix</h2>
-        <p class="note">
-          Every model is priced on one global mix. The default is the median of OpenCode's own
-          published per-request token profiles — extremely cache-heavy, because agentic coding
-          re-reads a large context every turn. Change it to see how the frontier moves.
-        </p>
-        <div class="mix-controls">
-          <div class="control">
-            <label for="mix-input">Input %</label>
-            <input id="mix-input" type="number" min="0" max="100" step="0.1" value="1.14" />
+        <section class="panel mix" aria-labelledby="mix-heading">
+          <p class="section-index">03 — Token mix</p>
+          <h2 id="mix-heading">What a token is made of</h2>
+          <p class="note">
+            Every model is priced on one global mix: the median of OpenCode’s own published
+            per-request token profiles. It is extremely cache-heavy because agentic coding re-reads
+            a large context every turn. Change it to see how the frontier moves.
+          </p>
+          <div class="mix-controls">
+            <div class="control">
+              <label for="mix-input">Input %</label>
+              <input id="mix-input" type="number" min="0" max="100" step="0.1" value="1.14" />
+            </div>
+            <div class="control">
+              <label for="mix-cached">Cached read %</label>
+              <input id="mix-cached" type="number" min="0" max="100" step="0.1" value="98.50" />
+            </div>
+            <div class="control">
+              <label for="mix-output">Output %</label>
+              <input id="mix-output" type="number" min="0" max="100" step="0.1" value="0.36" />
+            </div>
+            <button type="button" id="mix-reset" class="button">Reset to default</button>
           </div>
-          <div class="control">
-            <label for="mix-cached">Cached read %</label>
-            <input id="mix-cached" type="number" min="0" max="100" step="0.1" value="98.50" />
-          </div>
-          <div class="control">
-            <label for="mix-output">Output %</label>
-            <input id="mix-output" type="number" min="0" max="100" step="0.1" value="0.36" />
-          </div>
-          <button type="button" id="mix-reset" class="button">Reset to default</button>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section class="data" aria-labelledby="table-heading">
-        <h2 id="table-heading">All models</h2>
+        <div class="section-head">
+          <div>
+            <p class="section-index">04 — All models</p>
+            <h2 id="table-heading">The whole roster</h2>
+          </div>
+        </div>
         <div id="table-host"><!--DATASET_TABLE--></div>
       </section>
     </main>

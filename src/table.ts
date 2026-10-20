@@ -81,6 +81,17 @@ function scoreOf(model: DatasetModel, index: IndexKey): number | null {
   return score === null || score === undefined ? null : score;
 }
 
+/** The primary configuration's human effort label. */
+function effortCell(model: DatasetModel): string {
+  if (model.variants.length === 0) return '—';
+  const primary =
+    model.variants.find((variant) => variant.aaSlug === model.defaultVariant) ??
+    model.variants[model.variants.length - 1];
+  // "Default" is true but noisy for the many single-configuration models;
+  // the column is for real effort choices.
+  return primary.effort === 'Default' ? '—' : primary.effort;
+}
+
 /**
  * The dataset as plain cells, carrying a numeric sort key alongside the text.
  *
@@ -94,6 +105,7 @@ export function tableModel(dataset: Dataset, opts: TableOptions): TableModel {
     const score = scoreOf(model, opts.index);
     return [
       { text: model.display, rowHeader: true },
+      { text: effortCell(model) },
       { text: multiplierCell(model, opts.plan, planPrice), value: allowanceMultiplier(model, opts.plan, planPrice) },
       { text: listPriceCell(model, opts.mix), value: listBlended(model, opts.mix) },
       { text: effectiveCell(model, opts, planPrice), value: effectiveCost(model, opts, planPrice) },
@@ -107,8 +119,8 @@ export function tableModel(dataset: Dataset, opts: TableOptions): TableModel {
   });
 
   return {
-    caption: `Every model on OpenCode Go, priced on the ${dataset.plans[opts.plan].label} plan at the current token mix.`,
-    head: ['Model', 'Multiplier', 'List $/1M', 'Effective $/1M', 'Score', 'Notes'],
+    caption: `Every model on OpenCode Go, priced on the ${dataset.plans[opts.plan].label} plan at the current token mix. Score and effort show each model's primary configuration.`,
+    head: ['Model', 'Effort', 'Multiplier', 'List $/1M', 'Effective $/1M', 'Score', 'Notes'],
     rows,
   };
 }

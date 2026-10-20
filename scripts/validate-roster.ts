@@ -74,6 +74,48 @@ export function validateRoster(roster: RosterEntry[], aaSlugs: string[]): string
           (close.length > 0 ? ` (closest: ${close.join(', ')})` : ''),
       );
     }
+
+    const rungs = entry.efforts ?? [];
+    if (rungs.length > 0) {
+      if (entry.aaSlug === null) {
+        errors.push(`effort ladder needs a default aaSlug: ${entry.goId}`);
+      }
+
+      const seenSlugs = new Set<string>();
+      const seenLabels = new Set<string>();
+
+      for (const rung of rungs) {
+        const slug = rung.aaSlug?.trim() ?? '';
+        const label = rung.label?.trim() ?? '';
+
+        if (slug === '' || label === '') {
+          errors.push(`effort rung needs a slug and label: ${entry.goId}`);
+          continue;
+        }
+        if (seenSlugs.has(slug)) {
+          errors.push(`duplicate effort slug: ${entry.goId} -> ${slug}`);
+        }
+        if (seenLabels.has(label.toLowerCase())) {
+          errors.push(`duplicate effort label: ${entry.goId} -> ${label}`);
+        }
+        seenSlugs.add(slug);
+        seenLabels.add(label.toLowerCase());
+
+        if (aaSlugSet.size > 0 && !aaSlugSet.has(slug)) {
+          const close = suggestSlugs(slug, aaSlugs);
+          errors.push(
+            `effort slug not in the AA snapshot: ${entry.goId} -> ${slug}` +
+              (close.length > 0 ? ` (closest: ${close.join(', ')})` : ''),
+          );
+        }
+      }
+
+      if (entry.aaSlug !== null && !seenSlugs.has(entry.aaSlug)) {
+        errors.push(
+          `effort ladder must include the default aaSlug "${entry.aaSlug}": ${entry.goId}`,
+        );
+      }
+    }
   }
 
   return errors;

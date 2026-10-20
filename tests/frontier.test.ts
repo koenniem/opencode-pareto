@@ -18,6 +18,8 @@ function model(over: Partial<DatasetModel>): DatasetModel {
     prices: { input: 1, output: 4, cachedRead: 0.1, cachedWrite: null },
     allowances: { go: 60, 'go-plus': 180 },
     scores: { [IDX]: 50 },
+    variants: [],
+    defaultVariant: null,
     ...over,
   };
 }
@@ -134,7 +136,8 @@ describe('toFrontierInputs', () => {
   it('buckets one valid model as plotted', () => {
     const { buckets, inputs } = toFrontierInputs([model({})], 'go', IDX, DEFAULT_MIX, 10);
     expect(buckets.m).toBe('plotted');
-    expect(inputs).toEqual([{ id: 'm', cost: expect.any(Number), score: 50 }]);
+    expect(inputs).toHaveLength(1);
+    expect(inputs[0]).toMatchObject({ id: 'm::m', cost: expect.any(Number), score: 50 });
   });
 
   it('uses the requested plan allowance', () => {
@@ -151,6 +154,105 @@ describe('toFrontierInputs', () => {
     const go = toFrontierInputs([m], 'go', IDX, DEFAULT_MIX, 10).inputs[0];
     const plus = toFrontierInputs([m], 'go-plus', IDX, DEFAULT_MIX, 40).inputs[0];
     expect(plus.cost).toBeCloseTo(go.cost / 2, 10);
+  });
+});
+
+describe('effort variants', () => {
+  const ladder = model({
+    goId: 'ladder',
+    variants: [
+      {
+        aaSlug: 'ladder-low',
+        aaName: 'Ladder (Low)',
+        effort: 'Low',
+        order: 0,
+        scores: { [IDX]: 30 },
+      },
+      {
+        aaSlug: 'ladder',
+        aaName: 'Ladder (Max)',
+        effort: 'Max',
+        order: 1,
+        scores: { [IDX]: 50 },
+      },
+    ],
+    defaultVariant: 'ladder',
+  });
+
+  it('uses only the default rung by default', () => {
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10);
+    expect(inputs).toHaveLength(1);
+    expect(inputs[0]).toMatchObject({
+      modelId: 'ladder',
+      effort: 'Max',
+      score: 50,
+      isDefault: true,
+    });
+  });
+
+  it('includes every scored rung when all efforts are requested', () => {
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10, 'all');
+    expect(inputs.map((i) => i.effort)).toEqual(['Low', 'Max']);
+    expect(inputs.every((i) => i.modelId === 'ladder')).toBe(true);
+    expect(new Set(inputs.map((i) => i.id)).size).toBe(2);
+  });
+
+  it('keeps only the better rung on a shared-price frontier', () => {
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10, 'all');
+    expect(paretoFrontier(inputs)).toEqual([inputs.find((i) => i.effort === 'Max')!.id]);
+  });
+
+  it('skips a rung with no score on the selected index', () => {
+    const sparse = model({
+      goId: 'sparse',
+      variants: [
+        {
+          aaSlug: 'sparse-low',
+          aaName: 'Sparse (Low)',
+          effort: 'Low',
+          order: 0,
+          scores: { [IDX]: null },
+        },
+        {
+          aaSlug: 'sparse',
+          aaName: 'Sparse (Max)',
+          effort: 'Max',
+          order: 1,
+          scores: { [IDX]: 40 },
+        },
+      ],
+      defaultVariant: 'sparse',
+    });
+    expect(
+      toFrontierInputs([sparse], 'go', IDX, DEFAULT_MIX, 10, 'all').inputs.map((i) => i.effort),
+    ).toEqual(['Max']);
+  });
+
+  it('buckets a model as unscored when every visible rung is null', () => {
+    const blank = model({
+      goId: 'blank',
+      scores: { [IDX]: null },
+      variants: [
+        {
+          aaSlug: 'blank-low',
+          aaName: 'Blank (Low)',
+          effort: 'Low',
+          order: 0,
+          scores: { [IDX]: null },
+        },
+      ],
+      defaultVariant: 'blank-low',
+    });
+    expect(toFrontierInputs([blank], 'go', IDX, DEFAULT_MIX, 10, 'all').buckets.blank).toBe(
+      'unscored',
+    );
+  });
+
+  it('falls back to the model score when no variants were attached', () => {
+    const legacy = model({ goId: 'legacy', aaSlug: 'legacy', defaultVariant: null });
+    const { inputs } = toFrontierInputs([legacy], 'go', IDX, DEFAULT_MIX, 10, 'all');
+    expect(inputs).toHaveLength(1);
+    expect(inputs[0]).toMatchObject({ id: 'legacy::legacy', score: 50, isDefault: true });
   });
 });
 

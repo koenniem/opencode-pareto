@@ -11,7 +11,16 @@ export interface ChartPoint {
   near?: boolean;
   /** Lab key, used as a CSS class for colour. */
   lab?: string;
+  /** Screen-reader / native title text. */
   title?: string;
+  /** Model id. Points sharing it form an effort ladder. Defaults to `id`. */
+  group?: string;
+  /** Effort label, e.g. "Low", "Max", "Non-reasoning". */
+  effort?: string;
+  /** Ladder position; 0 is the least thinking. */
+  effortOrder?: number;
+  /** True for the model's primary rung. */
+  isDefault?: boolean;
 }
 
 export interface SceneOptions {
@@ -21,6 +30,8 @@ export interface SceneOptions {
   yLabel: string;
   /** Score points below the best-at-price level that still count as near. */
   tolerance?: number;
+  /** Maximum permanent point labels. Default 12. */
+  maxLabels?: number;
 }
 
 export type Shape =
@@ -49,13 +60,15 @@ export interface Scene {
   height: number;
   shapes: Shape[];
   empty: string | null;
+  /** The score range actually drawn, useful for tests and tooltips. */
+  yDomain: [number, number];
 }
 
-const PAD = { top: 20, right: 24, bottom: 56, left: 72 };
-const SCORE_MAX = 100;
+const PAD = { top: 24, right: 26, bottom: 58, left: 74 };
+const MAX_LABELS = 12;
 
 /** Rough glyph metrics for collision estimation; no text measurement needed. */
-const CHAR_WIDTH = 6.3;
+const CHAR_WIDTH = 6.6;
 const LABEL_HEIGHT = 13;
 
 interface Box {
@@ -81,6 +94,21 @@ export function logTicks(min: number, max: number): number[] {
   return ticks;
 }
 
+/** 2× and 5× multiples inside each decade, for unlabelled tick marks. */
+export function logMinorTicks(min: number, max: number): number[] {
+  if (!(min > 0) || !(max > min)) return [];
+  const ticks: number[] = [];
+  const start = Math.floor(Math.log10(min));
+  const end = Math.ceil(Math.log10(max));
+  for (let exponent = start; exponent <= end; exponent += 1) {
+    for (const multiple of [2, 5]) {
+      const value = multiple * 10 ** exponent;
+      if (value > min && value < max) ticks.push(value);
+    }
+  }
+  return ticks;
+}
+
 /** Prices span four orders of magnitude, so decimals follow magnitude. */
 export function formatPrice(value: number): string {
   if (!Number.isFinite(value)) return '—';
@@ -89,37 +117,86 @@ export function formatPrice(value: number): string {
   return `$${value.toFixed(4)}`;
 }
 
-function stepPath(ordered: Array<{ x: number; y: number }>): string {
-  if (ordered.length < 2) return '';
-  let d = `M ${ordered[0].x.toFixed(2)} ${ordered[0].y.toFixed(2)}`;
-  for (let i = 1; i < ordered.length; i += 1) {
-    const prev = ordered[i - 1];
-    const next = ordered[i];
-    d += ` L ${next.x.toFixed(2)} ${prev.y.toFixed(2)} L ${next.x.toFixed(2)} ${next.y.toFixed(2)}`;
+/** A stable readable step: 1, 2, 2.5, 5 or 10 times a power of ten. */
+function niceStep(raw: number): number {
+  if (!Number.isFinite(raw) || raw <= 0) return 1;
+  const exponent = Math.floor(Math.log10(raw));
+  const magnitude = 10 ** exponent;
+  const residual = raw / magnitude;
+  const nice =
+    residual < 1.5 ? 1 : residual < 2.25 ? 2 : residual < 3.5 ? 2.5 : residual < 7.5 ? 5 : 10;
+  return nice * magnitude;
+}
+
+/**
+ * Fit the score axis to the data.
+ *
+ * A fixed 0–100 axis wasted half the plot when every model scores between 19
+ * and 53. The domain is padded and quantised so the points use the height and
+ * the grid lines stay on round numbers.
+ */
+export function scoreDomain(scores: number[]): [number, number] {
+  if (scores.length === 0) return [0, 100];
+  const min = Math.min(...scores);
+  const max = Math.max(...scores);
+  const span = Math.max(max - min, 8);
+  const pad = span * 0.12;
+  const step = niceStep((Math.min(100, max + pad) - Math.max(0, min - pad)) / 4);
+  const lo = Math.max(0, Math.floor((min - pad) / step) * step);
+  const hi = Math.min(100, Math.ceil((max + pad) / step) * step);
+  return hi - lo < step ? [Math.max(0, lo - step), Math.min(100, lo + step)] : [lo, hi];
+}
+
+export function niceTicks(min: number, max: number, target = 5): number[] {
+  if (!(max > min)) return [];
+  const step = niceStep((max - min) / Math.max(target - 1, 1));
+  const ticks: number[] = [];
+  const start = Math.ceil(min / step) * step;
+  for (let value = start; value <= max + step * 1e-6; value += step) {
+    ticks.push(Number(value.toFixed(6)));
   }
+  return ticks;
+}
+
+function formatTick(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function formatTolerance(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function stepPath(steps: Array<{ x: number; y: number }>, plot: { left: number; right: number }): string {
+  if (steps.length < 2) return '';
+  let d = `M ${steps[0].x.toFixed(2)} ${steps[0].y.toFixed(2)}`;
+  for (let i = 1; i < steps.length; i += 1) {
+    d += ` L ${steps[i].x.toFixed(2)} ${steps[i - 1].y.toFixed(2)}`;
+    d += ` L ${steps[i].x.toFixed(2)} ${steps[i].y.toFixed(2)}`;
+  }
+  // Extending to the right is honest: the dearest frontier model remains the
+  // best available at every higher price. Extending left would claim its score
+  // at prices where no frontier model exists.
+  d += ` L ${plot.right.toFixed(2)} ${steps[steps.length - 1].y.toFixed(2)}`;
   return d;
 }
 
-const POINT_R = 6;
-
 /**
- * Shade the region that the band admits: everything between the best score
- * available at each price and `tolerance` points below it.
+ * The tolerance corridor: everything between the frontier and `tolerance`
+ * points below it.
  *
- * Without this the band is invisible — at a tight tolerance it moves a single
- * dot's opacity, which reads as "the control does nothing".
+ * The fill alone was invisible at 7% opacity, so the lower boundary is a real
+ * path as well. The caller styles both; geometry and visibility are separable.
  */
-function bandPath(
+function bandGeometry(
   steps: Array<{ x: number; score: number }>,
   plot: { left: number; right: number },
   y: (score: number) => number,
   tolerance: number,
   floor: number,
-): string {
-  if (steps.length < 2 || tolerance <= 0) return '';
+): { fill: string; edge: string } | null {
+  if (steps.length < 2 || tolerance <= 0) return null;
 
   const levels = [
-    { x: plot.left, score: steps[0].score },
     ...steps,
     { x: plot.right, score: steps[steps.length - 1].score },
   ];
@@ -132,13 +209,17 @@ function bandPath(
 
   const at = (point: { x: number; score: number }, lower: boolean) => {
     const score = lower ? point.score - tolerance : point.score;
-    return `${point.x.toFixed(2)} ${Math.min(y(score), floor).toFixed(2)}`;
+    const py = lower ? Math.min(y(score), floor) : Math.max(y(score), PAD.top);
+    return `${point.x.toFixed(2)} ${py.toFixed(2)}`;
   };
 
   const top = corners.map((point) => at(point, false));
-  const bottom = [...corners].reverse().map((point) => at(point, true));
+  const bottom = corners.map((point) => at(point, true));
 
-  return `M ${top.join(' L ')} L ${bottom.join(' L ')} Z`;
+  return {
+    fill: `M ${top.join(' L ')} L ${[...bottom].reverse().join(' L ')} Z`,
+    edge: `M ${bottom.join(' L ')}`,
+  };
 }
 
 interface LabelCandidate {
@@ -156,11 +237,7 @@ interface LabelCandidate {
  * is dropped rather than drawn on top of something else — the point keeps its
  * tooltip, so no information is lost.
  */
-function placeLabels(
-  candidates: LabelCandidate[],
-  bounds: Box,
-  occupied: Box[],
-): Shape[] {
+function placeLabels(candidates: LabelCandidate[], bounds: Box, occupied: Box[]): Shape[] {
   const placed: Shape[] = [];
   const leaders: Shape[] = [];
   const taken: Box[] = [...occupied];
@@ -187,24 +264,27 @@ function placeLabels(
       const box: Box = { x: anchorX, y: anchorY - LABEL_HEIGHT + 3, w: width, h: LABEL_HEIGHT };
 
       const inside =
-        box.x >= bounds.x && box.y >= bounds.y && box.x + box.w <= bounds.x + bounds.w && box.y + box.h <= bounds.y + bounds.h;
+        box.x >= bounds.x &&
+        box.y >= bounds.y &&
+        box.x + box.w <= bounds.x + bounds.w &&
+        box.y + box.h <= bounds.y + bounds.h;
       if (!inside) continue;
       if (taken.some((other) => overlaps(box, other))) continue;
 
       taken.push(box);
 
-      // A leader makes ownership explicit: with twenty-odd labels, "nearest
-      // dot" is a guess the reader should not have to make.
+      // A leader makes ownership explicit: with two dozen dots, "nearest dot"
+      // is a guess the reader should not have to make.
       const lx = Math.max(box.x, Math.min(candidate.x, box.x + box.w));
       const ly = Math.max(box.y, Math.min(candidate.y, box.y + box.h));
       const gap = Math.hypot(lx - candidate.x, ly - candidate.y);
-      if (gap > POINT_R + 2) {
+      if (gap > 8) {
         const ux = (lx - candidate.x) / gap;
         const uy = (ly - candidate.y) / gap;
         leaders.push({
           kind: 'line',
-          x1: candidate.x + ux * (POINT_R + 2),
-          y1: candidate.y + uy * (POINT_R + 2),
+          x1: candidate.x + ux * 8,
+          y1: candidate.y + uy * 8,
           x2: lx,
           y2: ly,
           cls: 'leader',
@@ -250,22 +330,31 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
         usable.length === 0
           ? 'No models can be plotted yet. Scores arrive with the first Artificial Analysis fetch.'
           : 'Only one model can be plotted, so there is no frontier to draw.',
+      yDomain: [0, 100],
     };
   }
 
   const costs = usable.map((p) => p.cost);
-  const xDomain: [number, number] = [Math.min(...costs) / 2, Math.max(...costs) * 2];
+  const logPad = 0.12;
+  const xDomain: [number, number] = [
+    10 ** (Math.log10(Math.min(...costs)) - logPad),
+    10 ** (Math.log10(Math.max(...costs)) + logPad),
+  ];
+  const yDomain = scoreDomain(usable.map((p) => p.score));
   const x = logScale(xDomain, [PAD.left, width - PAD.right]);
-  const y = linearScale([0, SCORE_MAX], [height - PAD.bottom, PAD.top]);
+  const y = linearScale(yDomain, [height - PAD.bottom, PAD.top]);
+  const plot = { left: PAD.left, right: width - PAD.right };
+  const floor = height - PAD.bottom;
+  const scoreY = (score: number) => y(Math.min(Math.max(score, yDomain[0]), yDomain[1]));
 
   const shapes: Shape[] = [];
 
   shapes.push({
     kind: 'line',
     x1: PAD.left,
-    y1: height - PAD.bottom,
+    y1: floor,
     x2: width - PAD.right,
-    y2: height - PAD.bottom,
+    y2: floor,
     cls: 'axis',
   });
   shapes.push({
@@ -273,18 +362,18 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     x1: PAD.left,
     y1: PAD.top,
     x2: PAD.left,
-    y2: height - PAD.bottom,
+    y2: floor,
     cls: 'axis',
   });
 
-  for (const value of [0, 25, 50, 75, 100]) {
+  for (const value of niceTicks(yDomain[0], yDomain[1], 5)) {
     const py = y(value);
     shapes.push({ kind: 'line', x1: PAD.left, y1: py, x2: width - PAD.right, y2: py, cls: 'grid' });
     shapes.push({
       kind: 'text',
       x: PAD.left - 10,
       y: py + 4,
-      text: String(value),
+      text: formatTick(value),
       cls: 'tick',
       anchor: 'end',
     });
@@ -292,15 +381,20 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
 
   for (const value of logTicks(xDomain[0], xDomain[1])) {
     const px = x(value);
-    shapes.push({ kind: 'line', x1: px, y1: PAD.top, x2: px, y2: height - PAD.bottom, cls: 'grid' });
+    shapes.push({ kind: 'line', x1: px, y1: PAD.top, x2: px, y2: floor, cls: 'grid' });
     shapes.push({
       kind: 'text',
       x: px,
-      y: height - PAD.bottom + 20,
+      y: floor + 20,
       text: formatPrice(value),
       cls: 'tick',
       anchor: 'middle',
     });
+  }
+
+  for (const value of logMinorTicks(xDomain[0], xDomain[1])) {
+    const px = x(value);
+    shapes.push({ kind: 'line', x1: px, y1: floor, x2: px, y2: floor - 4, cls: 'tick-minor' });
   }
 
   shapes.push({
@@ -321,56 +415,130 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
   });
 
   const frontier = usable
-    .filter((p) => p.frontier)
+    .filter((point) => point.frontier)
     .sort((a, b) => a.cost - b.cost)
-    .map((p) => ({ x: x(p.cost), y: y(Math.min(p.score, SCORE_MAX)), score: Math.min(p.score, SCORE_MAX) }));
+    .map((point) => ({
+      x: x(point.cost),
+      y: scoreY(point.score),
+      score: Math.min(Math.max(point.score, yDomain[0]), yDomain[1]),
+    }));
 
-  const band = bandPath(
-    frontier,
-    { left: PAD.left, right: width - PAD.right },
-    y,
-    opts.tolerance ?? 0,
-    height - PAD.bottom,
-  );
-  if (band) shapes.push({ kind: 'path', d: band, cls: 'band' });
+  const band = bandGeometry(frontier, plot, scoreY, opts.tolerance ?? 0, floor);
+
+  // Group by model so a ladder gets one rail and one permanent label.
+  const groups = new Map<string, ChartPoint[]>();
+  for (const point of usable) {
+    const key = point.group ?? point.id;
+    const group = groups.get(key);
+    if (group) group.push(point);
+    else groups.set(key, [point]);
+  }
 
   const occupied: Box[] = [];
+  const ladderShapes: Shape[] = [];
+  for (const group of groups.values()) {
+    if (group.length < 2) continue;
+    const xs = group.map((point) => x(point.cost));
+    const ys = group.map((point) => scoreY(point.score));
+    const railX = xs.reduce((sum, value) => sum + value, 0) / xs.length;
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    ladderShapes.push({
+      kind: 'line',
+      x1: railX,
+      y1: top,
+      x2: railX,
+      y2: bottom,
+      cls: 'ladder',
+    });
+    occupied.push({ x: railX - 2, y: top, w: 4, h: Math.max(bottom - top, 1) });
+  }
 
+  const pointShapes: Shape[] = [];
   for (const point of usable) {
     const cx = x(point.cost);
-    const cy = y(Math.min(point.score, SCORE_MAX));
+    const cy = scoreY(point.score);
+    const groupSize = groups.get(point.group ?? point.id)?.length ?? 1;
+    const isVariant = point.isDefault === false || (groupSize > 1 && point.isDefault !== true);
     const classes = ['point'];
     if (point.frontier) classes.push('frontier');
     else if (point.near) classes.push('near');
     if (point.lab) classes.push(`lab-${point.lab}`);
+    if (isVariant) classes.push('variant');
 
-    shapes.push({
+    const r = point.frontier ? 5.5 : point.near ? 4.5 : isVariant ? 3 : 4.2;
+    const effort = point.effort ? ` · ${point.effort}` : '';
+    pointShapes.push({
       kind: 'circle',
       cx,
       cy,
-      r: point.frontier ? 6 : point.near ? 5 : 4,
+      r,
       cls: classes.join(' '),
       id: point.id,
-      title: point.title ?? `${point.label}: ${formatPrice(point.cost)}/1M · score ${point.score}`,
+      title:
+        point.title ??
+        `${point.label}${effort}: ${formatPrice(point.cost)}/1M · score ${point.score}`,
     });
-
-    occupied.push({ x: cx - 7, y: cy - 7, w: 14, h: 14 });
+    occupied.push({ x: cx - r - 3, y: cy - r - 3, w: r * 2 + 6, h: r * 2 + 6 });
   }
+
+  let bandLabel: Shape | null = null;
+  if (band && frontier.length >= 2) {
+    const last = frontier[frontier.length - 1];
+    const text = `±${formatTolerance(opts.tolerance ?? 0)} pts`;
+    const labelY = Math.min(scoreY(last.score - (opts.tolerance ?? 0)) + 14, floor - 2);
+    const w = text.length * CHAR_WIDTH;
+    const box: Box = { x: plot.right - w, y: labelY - LABEL_HEIGHT + 3, w, h: LABEL_HEIGHT };
+    if (!occupied.some((other) => overlaps(box, other))) {
+      occupied.push(box);
+      bandLabel = {
+        kind: 'text',
+        x: plot.right,
+        y: labelY,
+        text,
+        cls: 'band-label',
+        anchor: 'end',
+      };
+    }
+  }
+
+  if (band) {
+    shapes.push({ kind: 'path', d: band.fill, cls: 'band' });
+    shapes.push({ kind: 'path', d: band.edge, cls: 'band-edge' });
+  }
+  if (bandLabel) shapes.push(bandLabel);
+  shapes.push(...ladderShapes);
 
   if (frontier.length >= 2) {
-    shapes.push({ kind: 'path', d: stepPath(frontier), cls: 'frontier' });
+    shapes.push({ kind: 'path', d: stepPath(frontier, plot), cls: 'frontier-line' });
   }
 
-  const labels = placeLabels(
-    usable.map((point) => ({
+  shapes.push(...pointShapes);
+
+  const anchors = new Map<string, { point: ChartPoint; priority: number }>();
+  for (const point of usable) {
+    const key = point.group ?? point.id;
+    const priority = (point.frontier ? 1000 : point.near ? 500 : 0) + point.score;
+    const current = anchors.get(key);
+    if (!current || priority > current.priority) anchors.set(key, { point, priority });
+  }
+
+  const budget = Math.max(0, opts.maxLabels ?? MAX_LABELS);
+  const candidates = [...anchors.values()]
+    .sort((a, b) => b.priority - a.priority)
+    .slice(0, budget)
+    .map(({ point, priority }) => ({
       text: point.label,
       x: x(point.cost),
-      y: y(Math.min(point.score, SCORE_MAX)),
-      priority: (point.frontier ? 1000 : point.near ? 500 : 0) + point.score,
-    })),
+      y: scoreY(point.score),
+      priority,
+    }));
+
+  const labels = placeLabels(
+    candidates,
     { x: PAD.left, y: PAD.top, w: width - PAD.left - PAD.right, h: height - PAD.top - PAD.bottom },
     occupied,
   );
 
-  return { width, height, shapes: [...shapes, ...labels], empty: null };
+  return { width, height, shapes: [...shapes, ...labels], empty: null, yDomain };
 }

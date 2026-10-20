@@ -1,19 +1,60 @@
 import { effectivePrice } from './compute';
-import type { DatasetModel, IndexKey, Mix, Plan } from './types';
+import type { DatasetModel, EffortSelection, IndexKey, Mix, Plan } from './types';
 
 export type Bucket = 'plotted' | 'free' | 'unpriced' | 'incomplete' | 'unscored';
 
-export interface FrontierInput {
+/** The minimum a Pareto calculation needs. */
+export interface CostScorePoint {
   id: string;
   cost: number;
   score: number;
+}
+
+/** A chartable point, carrying the model and effort rung it came from. */
+export interface FrontierInput extends CostScorePoint {
+  modelId: string;
+  aaSlug: string;
+  effort: string;
+  order: number;
+  isDefault: boolean;
+}
+
+interface VisibleVariant {
+  aaSlug: string;
+  effort: string;
+  order: number;
+  scores: DatasetModel['scores'];
+}
+
+function defaultSlug(model: DatasetModel): string {
+  return model.defaultVariant ?? model.aaSlug ?? model.goId;
+}
+
+/**
+ * The configurations the chart should draw for one model.
+ *
+ * `default` is the primary rung used by the table and the default chart. `all`
+ * exposes the whole ladder. A model with no attached variants falls back to its
+ * primary score map, so a snapshot without effort data still plots.
+ */
+export function visibleVariants(model: DatasetModel, selection: EffortSelection): VisibleVariant[] {
+  if (model.variants.length === 0) {
+    return [{ aaSlug: defaultSlug(model), effort: 'Default', order: 0, scores: model.scores }];
+  }
+  if (selection === 'all') return model.variants;
+
+  const wanted = defaultSlug(model);
+  const primary =
+    model.variants.find((variant) => variant.aaSlug === wanted) ??
+    model.variants[model.variants.length - 1];
+  return [primary];
 }
 
 /**
  * Non-dominated set: no other point is cheaper-or-equal and better-or-equal.
  * Equal costs keep only the best score. Returned cheapest first.
  */
-export function paretoFrontier(points: FrontierInput[]): string[] {
+export function paretoFrontier(points: CostScorePoint[]): string[] {
   const ordered = [...points].sort((a, b) => a.cost - b.cost || b.score - a.score);
   const frontier: string[] = [];
   let best = Number.NEGATIVE_INFINITY;
@@ -28,11 +69,15 @@ export function paretoFrontier(points: FrontierInput[]): string[] {
 }
 
 /**
- * Split every model into exactly one bucket and return the plottable ones.
+ * Split every model into exactly one bucket and return the plottable points.
  *
  * Precedence: free -> unpriced -> incomplete -> unscored -> plotted. A model
  * lands in the first bucket that applies, so a free model that also lacks a
  * score is reported as free rather than disappearing.
+ *
+ * Every rung of a ladder shares the model's price: effort changes the score,
+ * not the published per-token rate. When `all` is requested the points tie on
+ * cost, and `paretoFrontier` keeps only the best rung at that price.
  */
 export function toFrontierInputs(
   models: DatasetModel[],
@@ -40,6 +85,7 @@ export function toFrontierInputs(
   index: IndexKey,
   mix: Mix,
   planPrice: number,
+  efforts: EffortSelection = 'default',
 ): { inputs: FrontierInput[]; buckets: Record<string, Bucket> } {
   const inputs: FrontierInput[] = [];
   const buckets: Record<string, Bucket> = {};
@@ -62,14 +108,27 @@ export function toFrontierInputs(
       continue;
     }
 
-    const score = model.scores[index];
-    if (score === null || score === undefined || !Number.isFinite(score)) {
-      buckets[model.goId] = 'unscored';
-      continue;
+    const primarySlug = defaultSlug(model);
+    let scored = 0;
+
+    for (const variant of visibleVariants(model, efforts)) {
+      const score = variant.scores[index];
+      if (score === null || score === undefined || !Number.isFinite(score)) continue;
+
+      scored += 1;
+      inputs.push({
+        id: `${model.goId}::${variant.aaSlug}`,
+        modelId: model.goId,
+        aaSlug: variant.aaSlug,
+        effort: variant.effort,
+        order: variant.order,
+        isDefault: variant.aaSlug === primarySlug,
+        cost,
+        score,
+      });
     }
 
-    buckets[model.goId] = 'plotted';
-    inputs.push({ id: model.goId, cost, score });
+    buckets[model.goId] = scored > 0 ? 'plotted' : 'unscored';
   }
 
   return { inputs, buckets };
@@ -82,8 +141,9 @@ export function computeFrontier(
   index: IndexKey,
   mix: Mix,
   planPrice: number,
+  efforts: EffortSelection = 'default',
 ): { inputs: FrontierInput[]; buckets: Record<string, Bucket>; frontier: string[] } {
-  const { inputs, buckets } = toFrontierInputs(models, plan, index, mix, planPrice);
+  const { inputs, buckets } = toFrontierInputs(models, plan, index, mix, planPrice, efforts);
   return { inputs, buckets, frontier: paretoFrontier(inputs) };
 }
 
@@ -99,18 +159,18 @@ export function computeFrontier(
  * that cannot be seen is a band that flatters bad-value models.
  */
 export function nearFrontier(
-  inputs: FrontierInput[],
+  points: CostScorePoint[],
   frontierIds: string[],
   tolerance: number,
 ): Set<string> {
-  const byId = new Map(inputs.map((point) => [point.id, point]));
+  const byId = new Map(points.map((point) => [point.id, point]));
   const frontier = frontierIds
     .map((id) => byId.get(id))
-    .filter((point): point is FrontierInput => point !== undefined)
+    .filter((point): point is CostScorePoint => point !== undefined)
     .sort((a, b) => a.cost - b.cost);
 
   const near = new Set(frontierIds);
-  for (const point of inputs) {
+  for (const point of points) {
     let bestAtPrice = Number.NEGATIVE_INFINITY;
     for (const candidate of frontier) {
       if (candidate.cost <= point.cost) bestAtPrice = Math.max(bestAtPrice, candidate.score);

@@ -52,15 +52,23 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
 ### Reading the chart
 
 - **Colour = lab.** Every dot is coloured by who built the model, with the
-  legend under the chart. Names are placed on the chart itself and never
-  overlap: a name with nowhere to go is dropped rather than stacked, and its
-  tooltip still has it.
+  legend under the chart. The most useful names are placed at their dots and
+  never overlap; the rest are available on hover and in the table.
 - **The band.** A strict frontier says Muse Spark 1.3 Contributor dominates
   everything, which is true but leaves nothing to choose between. The band
   flags models within N score points of the best available at their price or
-  cheaper, so there is a shortlist instead of a single answer. N is adjustable
-  and shown next to the control — a band you cannot see is a band that flatters
-  bad value.
+  cheaper, so there is a shortlist instead of a single answer. The corridor is
+  filled with a dashed lower edge rather than implied by opacity; N is a range
+  slider and the count next to it says how many models it admits.
+- **Effort levels.** Artificial Analysis scores many models at several thinking
+  settings. The default chart shows one point per model at its primary setting.
+  **All effort levels** draws each model's rungs as a vertical rail: same
+  published price, different score. Lower rungs are smaller, and the tooltip
+  names the effort. Thinking harder spends more tokens per task, so the rail is
+  vertical by design — the per-token rate itself does not change.
+- **The tooltip.** Hovering or focusing a point shows its effective price,
+  score and multiplier at the point. The inspector below keeps the full
+  calculation plus the effort ladder for models that have one.
 - **Light and dark.** The palette is warm-monochrome so the fourteen lab hues
   are the only colour in the chart; switching theme re-tints surfaces, not data.
   The choice follows the OS until you pick one, is stored locally, and is
@@ -80,9 +88,9 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
 
 | File | What it is |
 | --- | --- |
-| `data/roster.yaml` | The join. One hand-reviewed entry per Go model, carrying its AA slug. |
+| `data/roster.yaml` | The join. One hand-reviewed entry per Go model, carrying its AA slug and optional effort ladder. |
 | `data/go-pricing.json` | Allowances and token prices, scraped from the Go docs and committed for review. |
-| `data/aa-snapshot.json` | Artificial Analysis Free-tier response, verbatim. Absent until the first fetch. |
+| `data/aa-snapshot.json` | Artificial Analysis Free-tier response for the configurations the roster names, trimmed to what the site plots. Absent until the first fetch. |
 | `data/dataset.json` | Generated join. Consumed by the site. |
 
 Scores come from
@@ -92,8 +100,8 @@ Free tier is sufficient; 100 requests/day against our two.
 
 ### Adding the API key
 
-The key never reaches the browser. It is used only by CI, which commits a
-snapshot the static site reads.
+The key never reaches the browser. The fetch script uses it (in CI or locally)
+to write the snapshot the static site reads.
 
 ```bash
 gh secret set AA_API_KEY --repo <owner>/opencode-pareto
@@ -102,16 +110,30 @@ gh secret set AA_API_KEY --repo <owner>/opencode-pareto
 Then trigger the workflow (`gh workflow run deploy.yml`) or wait for the daily
 cron. Until then the site builds with no scores and says so.
 
+For local work, put the key in `.env` (already gitignored) and `npm run fetch:aa`
+will load it:
+
+```bash
+# .env
+AA_API_KEY=...
+```
+
+`AA_API_KEY=... npm run fetch:aa` still works for a one-off. Never expose the
+key through a `VITE_` variable; that would ship it to the browser.
+
 ### Refreshing data locally
 
 ```bash
 npm ci
 npm run scrape:go          # drift check against the committed pricing
 npm run scrape:go -- --write   # accept the drift after reviewing it
-AA_API_KEY=... npm run fetch:aa
+npm run fetch:aa           # uses .env when present
 npm run validate:roster
 npm run data:build
 ```
+
+`data/aa-full.json` is the untrimmed response, gitignored for size and
+licensing; only the configurations the roster plots are committed.
 
 `npm run scrape:go` exits non-zero when OpenCode changes a price or allowance.
 That is intended: the committed file is the reviewed source of truth, so a
@@ -135,6 +157,24 @@ If AA has never scored the model, set `aaSlug: null` and it appears in the
 "priced but not scored" list rather than on the chart. If AA scores a *different*
 model (for example `Qwen3.8-Flash-Next` is not `Qwen3.8 Flash`), leave it null —
 attaching another model's score is worse than showing no score.
+
+### When a model gains effort levels
+
+AA publishes each thinking setting as its own model row. Name the rungs in the
+roster, lowest thinking first, and include the primary `aaSlug`:
+
+```yaml
+efforts:
+  - aaSlug: kimi-k3-low
+    label: Low
+  - aaSlug: kimi-k3
+    label: Max
+```
+
+`npm run validate:roster` fails if a rung is missing from the snapshot, a label
+is repeated, or the ladder omits its default. Only thinking settings belong
+here: `qwen3-8-max` 0803/0902 are release snapshots, not effort levels, so they
+are not a ladder.
 
 ## Development
 

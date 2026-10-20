@@ -229,3 +229,136 @@ describe('label leaders', () => {
     expect(lastLeader).toBeLessThan(firstLabel);
   });
 });
+
+describe('score domain', () => {
+  it('fits the y-axis to the data instead of always 0-100', () => {
+    const scene = buildScene(
+      [
+        { id: 'a', label: 'A', cost: 0.001, score: 40, frontier: true },
+        { id: 'b', label: 'B', cost: 0.01, score: 50, frontier: true },
+      ],
+      OPTS,
+    );
+    const yTicks = textShapes(scene)
+      .filter((s) => s.cls === 'tick' && /^\d+(\.\d+)?$/.test(s.text))
+      .map((s) => Number(s.text));
+    expect(yTicks.length).toBeGreaterThan(2);
+    expect(Math.min(...yTicks)).toBeGreaterThanOrEqual(35);
+    expect(Math.max(...yTicks)).toBeLessThanOrEqual(55);
+  });
+
+  it('reports the domain it drew', () => {
+    const scene = buildScene(pts, OPTS);
+    expect(scene.yDomain[0]).toBeLessThan(40);
+    expect(scene.yDomain[1]).toBeGreaterThan(50);
+  });
+});
+
+describe('effort ladders', () => {
+  const ladder: ChartPoint[] = [
+    {
+      id: 'g::low', group: 'g', label: 'G', effort: 'Low', effortOrder: 0,
+      cost: 0.01, score: 30, frontier: false, lab: 'openai',
+    },
+    {
+      id: 'g::max', group: 'g', label: 'G', effort: 'Max', effortOrder: 1, isDefault: true,
+      cost: 0.01, score: 45, frontier: true, lab: 'openai',
+    },
+  ];
+
+  it('draws a vertical rail at the shared price', () => {
+    const rails = buildScene(ladder, OPTS).shapes.filter(
+      (s) => s.kind === 'line' && s.cls.includes('ladder'),
+    );
+    expect(rails).toHaveLength(1);
+    const rail = rails[0];
+    if (rail.kind !== 'line') throw new Error('not a line');
+    expect(rail.x1).toBeCloseTo(rail.x2, 6);
+    expect(Math.abs(rail.y1 - rail.y2)).toBeGreaterThan(10);
+  });
+
+  it('labels the model once, at its best rung', () => {
+    const scene = buildScene(ladder, OPTS);
+    const labels = textShapes(scene).filter((s) => s.cls === 'point-label');
+    expect(labels.map((l) => l.text)).toEqual(['G']);
+    const maxDot = circles(scene).find((d) => d.id === 'g::max')!;
+    expect(Math.abs(labels[0].y - maxDot.cy)).toBeLessThan(30);
+  });
+
+  it('draws the default rung larger than a lower rung', () => {
+    const dots = circles(buildScene(ladder, OPTS));
+    const low = dots.find((d) => d.id === 'g::low')!;
+    const max = dots.find((d) => d.id === 'g::max')!;
+    expect(max.r).toBeGreaterThan(low.r);
+  });
+
+  it('marks non-default rungs for styling', () => {
+    const low = circles(buildScene(ladder, OPTS)).find((d) => d.id === 'g::low')!;
+    expect(low.cls).toContain('variant');
+  });
+});
+
+describe('label budget', () => {
+  it('keeps the permanent label count within the budget', () => {
+    const many: ChartPoint[] = Array.from({ length: 24 }, (_, i) => ({
+      id: `m${i}`,
+      label: `Model ${i}`,
+      cost: 0.001 * (i + 1),
+      score: 20 + i,
+      frontier: i % 6 === 0,
+    }));
+    const labels = textShapes(buildScene(many, { ...OPTS, maxLabels: 8 })).filter(
+      (s) => s.cls === 'point-label',
+    );
+    expect(labels.length).toBeLessThanOrEqual(8);
+  });
+});
+
+describe('tolerance corridor', () => {
+  const corridor: ChartPoint[] = [
+    { id: 'cheap', label: 'Cheap', cost: 0.001, score: 40, frontier: true },
+    { id: 'dear', label: 'Dear', cost: 0.05, score: 50, frontier: true },
+  ];
+
+  it('draws a lower edge so the corridor is visible', () => {
+    const shapes = buildScene(corridor, { ...OPTS, tolerance: 3 }).shapes;
+    expect(shapes.some((s) => s.cls === 'band-edge')).toBe(true);
+  });
+
+  it('starts the frontier at the cheapest frontier model, not the plot edge', () => {
+    const scene = buildScene(corridor, OPTS);
+    const path = scene.shapes.find((s) => s.kind === 'path' && s.cls === 'frontier-line');
+    if (!path || path.kind !== 'path') throw new Error('missing frontier');
+    const startX = Number(/M ([\d.]+)/.exec(path.d)?.[1]);
+    const cheap = circles(scene).find((c) => c.id === 'cheap')!;
+    expect(startX).toBeCloseTo(cheap.cx, 1);
+    expect(startX).toBeGreaterThan(74);
+  });
+
+  it('starts the corridor at the cheapest frontier model', () => {
+    const scene = buildScene(corridor, { ...OPTS, tolerance: 3 });
+    const band = scene.shapes.find((s) => s.kind === 'path' && s.cls === 'band');
+    if (!band || band.kind !== 'path') throw new Error('missing band');
+    const startX = Number(/M ([\d.]+)/.exec(band.d)?.[1]);
+    const cheap = circles(scene).find((c) => c.id === 'cheap')!;
+    expect(startX).toBeCloseTo(cheap.cx, 1);
+  });
+
+  it('moves the corridor edge as the tolerance changes', () => {
+    const edgeAt = (tolerance: number) => {
+      const shape = buildScene(corridor, { ...OPTS, tolerance }).shapes.find(
+        (s) => s.cls === 'band-edge',
+      );
+      return shape && shape.kind === 'path' ? shape.d : '';
+    };
+    expect(edgeAt(2)).not.toBe('');
+    expect(edgeAt(2)).not.toBe(edgeAt(10));
+  });
+});
+
+describe('minor log ticks', () => {
+  it('adds minor ticks between the labelled decades', () => {
+    const minor = buildScene(pts, OPTS).shapes.filter((s) => s.cls === 'tick-minor');
+    expect(minor.length).toBeGreaterThan(0);
+  });
+});

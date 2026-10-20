@@ -17,10 +17,9 @@ export function paintScene(svg: SVGSVGElement, scene: Scene): void {
         el.setAttribute('tabindex', '0');
         el.setAttribute('data-id', shape.id);
         if (shape.title) {
+          // Aria only: a <title> child would fire a second, delayed native
+          // tooltip on top of the custom one the page draws.
           el.setAttribute('aria-label', shape.title);
-          const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-          title.textContent = shape.title;
-          el.appendChild(title);
         }
         break;
       case 'path':

@@ -57,6 +57,75 @@ describe('validateRoster (fatal errors only)', () => {
   it('tolerates a null aaSlug', () => {
     expect(validateRoster([entry('kimi-k3', { aaSlug: null })], [])).toEqual([]);
   });
+
+  it('accepts a complete effort ladder', () => {
+    const ladder = entry('kimi-k3', {
+      efforts: [
+        { aaSlug: 'kimi-k3-low', label: 'Low' },
+        { aaSlug: 'kimi-k3', label: 'Max' },
+      ],
+    });
+    expect(validateRoster([ladder], ['kimi-k3', 'kimi-k3-low'])).toEqual([]);
+  });
+
+  it('reports an effort slug absent from the AA snapshot', () => {
+    const ladder = entry('kimi-k3', {
+      efforts: [{ aaSlug: 'kimi-k3-nope', label: 'Nope' }],
+    });
+    expect(validateRoster([ladder], ['kimi-k3'])).toContainEqual(
+      expect.stringContaining('kimi-k3-nope'),
+    );
+  });
+
+  it('requires the default aaSlug to be one of the rungs', () => {
+    const ladder = entry('kimi-k3', {
+      efforts: [{ aaSlug: 'kimi-k3-low', label: 'Low' }],
+    });
+    expect(validateRoster([ladder], ['kimi-k3', 'kimi-k3-low'])).toContainEqual(
+      expect.stringContaining('default'),
+    );
+  });
+
+  it('rejects duplicate labels and duplicate rungs', () => {
+    const dupeLabel = entry('kimi-k3', {
+      efforts: [
+        { aaSlug: 'kimi-k3-low', label: 'Low' },
+        { aaSlug: 'kimi-k3', label: 'Low' },
+      ],
+    });
+    expect(validateRoster([dupeLabel], ['kimi-k3', 'kimi-k3-low'])).toContainEqual(
+      expect.stringContaining('duplicate'),
+    );
+
+    const dupeRung = entry('kimi-k3', {
+      efforts: [
+        { aaSlug: 'kimi-k3', label: 'Max' },
+        { aaSlug: 'kimi-k3', label: 'Max again' },
+      ],
+    });
+    expect(validateRoster([dupeRung], ['kimi-k3'])).toContainEqual(
+      expect.stringContaining('duplicate'),
+    );
+  });
+
+  it('rejects a ladder on a model with no default aaSlug', () => {
+    const ladder = entry('kimi-k3', {
+      aaSlug: null,
+      efforts: [{ aaSlug: 'kimi-k3', label: 'Max' }],
+    });
+    expect(validateRoster([ladder], ['kimi-k3'])).toContainEqual(
+      expect.stringContaining('aaSlug'),
+    );
+  });
+
+  it('rejects an empty or blank rung', () => {
+    const blank = entry('kimi-k3', {
+      efforts: [{ aaSlug: '  ', label: 'Low' }],
+    });
+    expect(validateRoster([blank], ['kimi-k3'])).toContainEqual(
+      expect.stringContaining('effort'),
+    );
+  });
 });
 
 describe('suggestSlugs', () => {

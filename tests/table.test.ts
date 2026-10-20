@@ -56,3 +56,23 @@ describe('renderTableHtml', () => {
     expect(renderTableHtml(dataset, OPTS)).toMatch(/6\.0×|6×/);
   });
 });
+
+describe('effort column', () => {
+  it('shows the primary configuration label for a model with a ladder', () => {
+    expect(renderTableHtml(dataset, OPTS)).toMatch(
+      /<th scope="row">Kimi K3<\/th><td>Max<\/td>/,
+    );
+  });
+
+  it('hides the generic Default label for single-configuration models', () => {
+    expect(renderTableHtml(dataset, OPTS)).toMatch(
+      /<th scope="row">GLM-5.3-Flash<\/th><td>—<\/td>/,
+    );
+  });
+
+  it('shows a dash when Artificial Analysis has no counterpart', () => {
+    expect(renderTableHtml(dataset, OPTS)).toMatch(
+      /<th scope="row">Qwen3.8 Flash<\/th><td>—<\/td>/,
+    );
+  });
+});

@@ -1,11 +1,61 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import type { AASnapshot } from './fetch-aa';
+import type { AAModel, AASnapshot } from './fetch-aa';
 import type { GoPricing } from './scrape-go';
 import { loadAASlugs, loadPricing, loadRoster, validateRoster } from './validate-roster';
-import type { Dataset, DatasetModel, RosterEntry, IndexKey } from '../src/types';
+import type { Dataset, DatasetModel, ModelVariant, RosterEntry, IndexKey } from '../src/types';
 import { labOf } from '../src/labs';
 
 const PLAN_PRICES = { go: 10, 'go-plus': 40 } as const;
+
+function copyScores(aa: AAModel | undefined): Partial<Record<IndexKey, number | null>> {
+  const scores: Partial<Record<IndexKey, number | null>> = {};
+  if (!aa) return scores;
+  for (const [key, value] of Object.entries(aa.scores)) scores[key as IndexKey] = value;
+  return scores;
+}
+
+/**
+ * Resolve the roster's effort ladder against the AA snapshot.
+ *
+ * A rung AA did not return is skipped rather than invented; validation runs
+ * first in the build and reports the missing slug. If the roster forgot its
+ * own default rung, append it so the primary point is never lost.
+ */
+function buildVariants(
+  entry: RosterEntry,
+  aa: AAModel | undefined,
+  bySlug: Map<string, AAModel>,
+): ModelVariant[] {
+  if (!aa) return [];
+
+  const variants: ModelVariant[] = [];
+  const seen = new Set<string>();
+
+  for (const rung of entry.efforts ?? []) {
+    const found = bySlug.get(rung.aaSlug);
+    if (!found || seen.has(found.slug)) continue;
+    seen.add(found.slug);
+    variants.push({
+      aaSlug: found.slug,
+      aaName: found.name,
+      effort: rung.label,
+      order: variants.length,
+      scores: copyScores(found),
+    });
+  }
+
+  if (!seen.has(aa.slug)) {
+    variants.push({
+      aaSlug: aa.slug,
+      aaName: aa.name,
+      effort: entry.aaVariant ?? aa.variant ?? 'Default',
+      order: variants.length,
+      scores: copyScores(aa),
+    });
+  }
+
+  return variants;
+}
 
 /**
  * Join the roster, the Go pricing table and the AA snapshot into the single
@@ -41,12 +91,8 @@ export function buildDataset(
       }
     }
 
-    const scores: Partial<Record<IndexKey, number | null>> = {};
-    if (aa) {
-      for (const [key, value] of Object.entries(aa.scores)) {
-        scores[key as IndexKey] = value;
-      }
-    }
+    const scores = copyScores(aa);
+    const variants = buildVariants(entry, aa, bySlug);
 
     return {
       goId: entry.goId,
@@ -68,6 +114,8 @@ export function buildDataset(
           : null,
       allowances: priceRow && entry.tier !== 'unpriced' ? { ...priceRow.allowance } : null,
       scores,
+      variants,
+      defaultVariant: aa?.slug ?? null,
     };
   });
 
