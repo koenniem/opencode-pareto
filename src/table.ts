@@ -1,11 +1,10 @@
-import { blendedPrice, effectivePrice, multiplier } from './compute';
-import { formatPrice } from './chart';
-import type { Dataset, DatasetModel, IndexKey, Mix, Plan } from './types';
+import { effectiveCostPerTask, multiplier } from './compute';
+import { formatCostPerTask } from './chart';
+import type { Dataset, DatasetModel, IndexKey, ModelVariant, Plan } from './types';
 
 export interface TableOptions {
   plan: Plan;
   index: IndexKey;
-  mix: Mix;
 }
 
 export interface TableCell {
@@ -51,29 +50,55 @@ function multiplierCell(model: DatasetModel, plan: Plan, planPrice: number): str
   return Number.isFinite(m) ? `${m.toFixed(1)}×` : '∞';
 }
 
-function listBlended(model: DatasetModel, mix: Mix): number | null {
-  if (!model.prices) return null;
-  return blendedPrice(model.prices, mix);
+function primaryVariant(model: DatasetModel): ModelVariant | undefined {
+  if (model.variants.length === 0) return undefined;
+  return (
+    model.variants.find((variant) => variant.aaSlug === model.defaultVariant) ??
+    model.variants[model.variants.length - 1]
+  );
 }
 
-function listPriceCell(model: DatasetModel, mix: Mix): string {
-  if (!model.prices) return 'no published price';
-  const blended = listBlended(model, mix);
-  return blended === null ? 'incomplete price' : `${formatPrice(blended)}/1M`;
+function aaCost(model: DatasetModel): number | null {
+  const primary = primaryVariant(model);
+  return primary ? primary.listCostPerTask : model.listCostPerTask;
 }
 
-function effectiveCost(model: DatasetModel, opts: TableOptions, planPrice: number): number | null {
-  const allowance = model.allowances?.[opts.plan] ?? null;
+function adjustedCost(model: DatasetModel): number | null {
+  const primary = primaryVariant(model);
+  return primary ? primary.costPerTask : model.costPerTask;
+}
+
+function goCost(model: DatasetModel, plan: Plan, planPrice: number): number | null {
+  const allowance = model.allowances?.[plan] ?? null;
   if (allowance === null || allowance === 'unlimited' || !model.prices) return null;
-  return effectivePrice(model.prices, allowance, planPrice, opts.mix);
+  return effectiveCostPerTask(adjustedCost(model), allowance, planPrice);
 }
 
-function effectiveCell(model: DatasetModel, opts: TableOptions, planPrice: number): string {
-  const allowance = model.allowances?.[opts.plan] ?? null;
+function aaCostCell(model: DatasetModel): string {
+  const cost = aaCost(model);
+  return cost === null ? 'no AA cost' : formatCostPerTask(cost);
+}
+
+function goCostCell(model: DatasetModel, plan: Plan, planPrice: number): string {
+  const allowance = model.allowances?.[plan] ?? null;
   if (allowance === 'unlimited') return 'free (unlimited allowance)';
-  const cost = effectiveCost(model, opts, planPrice);
-  if (cost === null) return allowance === null || !model.prices ? 'no published price' : 'incomplete price';
-  return `${formatPrice(cost)}/1M`;
+  if (allowance === null || !model.prices) return 'no published price';
+  const cost = goCost(model, plan, planPrice);
+  return cost === null ? 'no AA cost' : formatCostPerTask(cost);
+}
+
+function noteCell(model: DatasetModel): string {
+  if (model.promoLabel) return model.promoLabel;
+  if (model.tier === 'unpriced') return 'served, not priced by OpenCode';
+  if (adjustedCost(model) === null) return 'no AA cost';
+
+  const primary = primaryVariant(model);
+  if (primary?.priceFactorApproximate) return 'price estimate';
+  const factor = primary?.priceFactor;
+  if (factor !== null && factor !== undefined && Math.abs(factor - 1) > 1e-9) {
+    return 'price-adjusted';
+  }
+  return '';
 }
 
 function scoreOf(model: DatasetModel, index: IndexKey): number | null {
@@ -106,21 +131,20 @@ export function tableModel(dataset: Dataset, opts: TableOptions): TableModel {
     return [
       { text: model.display, rowHeader: true },
       { text: effortCell(model) },
-      { text: multiplierCell(model, opts.plan, planPrice), value: allowanceMultiplier(model, opts.plan, planPrice) },
-      { text: listPriceCell(model, opts.mix), value: listBlended(model, opts.mix) },
-      { text: effectiveCell(model, opts, planPrice), value: effectiveCost(model, opts, planPrice) },
-      { text: score === null ? 'not scored' : score.toFixed(1), value: score },
       {
-        text:
-          model.promoLabel ??
-          (model.tier === 'unpriced' ? 'served, not priced by OpenCode' : ''),
+        text: multiplierCell(model, opts.plan, planPrice),
+        value: allowanceMultiplier(model, opts.plan, planPrice),
       },
+      { text: aaCostCell(model), value: aaCost(model) },
+      { text: goCostCell(model, opts.plan, planPrice), value: goCost(model, opts.plan, planPrice) },
+      { text: score === null ? 'not scored' : score.toFixed(1), value: score },
+      { text: noteCell(model) },
     ];
   });
 
   return {
-    caption: `Every model on OpenCode Go, priced on the ${dataset.plans[opts.plan].label} plan at the current token mix. Score and effort show each model's primary configuration.`,
-    head: ['Model', 'Effort', 'Multiplier', 'List $/1M', 'Effective $/1M', 'Score', 'Notes'],
+    caption: `Every model on OpenCode Go, with Artificial Analysis's weighted cost per Intelligence Index task. AA $/task is AA's list-price cost; Go $/task applies OpenCode's price basis and the plan's usage multiplier. Score and effort show each model's primary configuration.`,
+    head: ['Model', 'Effort', 'Usage ×', 'AA $/task', 'Go $/task', 'Score', 'Notes'],
     rows,
   };
 }

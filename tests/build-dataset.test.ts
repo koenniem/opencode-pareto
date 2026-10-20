@@ -25,6 +25,8 @@ const snapshot: AASnapshot = {
         artificial_analysis_intelligence_index: 47,
         artificial_analysis_coding_index: 44,
       },
+      costPerTask: 2,
+      pricing: { input: 3, output: 15, cachedRead: 0.3, cachedWrite: null },
     },
     {
       slug: 'kimi-k3-low',
@@ -34,6 +36,8 @@ const snapshot: AASnapshot = {
         artificial_analysis_intelligence_index: 38,
         artificial_analysis_coding_index: 35,
       },
+      costPerTask: 0.8,
+      pricing: { input: 3, output: 15, cachedRead: 0.3, cachedWrite: null },
     },
     {
       slug: 'glm-5-3',
@@ -43,6 +47,8 @@ const snapshot: AASnapshot = {
         artificial_analysis_intelligence_index: 45,
         artificial_analysis_coding_index: null,
       },
+      costPerTask: 2,
+      pricing: { input: 1.4, output: 4.4, cachedRead: 0.26, cachedWrite: null },
     },
     {
       slug: 'glm-5-3-low',
@@ -52,6 +58,8 @@ const snapshot: AASnapshot = {
         artificial_analysis_intelligence_index: 39,
         artificial_analysis_coding_index: null,
       },
+      costPerTask: 0.85,
+      pricing: { input: 1.4, output: 4.4, cachedRead: 0.26, cachedWrite: null },
     },
   ],
 };
@@ -114,6 +122,8 @@ describe('buildDataset', () => {
     expect(ds.models.every((m) => Object.keys(m.scores).length === 0)).toBe(true);
     expect(ds.models.every((m) => m.variants.length === 0)).toBe(true);
     expect(ds.models.every((m) => m.defaultVariant === null)).toBe(true);
+    expect(ds.models.every((m) => m.costPerTask === null)).toBe(true);
+    expect(ds.models.every((m) => m.listCostPerTask === null)).toBe(true);
   });
 
   it('attaches the declared effort ladder in roster order', () => {
@@ -142,6 +152,88 @@ describe('buildDataset', () => {
     expect(m.variants).toHaveLength(1);
     expect(m.variants[0]).toMatchObject({ aaSlug: 'kimi-k3', effort: 'Max', order: 0 });
     expect(m.defaultVariant).toBe('kimi-k3');
+    expect(m.variants[0].costPerTask).toBe(2);
+  });
+
+  it('stores the AA cost and the OpenCode-basis cost on every rung', () => {
+    const m = buildDataset(roster, pricing, snapshot).models.find((x) => x.goId === 'kimi-k3')!;
+    const low = m.variants.find((v) => v.aaSlug === 'kimi-k3-low')!;
+    const max = m.variants.find((v) => v.aaSlug === 'kimi-k3')!;
+    expect(low.listCostPerTask).toBe(0.8);
+    expect(low.costPerTask).toBeCloseTo(0.8, 10);
+    expect(low.priceFactor).toBe(1);
+    expect(low.priceFactorApproximate).toBe(false);
+    expect(max.listCostPerTask).toBe(2);
+    expect(max.costPerTask).toBeCloseTo(2, 10);
+    expect(m.listCostPerTask).toBe(2);
+    expect(m.costPerTask).toBeCloseTo(2, 10);
+  });
+
+  it('scales a proportional OpenCode price difference exactly', () => {
+    const doubled: AASnapshot = {
+      ...snapshot,
+      models: snapshot.models.map((m) =>
+        m.slug === 'kimi-k3'
+          ? {
+              ...m,
+              costPerTask: 2,
+              pricing: { input: 6, output: 30, cachedRead: 0.6, cachedWrite: null },
+            }
+          : m,
+      ),
+    };
+    const m = buildDataset(kimiOnly, pricing, doubled).models[0];
+    expect(m.variants[0].listCostPerTask).toBe(2);
+    expect(m.variants[0].costPerTask).toBeCloseTo(1, 10);
+    expect(m.variants[0].priceFactor).toBeCloseTo(0.5, 10);
+    expect(m.variants[0].priceFactorApproximate).toBe(false);
+  });
+
+  it('marks a non-proportional price difference as approximate', () => {
+    const cacheDearer: AASnapshot = {
+      ...snapshot,
+      models: snapshot.models.map((m) =>
+        m.slug === 'kimi-k3'
+          ? {
+              ...m,
+              costPerTask: 2,
+              pricing: { input: 3, output: 15, cachedRead: 0.6, cachedWrite: null },
+            }
+          : m,
+      ),
+    };
+    const m = buildDataset(kimiOnly, pricing, cacheDearer).models[0];
+    // AA's cache is twice OpenCode's; the exact answer depends on the unseen
+    // token mix, so the mix-weighted estimate sits between 1 and 2.
+    expect(m.variants[0].costPerTask).toBeGreaterThan(1);
+    expect(m.variants[0].costPerTask).toBeLessThan(2);
+    expect(m.variants[0].priceFactorApproximate).toBe(true);
+  });
+
+  it('keeps a rung with no AA cost unpriceable', () => {
+    const noCost: AASnapshot = {
+      ...snapshot,
+      models: snapshot.models.map((m) =>
+        m.slug === 'kimi-k3' ? { ...m, costPerTask: null } : m,
+      ),
+    };
+    const m = buildDataset(kimiOnly, pricing, noCost).models[0];
+    expect(m.variants[0].listCostPerTask).toBeNull();
+    expect(m.variants[0].costPerTask).toBeNull();
+    expect(m.variants[0].priceFactor).toBeNull();
+    expect(m.costPerTask).toBeNull();
+  });
+
+  it('keeps the AA cost when OpenCode has no price row', () => {
+    const unpricedRoster: RosterEntry[] = [
+      { ...kimiOnly[0], tier: 'unpriced', priceRow: null },
+    ];
+    const m = buildDataset(unpricedRoster, pricing, snapshot).models[0];
+    expect(m.prices).toBeNull();
+    expect(m.variants[0].listCostPerTask).toBe(2);
+    expect(m.variants[0].costPerTask).toBe(2);
+    expect(m.variants[0].priceFactor).toBeNull();
+    expect(m.variants[0].priceFactorApproximate).toBe(false);
   });
 
   it('skips a declared rung that Artificial Analysis does not return', () => {

@@ -1,6 +1,6 @@
 import datasetJson from '../data/dataset.json';
-import { DEFAULT_MIX, blendedPrice, effectivePrice, multiplier, normalizeMix } from './compute';
-import { buildScene, formatPrice, type ChartPoint, type Scene } from './chart';
+import { effectiveCostPerTask, multiplier } from './compute';
+import { buildScene, formatCostPerTask, type ChartPoint, type Scene } from './chart';
 import { computeFrontier, nearFrontier, type Bucket, type FrontierInput } from './frontier';
 import { LAB_NAMES, labOf } from './labs';
 import { paintScene } from './render';
@@ -11,7 +11,6 @@ import type {
   DatasetModel,
   EffortSelection,
   IndexKey,
-  Mix,
   ModelVariant,
   Plan,
 } from './types';
@@ -25,7 +24,6 @@ const dataset = datasetJson as unknown as Dataset;
 interface UiState {
   plan: Plan;
   index: IndexKey;
-  mix: Mix;
   tolerance: number;
   efforts: EffortSelection;
   sort: SortState | null;
@@ -36,7 +34,6 @@ interface UiState {
 const state: UiState = {
   plan: 'go',
   index: 'artificial_analysis_intelligence_index',
-  mix: { ...DEFAULT_MIX },
   tolerance: 2,
   efforts: 'default',
   sort: null,
@@ -92,12 +89,6 @@ function modelScore(model: DatasetModel): number | null {
   return score === null || score === undefined ? null : score;
 }
 
-function percentToShare(value: string): number {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed <= 0) return 0;
-  return parsed / 100;
-}
-
 function allowanceText(allowance: number | 'unlimited' | null): string {
   if (allowance === 'unlimited') return 'unlimited';
   if (allowance === null) return 'no published price';
@@ -113,7 +104,7 @@ function renderDetails(id: string | null): void {
     host.replaceChildren(
       el(
         'p',
-        'Hover, focus or click a point to see its effort, allowance and effective price.',
+        'Hover, focus or click a point to see its effort, cost per task and allowance.',
         'note',
       ),
     );
@@ -124,12 +115,24 @@ function renderDetails(id: string | null): void {
   const planPrice = dataset.plans[state.plan].price;
   const allowance = model.allowances?.[state.plan] ?? null;
   const m = multiplier(allowance, planPrice);
-  const listBlended = model.prices ? blendedPrice(model.prices, state.mix) : null;
-  const effective =
-    model.prices && allowance !== null
-      ? effectivePrice(model.prices, allowance, planPrice, state.mix)
+  const primary =
+    model.variants.find((rung) => rung.aaSlug === model.defaultVariant) ??
+    model.variants[model.variants.length - 1];
+  const selected = variant ?? primary;
+  const aaCost = selected ? selected.listCostPerTask : model.listCostPerTask;
+  const adjusted = selected ? selected.costPerTask : model.costPerTask;
+  const effective = effectiveCostPerTask(adjusted, allowance, planPrice);
+  const tasks =
+    adjusted !== null && typeof allowance === 'number' && adjusted > 0
+      ? allowance / adjusted
       : null;
   const score = scoreFor(model, variant);
+  const factor = selected?.priceFactor ?? null;
+  const priceNote = selected?.priceFactorApproximate
+    ? 'OpenCode price basis estimated with the cache-heavy mix.'
+    : factor !== null && Math.abs(factor - 1) > 1e-9
+      ? 'Cost scaled to OpenCode’s token prices.'
+      : '';
 
   const frag = document.createDocumentFragment();
   const h2 = el('h2');
@@ -158,11 +161,18 @@ function renderDetails(id: string | null): void {
     ],
     ['Allowance', allowanceText(allowance)],
     [
-      'Multiplier',
+      'Usage multiplier',
       m === null ? '—' : `${m.toFixed(2)}× (${dataset.plans[state.plan].label} at $${planPrice})`,
     ],
-    ['List blended', listBlended === null ? 'incomplete price' : `${formatPrice(listBlended)}/1M`],
-    ['Effective', effective === null ? '—' : `${formatPrice(effective)}/1M`, true],
+    [
+      'AA cost/task',
+      aaCost === null ? 'no AA cost' : `${formatCostPerTask(aaCost)} at AA prices`,
+    ],
+    ['Go cost/task', effective === null ? '—' : formatCostPerTask(effective), true],
+    [
+      'Tasks/allowance',
+      tasks === null ? '—' : `~${Math.round(tasks).toLocaleString('en-US')}`,
+    ],
   ];
   for (const [term, value, strong] of pairs) {
     const dt = el('dt', term);
@@ -174,6 +184,7 @@ function renderDetails(id: string | null): void {
 
   frag.append(el('p', `Pricing row: ${model.priceRow ?? 'none'}`, 'note'));
   if (model.promoLabel) frag.append(el('p', `Promotional: ${model.promoLabel}`, 'note'));
+  if (priceNote) frag.append(el('p', priceNote, 'note'));
 
   if (model.variants.length > 1) {
     const ladder = el('div', undefined, 'effort-ladder');
@@ -198,6 +209,7 @@ function renderDetails(id: string | null): void {
       fill.style.width = `${width}%`;
       track.append(fill);
 
+      const rungCost = effectiveCostPerTask(rung.costPerTask, allowance, planPrice);
       li.append(
         track,
         el(
@@ -205,6 +217,7 @@ function renderDetails(id: string | null): void {
           rungScore === null || rungScore === undefined ? '—' : rungScore.toFixed(1),
           'effort-score',
         ),
+        el('span', rungCost === null ? '—' : formatCostPerTask(rungCost), 'effort-cost'),
       );
       list.append(li);
     }
@@ -233,6 +246,12 @@ function showTooltip(circle: SVGCircleElement, id: string): void {
   const score = scoreFor(model, variant);
   const allowance = model.allowances?.[state.plan] ?? null;
   const m = multiplier(allowance, dataset.plans[state.plan].price);
+  const adjusted = variant ? variant.costPerTask : model.costPerTask;
+  const aaCost = variant ? variant.listCostPerTask : model.listCostPerTask;
+  const tasks =
+    adjusted !== null && typeof allowance === 'number' && adjusted > 0
+      ? allowance / adjusted
+      : null;
 
   const title = el('p', undefined, 'tt-title');
   title.append(
@@ -242,12 +261,14 @@ function showTooltip(circle: SVGCircleElement, id: string): void {
 
   const dl = el('dl', undefined, 'tt-grid');
   const rows: Array<[string, string]> = [
-    ['Effective', `${formatPrice(input.cost)}/1M`],
+    ['Go $/task', formatCostPerTask(input.cost)],
+    ['AA $/task', aaCost === null ? '—' : formatCostPerTask(aaCost)],
     ['Score', score === null ? '—' : score.toFixed(1)],
     [
-      'Multiplier',
+      'Usage ×',
       m === null ? (allowance === 'unlimited' ? 'unlimited' : '—') : `${m.toFixed(1)}×`,
     ],
+    ['Tasks', tasks === null ? '—' : `~${Math.round(tasks).toLocaleString('en-US')}`],
   ];
   for (const [term, value] of rows) {
     dl.append(el('dt', term), el('dd', value));
@@ -258,15 +279,12 @@ function showTooltip(circle: SVGCircleElement, id: string): void {
     el('p', variant?.aaName ?? model.aaName ?? 'No Artificial Analysis counterpart', 'tt-sub'),
     dl,
   ];
+  const notes: string[] = [];
   if (model.variants.length > 1) {
-    children.push(
-      el(
-        'p',
-        `${model.variants.length} effort levels. Effort raises the score, not the per-token rate.`,
-        'tt-note',
-      ),
-    );
+    notes.push('Effort raises the score and burns more tokens; cost per task includes that.');
   }
+  if (variant?.priceFactorApproximate) notes.push('OpenCode price basis estimated.');
+  for (const note of notes) children.push(el('p', note, 'tt-note'));
 
   tooltip.replaceChildren(...children);
   tooltip.hidden = false;
@@ -338,7 +356,7 @@ function paintChart(): void {
   const scene = buildScene(chartPoints, {
     width,
     height,
-    xLabel: 'Effective $ per 1M blended tokens · log scale',
+    xLabel: 'Go cost per task · log scale',
     yLabel: INDEX_LABELS[state.index],
     tolerance: state.tolerance,
     maxLabels: state.efforts === 'all' ? 10 : 12,
@@ -421,7 +439,6 @@ function render(): void {
     dataset.models,
     state.plan,
     state.index,
-    state.mix,
     planPrice,
     state.efforts,
   );
@@ -473,10 +490,6 @@ function render(): void {
   const tableKey = [
     state.plan,
     state.index,
-    state.mix.input,
-    state.mix.cached,
-    state.mix.output,
-    state.mix.cacheWrite,
     state.sort?.column ?? '',
     state.sort?.direction ?? '',
   ].join('|');
@@ -507,36 +520,6 @@ function wireControls(): void {
   efforts?.addEventListener('change', () => {
     state.efforts = efforts.checked ? 'all' : 'default';
     state.selected = null;
-    render();
-  });
-
-  const fields = [
-    ['mix-input', 'input'],
-    ['mix-cached', 'cached'],
-    ['mix-output', 'output'],
-  ] as const;
-
-  for (const [elementId, key] of fields) {
-    const field = document.getElementById(elementId) as HTMLInputElement | null;
-    if (field) field.value = (DEFAULT_MIX[key] * 100).toFixed(2);
-    field?.addEventListener('input', () => {
-      state.mix = normalizeMix({
-        input: key === 'input' ? percentToShare(field.value) : state.mix.input,
-        cached: key === 'cached' ? percentToShare(field.value) : state.mix.cached,
-        output: key === 'output' ? percentToShare(field.value) : state.mix.output,
-        cacheWrite: 0,
-      });
-      render();
-    });
-  }
-
-  const reset = document.getElementById('mix-reset');
-  reset?.addEventListener('click', () => {
-    state.mix = { ...DEFAULT_MIX };
-    for (const [elementId, key] of fields) {
-      const field = document.getElementById(elementId) as HTMLInputElement | null;
-      if (field) field.value = (DEFAULT_MIX[key] * 100).toFixed(2);
-    }
     render();
   });
 
@@ -587,7 +570,7 @@ function renderFreshness(): void {
   const version = dataset.intelligenceIndexVersion ?? 'unknown';
 
   const footer = document.getElementById('freshness');
-  if (footer) footer.textContent = `Scores fetched ${fetched}; index version ${version}.`;
+  if (footer) footer.textContent = `Scores and costs fetched ${fetched}; index version ${version}.`;
 
   const stat = document.getElementById('stat-freshness');
   if (stat) {

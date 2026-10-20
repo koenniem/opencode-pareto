@@ -35,6 +35,40 @@ describe('parseAAResponse', () => {
     expect(parseAAResponse(fixture).models[0].name).toBe('fixture-model-a (high)');
   });
 
+  it('reads the cost per task and the price basis behind it', () => {
+    const snap = parseAAResponse(fixture);
+    expect(snap.models[0].costPerTask).toBe(0.05);
+    expect(snap.models[0].pricing).toEqual({
+      input: 0.06,
+      output: 0.2,
+      cachedRead: 0.015,
+      cachedWrite: 0.075,
+    });
+  });
+
+  it('keeps a missing cost as null, never zero', () => {
+    expect(parseAAResponse(fixture).models[1].costPerTask).toBeNull();
+  });
+
+  it('tolerates a cost object without a per-task total', () => {
+    const parsed = parseAAResponse({
+      data: [
+        {
+          slug: 'x',
+          name: 'X',
+          evaluations: {},
+          artificial_analysis_intelligence_index_cost: { total_cost: 9 },
+        },
+      ],
+    });
+    expect(parsed.models[0].costPerTask).toBeNull();
+  });
+
+  it('keeps missing pricing as null', () => {
+    const parsed = parseAAResponse({ data: [{ slug: 'x', name: 'X', evaluations: {} }] });
+    expect(parsed.models[0].pricing).toBeNull();
+  });
+
   it('throws on a malformed body', () => {
     expect(() => parseAAResponse({ data: 'nope' })).toThrow();
     expect(() => parseAAResponse(null)).toThrow();
@@ -56,6 +90,12 @@ describe('trimToRoster', () => {
 
   it('drops everything when the roster references nothing', () => {
     expect(trimToRoster(parseAAResponse(fixture), []).models).toEqual([]);
+  });
+
+  it('keeps cost and pricing on the kept models', () => {
+    const trimmed = trimToRoster(parseAAResponse(fixture), ['fixture-model-a']);
+    expect(trimmed.models[0].costPerTask).toBe(0.05);
+    expect(trimmed.models[0].pricing?.cachedRead).toBe(0.015);
   });
 });
 

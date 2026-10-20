@@ -3,51 +3,60 @@
 Which model gives the most capability per dollar on the **OpenCode Go**
 subscription.
 
-Artificial Analysis charts quality against list API price. That answer is wrong
-for Go, because Go sells **monthly dollar allowances** rather than tokens, and
-the allowance is different for every model. This site applies that per-model
-multiplier and draws the Pareto frontier through the result.
+Artificial Analysis publishes the weighted cost of completing one Intelligence
+Index task for every model. That is a better unit for Go than a blended token
+price: a task's cost reflects how many input, cached and output tokens the model
+actually burns, including reasoning. DeepSeek can be cheap per token and
+expensive per task; a high-effort model can be cheap per token and expensive per
+task. This site takes AA's cost per task, translates it to OpenCode's token
+prices, applies the plan's per-model usage multiplier, and draws the Pareto
+frontier through the result.
 
 Live: `https://<owner>.github.io/opencode-pareto/`
 
-## How the price is calculated
+## How the cost is calculated
 
 ```text
-multiplier(model) = monthly allowance ÷ subscription price
-effective price   = blended list price ÷ multiplier
+aa cost/task       = AA's weighted cost for one Intelligence Index task, at AA prices
+adjusted cost/task = aa cost/task × (OpenCode price ÷ AA price)   [when the bases differ]
+Go cost/task       = adjusted cost/task ÷ (monthly allowance ÷ subscription price)
 ```
 
-Both plans publish the same token prices; only the allowance differs. On the
-$10 Go plan:
+The last step is a **usage multiplier**: a $60 allowance on a $10 plan means six
+times the list-price usage, so each task costs one sixth as much. On the $10 Go
+plan:
 
-| Model | Allowance | Multiplier | Effective price |
-| --- | --- | --- | --- |
-| GLM-5.2 | $60 | 6.0× | $0.048 / 1M |
-| Kimi K3 | $15 | 1.5× | $0.256 / 1M |
+| Model | AA cost/task | Allowance | Usage × | Go cost/task |
+| --- | --- | --- | --- | --- |
+| GPT-6 Luna (Max) | $0.068 | $15 | 1.5× | $0.045 |
+| Kimi K3 (Max) | $2.00 | $15 | 1.5× | $1.33 |
+| GLM-5.3 (Max) | $2.01 | $15 | 1.5× | $1.34 |
+| Muse Spark 1.3 Contributor (Max) | $1.60 (adjusted) | $60 | 6× | $0.0058 (estimate) |
 
-GLM-5.2 is not merely cheaper than Kimi K3 — the plan discounts it four times
-harder. That reshuffling is the reason this chart exists.
+The point is the spread: GPT-6 Luna costs about 30× less per task than GLM-5.3
+Max, even though the two token price sheets look closer. That reshuffling is the
+reason this chart exists.
 
-**Effective price assumes you spend the whole monthly allowance on that one
-model.** Allowances do not pool across models: unused GLM-5.2 allowance cannot
+**Go cost per task assumes you spend the whole monthly allowance on that one
+model.** Allowances do not pool across models: unused GLM-5.3 allowance cannot
 pay for Kimi K3.
 
-### Token mix
+### Price-basis adjustment
 
-Blended price needs a token mix. The default is the median of OpenCode's own
-published per-request profiles:
+AA's cost per task is calculated at AA's own token prices. OpenCode's prices
+usually match. Where they are proportional, the conversion is exact: Gemini 4
+Argon Contributor is 2× AA, DeepSeek off-peak is 0.5×. Where only one component
+differs, the free AA API omits the token counts needed for an exact conversion,
+so the site scales by the cache-heavy mix used for agentic coding:
 
 ```text
 input 1.14%   cached read 98.50%   output 0.36%
 ```
 
-That is extremely cache-heavy, and deliberately so: agentic coding re-reads a
-large context every turn. It reproduces OpenCode's published
-requests-per-month figures to within 1%, which is the test that pins it.
-
-The mix is adjustable on the site. Changing it moves the frontier — models with
-cheap cache reads (`MiMo-V2.6-Flash` at $0.0028/1M) gain a lot, models with
-expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
+Those rows are labelled **price estimate** in the table and inspector. A Pro AA
+key, which exposes token counts, would make the conversion exact. The mix is no
+longer a site control: the chart's cost comes from AA's measured tokens, not
+from a user-chosen blend.
 
 ### Reading the chart
 
@@ -56,26 +65,28 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
   never overlap; the rest are available on hover and in the table.
 - **The band.** A strict frontier says Muse Spark 1.3 Contributor dominates
   everything, which is true but leaves nothing to choose between. The band
-  flags models within N score points of the best available at their price or
+  flags models within N score points of the best available at their cost or
   cheaper, so there is a shortlist instead of a single answer. The corridor is
   filled with a dashed lower edge rather than implied by opacity; N is a range
   slider and the count next to it says how many models it admits.
 - **Effort levels.** Artificial Analysis scores many models at several thinking
   settings. The default chart shows one point per model at its primary setting.
-  **All effort levels** draws each model's rungs as a vertical rail: same
-  published price, different score. Lower rungs are smaller, and the tooltip
-  names the effort. Thinking harder spends more tokens per task, so the rail is
-  vertical by design — the per-token rate itself does not change.
-- **The tooltip.** Hovering or focusing a point shows its effective price,
-  score and multiplier at the point. The inspector below keeps the full
-  calculation plus the effort ladder for models that have one.
+  **All effort levels** draws each model's rungs as connected, diagonal steps:
+  higher effort costs more per task and usually scores higher. Lower rungs are
+  smaller, and the tooltip names the effort. The cost already includes the extra
+  reasoning tokens, so the rungs do not share a price.
+- **The tooltip.** Hovering or focusing a point shows its Go cost per task, AA
+  cost per task, score, usage multiplier and tasks per allowance. The inspector
+  below keeps the full calculation plus the effort ladder for models that have
+  one.
 - **Light and dark.** The palette is warm-monochrome so the fourteen lab hues
   are the only colour in the chart; switching theme re-tints surfaces, not data.
   The choice follows the OS until you pick one, is stored locally, and is
   applied before first paint so there is no white flash. A test asserts every
   text and point colour clears WCAG AA against its surface in both themes.
 - **The table sorts.** Every column header is a button; values sort numerically
-  with unpriceable models always last.
+  with unpriceable models always last. It shows AA $/task, Go $/task and the
+  usage multiplier alongside the score.
 
 ### What is not modelled
 
@@ -83,6 +94,9 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
   hours. Monthly only, by choice.
 - **Model roles.** No worker/orchestrator tags; read the curve.
 - **Throughput or latency.** Scores only.
+- **Your own token mix.** AA's measured cost already includes the task's token
+  usage. The cache-heavy mix is used only to convert AA's price basis to
+  OpenCode's when the two are not proportional.
 
 ## Data
 
@@ -90,13 +104,15 @@ expensive cache (`GLM-5.2` at $0.26/1M) lose a lot.
 | --- | --- |
 | `data/roster.yaml` | The join. One hand-reviewed entry per Go model, carrying its AA slug and optional effort ladder. |
 | `data/go-pricing.json` | Allowances and token prices, scraped from the Go docs and committed for review. |
-| `data/aa-snapshot.json` | Artificial Analysis Free-tier response for the configurations the roster names, trimmed to what the site plots. Absent until the first fetch. |
-| `data/dataset.json` | Generated join. Consumed by the site. |
+| `data/aa-snapshot.json` | Artificial Analysis Free-tier response for the configurations the roster names, trimmed to what the site plots. Includes scores, cost per task and AA's token pricing. |
+| `data/dataset.json` | Generated join. Consumed by the site. Each effort rung carries its AA and OpenCode-basis cost per task. |
 
-Scores come from
+Scores and costs come from
 `https://artificialanalysis.ai/api/v2/language/models/free`, which returns the
-Intelligence, Coding and Agentic indices plus the six capability indices. The
-Free tier is sufficient; 100 requests/day against our two.
+Intelligence, Coding and Agentic indices plus the six capability indices,
+`artificial_analysis_intelligence_index_cost.cost_per_task.total_cost`, and
+input/output/cache pricing. The free tier omits token counts and blended
+pricing; those are Pro-only. A refresh uses a handful of paginated requests.
 
 ### Adding the API key
 
@@ -108,7 +124,7 @@ gh secret set AA_API_KEY --repo <owner>/opencode-pareto
 ```
 
 Then trigger the workflow (`gh workflow run deploy.yml`) or wait for the daily
-cron. Until then the site builds with no scores and says so.
+cron. Until then the site builds with no scores or costs and says so.
 
 For local work, put the key in `.env` (already gitignored) and `npm run fetch:aa`
 will load it:
@@ -172,9 +188,10 @@ efforts:
 ```
 
 `npm run validate:roster` fails if a rung is missing from the snapshot, a label
-is repeated, or the ladder omits its default. Only thinking settings belong
-here: `qwen3-8-max` 0803/0902 are release snapshots, not effort levels, so they
-are not a ladder.
+is repeated, or the ladder omits its default. Each rung carries its own AA cost
+per task; a rung with no published cost is skipped rather than estimated. Only
+thinking settings belong here: `qwen3-8-max` 0803/0902 are release snapshots,
+not effort levels, so they are not a ladder.
 
 ## Development
 
@@ -193,10 +210,10 @@ unit-tested without a DOM.
 
 ## Attribution
 
-Scores: [Source: Artificial Analysis
+Scores and costs: [Source: Artificial Analysis
 (artificialanalysis.ai)](https://artificialanalysis.ai). Scores are reproduced
-unaltered. Effective prices are this project's own calculation and are not
-endorsed by Artificial Analysis.
+unaltered. Go costs are this project's own calculation and are not endorsed by
+Artificial Analysis.
 
 Prices: [OpenCode Go documentation](https://opencode.ai/docs/go/).
 

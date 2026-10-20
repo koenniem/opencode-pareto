@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-20T10:30:51.120Z",
-  "aaFetchedAt": "2026-10-20T10:30:49.368Z",
+  "generatedAt": "2026-10-20T11:42:44.284Z",
+  "aaFetchedAt": "2026-10-20T11:42:43.188Z",
   "intelligenceIndexVersion": "4.3",
   "plans": {
     "go": {
@@ -43,6 +43,8 @@
         "artificial_analysis_engineering_index": 43.8,
         "artificial_analysis_economics_index": 48.9
       },
+      "listCostPerTask": 0.2836,
+      "costPerTask": 0.2836,
       "variants": [
         {
           "aaSlug": "glm-5-3-flash",
@@ -59,7 +61,11 @@
             "artificial_analysis_healthcare_and_medical_index": 44.8,
             "artificial_analysis_engineering_index": 43.8,
             "artificial_analysis_economics_index": 48.9
-          }
+          },
+          "listCostPerTask": 0.2836,
+          "costPerTask": 0.2836,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "glm-5-3-flash"
@@ -94,6 +100,8 @@
         "artificial_analysis_engineering_index": 47.1,
         "artificial_analysis_economics_index": 51.2
       },
+      "listCostPerTask": 2.0056,
+      "costPerTask": 2.0056,
       "variants": [
         {
           "aaSlug": "glm-5-3-low",
@@ -110,7 +118,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 38,
             "artificial_analysis_economics_index": 40.5
-          }
+          },
+          "listCostPerTask": 0.8522,
+          "costPerTask": 0.8522,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "glm-5-3",
@@ -127,7 +139,11 @@
             "artificial_analysis_healthcare_and_medical_index": 46.7,
             "artificial_analysis_engineering_index": 47.1,
             "artificial_analysis_economics_index": 51.2
-          }
+          },
+          "listCostPerTask": 2.0056,
+          "costPerTask": 2.0056,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "glm-5-3"
@@ -162,6 +178,8 @@
         "artificial_analysis_engineering_index": 37.2,
         "artificial_analysis_economics_index": 45.6
       },
+      "listCostPerTask": 1.4726,
+      "costPerTask": 1.4726,
       "variants": [
         {
           "aaSlug": "glm-5-2-non-reasoning",
@@ -178,7 +196,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": null,
             "artificial_analysis_economics_index": null
-          }
+          },
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "glm-5-2",
@@ -195,7 +217,11 @@
             "artificial_analysis_healthcare_and_medical_index": 32.4,
             "artificial_analysis_engineering_index": 37.2,
             "artificial_analysis_economics_index": 45.6
-          }
+          },
+          "listCostPerTask": 1.4726,
+          "costPerTask": 1.4726,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "glm-5-2"
@@ -230,6 +256,8 @@
         "artificial_analysis_engineering_index": 43.3,
         "artificial_analysis_economics_index": 53.4
       },
+      "listCostPerTask": 2.0001,
+      "costPerTask": 2.0001,
       "variants": [
         {
           "aaSlug": "kimi-k3-low",
@@ -246,7 +274,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 29.7,
             "artificial_analysis_economics_index": 37
-          }
+          },
+          "listCostPerTask": 1.1463,
+          "costPerTask": 1.1463,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "kimi-k3",
@@ -263,7 +295,11 @@
             "artificial_analysis_healthcare_and_medical_index": 45,
             "artificial_analysis_engineering_index": 43.3,
             "artificial_analysis_economics_index": 53.4
-          }
+          },
+          "listCostPerTask": 2.0001,
+          "costPerTask": 2.0001,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "kimi-k3"
@@ -298,6 +334,8 @@
         "artificial_analysis_engineering_index": 29.1,
         "artificial_analysis_economics_index": 36.5
       },
+      "listCostPerTask": 0.5412,
+      "costPerTask": 0.5412,
       "variants": [
         {
           "aaSlug": "kimi-k2-7-code",
@@ -314,7 +352,11 @@
             "artificial_analysis_healthcare_and_medical_index": 26.5,
             "artificial_analysis_engineering_index": 29.1,
             "artificial_analysis_economics_index": 36.5
-          }
+          },
+          "listCostPerTask": 0.5412,
+          "costPerTask": 0.5412,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "kimi-k2-7-code"
@@ -349,6 +391,8 @@
         "artificial_analysis_engineering_index": 24.1,
         "artificial_analysis_economics_index": 31.1
       },
+      "listCostPerTask": 0.1462,
+      "costPerTask": 0.05879010163499778,
       "variants": [
         {
           "aaSlug": "longcat-2-0",
@@ -365,7 +409,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 24.1,
             "artificial_analysis_economics_index": 31.1
-          }
+          },
+          "listCostPerTask": 0.1462,
+          "costPerTask": 0.05879010163499778,
+          "priceFactor": 0.4021210782147591,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "longcat-2-0"
@@ -400,6 +448,8 @@
         "artificial_analysis_engineering_index": 45,
         "artificial_analysis_economics_index": 52.8
       },
+      "listCostPerTask": 1.0264,
+      "costPerTask": 1.0264,
       "variants": [
         {
           "aaSlug": "step-5",
@@ -416,7 +466,11 @@
             "artificial_analysis_healthcare_and_medical_index": 40.8,
             "artificial_analysis_engineering_index": 45,
             "artificial_analysis_economics_index": 52.8
-          }
+          },
+          "listCostPerTask": 1.0264,
+          "costPerTask": 1.0264,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "step-5"
@@ -451,6 +505,8 @@
         "artificial_analysis_engineering_index": 37.3,
         "artificial_analysis_economics_index": 43.6
       },
+      "listCostPerTask": 0.0624,
+      "costPerTask": 0.0624,
       "variants": [
         {
           "aaSlug": "mimo-v2-6-flash",
@@ -467,7 +523,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 37.3,
             "artificial_analysis_economics_index": 43.6
-          }
+          },
+          "listCostPerTask": 0.0624,
+          "costPerTask": 0.0624,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "mimo-v2-6-flash"
@@ -502,6 +562,8 @@
         "artificial_analysis_engineering_index": 46.9,
         "artificial_analysis_economics_index": 53.2
       },
+      "listCostPerTask": 0.1332,
+      "costPerTask": 0.13348186388244396,
       "variants": [
         {
           "aaSlug": "mimo-v2-6-pro",
@@ -518,7 +580,11 @@
             "artificial_analysis_healthcare_and_medical_index": 41.8,
             "artificial_analysis_engineering_index": 46.9,
             "artificial_analysis_economics_index": 53.2
-          }
+          },
+          "listCostPerTask": 0.1332,
+          "costPerTask": 0.13348186388244396,
+          "priceFactor": 1.002116095213543,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "mimo-v2-6-pro"
@@ -553,6 +619,8 @@
         "artificial_analysis_engineering_index": 24.6,
         "artificial_analysis_economics_index": 33.9
       },
+      "listCostPerTask": 0.0191,
+      "costPerTask": 0.0191,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-0424",
@@ -569,7 +637,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 24.6,
             "artificial_analysis_economics_index": 33.9
-          }
+          },
+          "listCostPerTask": 0.0191,
+          "costPerTask": 0.0191,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "mimo-v2-5-0424"
@@ -604,6 +676,8 @@
         "artificial_analysis_engineering_index": 28.6,
         "artificial_analysis_economics_index": 40.5
       },
+      "listCostPerTask": 0.0541,
+      "costPerTask": 0.05421448075105268,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-pro-non-reasoning",
@@ -620,7 +694,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": null,
             "artificial_analysis_economics_index": null
-          }
+          },
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "mimo-v2-5-pro",
@@ -637,7 +715,11 @@
             "artificial_analysis_healthcare_and_medical_index": 25.5,
             "artificial_analysis_engineering_index": 28.6,
             "artificial_analysis_economics_index": 40.5
-          }
+          },
+          "listCostPerTask": 0.0541,
+          "costPerTask": 0.05421448075105268,
+          "priceFactor": 1.002116095213543,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "mimo-v2-5-pro"
@@ -672,6 +754,8 @@
         "artificial_analysis_engineering_index": 31.2,
         "artificial_analysis_economics_index": 43.7
       },
+      "listCostPerTask": 0.5076,
+      "costPerTask": 0.5076,
       "variants": [
         {
           "aaSlug": "minimax-m3",
@@ -688,7 +772,11 @@
             "artificial_analysis_healthcare_and_medical_index": 29.7,
             "artificial_analysis_engineering_index": 31.2,
             "artificial_analysis_economics_index": 43.7
-          }
+          },
+          "listCostPerTask": 0.5076,
+          "costPerTask": 0.5076,
+          "priceFactor": 1,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "minimax-m3"
@@ -723,6 +811,8 @@
         "artificial_analysis_engineering_index": 49.4,
         "artificial_analysis_economics_index": 56.3
       },
+      "listCostPerTask": 1.6049,
+      "costPerTask": 0.034668736604624925,
       "variants": [
         {
           "aaSlug": "muse-spark-1-3-xhigh",
@@ -739,7 +829,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 45.6,
             "artificial_analysis_economics_index": 54.9
-          }
+          },
+          "listCostPerTask": 1.3678,
+          "costPerTask": 0.029546948674562885,
+          "priceFactor": 0.021601804850535814,
+          "priceFactorApproximate": true
         },
         {
           "aaSlug": "muse-spark-1-3",
@@ -756,7 +850,11 @@
             "artificial_analysis_healthcare_and_medical_index": 49.7,
             "artificial_analysis_engineering_index": 49.4,
             "artificial_analysis_economics_index": 56.3
-          }
+          },
+          "listCostPerTask": 1.6049,
+          "costPerTask": 0.034668736604624925,
+          "priceFactor": 0.021601804850535814,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "muse-spark-1-3"
@@ -791,6 +889,8 @@
         "artificial_analysis_engineering_index": 41.6,
         "artificial_analysis_economics_index": 52.9
       },
+      "listCostPerTask": 0.9747,
+      "costPerTask": 0.021055279187817258,
       "variants": [
         {
           "aaSlug": "muse-spark-1-2",
@@ -807,7 +907,11 @@
             "artificial_analysis_healthcare_and_medical_index": 43.8,
             "artificial_analysis_engineering_index": 41.6,
             "artificial_analysis_economics_index": 52.9
-          }
+          },
+          "listCostPerTask": 0.9747,
+          "costPerTask": 0.021055279187817258,
+          "priceFactor": 0.021601804850535814,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "muse-spark-1-2"
@@ -842,6 +946,8 @@
         "artificial_analysis_engineering_index": 46.4,
         "artificial_analysis_economics_index": 52.3
       },
+      "listCostPerTask": 5.4085,
+      "costPerTask": 5.4085,
       "variants": [
         {
           "aaSlug": "qwen3-8-max",
@@ -858,7 +964,11 @@
             "artificial_analysis_healthcare_and_medical_index": 41.4,
             "artificial_analysis_engineering_index": 46.4,
             "artificial_analysis_economics_index": 52.3
-          }
+          },
+          "listCostPerTask": 5.4085,
+          "costPerTask": 5.4085,
+          "priceFactor": 1,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "qwen3-8-max"
@@ -883,6 +993,8 @@
         "go-plus": 90
       },
       "scores": {},
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [],
       "defaultVariant": null
     },
@@ -916,6 +1028,8 @@
         "artificial_analysis_engineering_index": 28.8,
         "artificial_analysis_economics_index": 37.3
       },
+      "listCostPerTask": 0.217,
+      "costPerTask": 0.12106418312387794,
       "variants": [
         {
           "aaSlug": "qwen3-7-plus",
@@ -932,7 +1046,11 @@
             "artificial_analysis_healthcare_and_medical_index": 23,
             "artificial_analysis_engineering_index": 28.8,
             "artificial_analysis_economics_index": 37.3
-          }
+          },
+          "listCostPerTask": 0.217,
+          "costPerTask": 0.12106418312387794,
+          "priceFactor": 0.5578994614003592,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "qwen3-7-plus"
@@ -967,6 +1085,8 @@
         "artificial_analysis_engineering_index": 39.3,
         "artificial_analysis_economics_index": 44.4
       },
+      "listCostPerTask": 0.4857,
+      "costPerTask": 0.24285,
       "variants": [
         {
           "aaSlug": "deepseek-v4-1-flash-non-reasoning",
@@ -983,7 +1103,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 24.7,
             "artificial_analysis_economics_index": 32
-          }
+          },
+          "listCostPerTask": 0.2212,
+          "costPerTask": 0.10315613255893406,
+          "priceFactor": 0.46634779637854457,
+          "priceFactorApproximate": true
         },
         {
           "aaSlug": "deepseek-v4-1-flash",
@@ -1000,7 +1124,11 @@
             "artificial_analysis_healthcare_and_medical_index": 40.6,
             "artificial_analysis_engineering_index": 39.3,
             "artificial_analysis_economics_index": 44.4
-          }
+          },
+          "listCostPerTask": 0.4857,
+          "costPerTask": 0.24285,
+          "priceFactor": 0.5,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "deepseek-v4-1-flash"
@@ -1035,6 +1163,8 @@
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 43.7
       },
+      "listCostPerTask": 0.674,
+      "costPerTask": 0.337,
       "variants": [
         {
           "aaSlug": "deepseek-v4-pro-non-reasoning",
@@ -1051,7 +1181,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 21.9,
             "artificial_analysis_economics_index": 26.2
-          }
+          },
+          "listCostPerTask": 0.3555,
+          "costPerTask": 0.17775,
+          "priceFactor": 0.5,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "deepseek-v4-pro",
@@ -1068,7 +1202,11 @@
             "artificial_analysis_healthcare_and_medical_index": 38.2,
             "artificial_analysis_engineering_index": 37.1,
             "artificial_analysis_economics_index": 43.7
-          }
+          },
+          "listCostPerTask": 0.674,
+          "costPerTask": 0.337,
+          "priceFactor": 0.5,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "deepseek-v4-pro"
@@ -1093,6 +1231,8 @@
         "go-plus": 120
       },
       "scores": {},
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [],
       "defaultVariant": null
     },
@@ -1126,6 +1266,8 @@
         "artificial_analysis_engineering_index": 26.7,
         "artificial_analysis_economics_index": 35.2
       },
+      "listCostPerTask": 0.0718,
+      "costPerTask": 0.07397231521879996,
       "variants": [
         {
           "aaSlug": "hy3",
@@ -1142,7 +1284,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 26.7,
             "artificial_analysis_economics_index": 35.2
-          }
+          },
+          "listCostPerTask": 0.0718,
+          "costPerTask": 0.07397231521879996,
+          "priceFactor": 1.0302550866128128,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "hy3"
@@ -1177,6 +1323,8 @@
         "artificial_analysis_engineering_index": 43.4,
         "artificial_analysis_economics_index": 50
       },
+      "listCostPerTask": 0.2201,
+      "costPerTask": 0,
       "variants": [
         {
           "aaSlug": "minimax-m3-1-flash",
@@ -1193,7 +1341,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 43.4,
             "artificial_analysis_economics_index": 50
-          }
+          },
+          "listCostPerTask": 0.2201,
+          "costPerTask": 0,
+          "priceFactor": 0,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "minimax-m3-1-flash"
@@ -1228,6 +1380,8 @@
         "artificial_analysis_engineering_index": 47.4,
         "artificial_analysis_economics_index": 55.7
       },
+      "listCostPerTask": 3.7383,
+      "costPerTask": 3.7383,
       "variants": [
         {
           "aaSlug": "grok-4-7-low",
@@ -1244,7 +1398,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 42.5,
             "artificial_analysis_economics_index": 52.8
-          }
+          },
+          "listCostPerTask": 1.248,
+          "costPerTask": 1.248,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "grok-4-7-high",
@@ -1261,7 +1419,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 46.6,
             "artificial_analysis_economics_index": 55.3
-          }
+          },
+          "listCostPerTask": 2.7261,
+          "costPerTask": 2.7261,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "grok-4-7",
@@ -1278,7 +1440,11 @@
             "artificial_analysis_healthcare_and_medical_index": 47.2,
             "artificial_analysis_engineering_index": 47.4,
             "artificial_analysis_economics_index": 55.7
-          }
+          },
+          "listCostPerTask": 3.7383,
+          "costPerTask": 3.7383,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "grok-4-7"
@@ -1313,6 +1479,8 @@
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 45.2
       },
+      "listCostPerTask": 0.0678,
+      "costPerTask": 0.0678,
       "variants": [
         {
           "aaSlug": "gpt-6-luna-non-reasoning",
@@ -1329,7 +1497,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 20.7,
             "artificial_analysis_economics_index": 24.2
-          }
+          },
+          "listCostPerTask": 0.0113,
+          "costPerTask": 0.0113,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-6-luna-low",
@@ -1346,7 +1518,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 22.8,
             "artificial_analysis_economics_index": 30.1
-          }
+          },
+          "listCostPerTask": 0.0045,
+          "costPerTask": 0.0045,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-6-luna-medium",
@@ -1363,7 +1539,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 29.4,
             "artificial_analysis_economics_index": 37.1
-          }
+          },
+          "listCostPerTask": 0.0175,
+          "costPerTask": 0.0175,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-6-luna-high",
@@ -1380,7 +1560,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 31.8,
             "artificial_analysis_economics_index": 40
-          }
+          },
+          "listCostPerTask": 0.029,
+          "costPerTask": 0.029,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-6-luna-xhigh",
@@ -1397,7 +1581,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 33.7,
             "artificial_analysis_economics_index": 41.6
-          }
+          },
+          "listCostPerTask": 0.0422,
+          "costPerTask": 0.0422,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-6-luna",
@@ -1414,7 +1602,11 @@
             "artificial_analysis_healthcare_and_medical_index": 37.4,
             "artificial_analysis_engineering_index": 37.1,
             "artificial_analysis_economics_index": 45.2
-          }
+          },
+          "listCostPerTask": 0.0678,
+          "costPerTask": 0.0678,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "gpt-6-luna"
@@ -1449,6 +1641,8 @@
         "artificial_analysis_engineering_index": 36.2,
         "artificial_analysis_economics_index": 42.7
       },
+      "listCostPerTask": 0.1783,
+      "costPerTask": 0.1783,
       "variants": [
         {
           "aaSlug": "gpt-5-6-luna-non-reasoning",
@@ -1465,7 +1659,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 18.3,
             "artificial_analysis_economics_index": 21.6
-          }
+          },
+          "listCostPerTask": 0.0101,
+          "costPerTask": 0.0101,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-5-6-luna-low",
@@ -1482,7 +1680,11 @@
             "artificial_analysis_healthcare_and_medical_index": 19.9,
             "artificial_analysis_engineering_index": 22.7,
             "artificial_analysis_economics_index": 27.9
-          }
+          },
+          "listCostPerTask": 0.0098,
+          "costPerTask": 0.0098,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-5-6-luna-medium",
@@ -1499,7 +1701,11 @@
             "artificial_analysis_healthcare_and_medical_index": 24.2,
             "artificial_analysis_engineering_index": 26.2,
             "artificial_analysis_economics_index": 32
-          }
+          },
+          "listCostPerTask": 0.0156,
+          "costPerTask": 0.0156,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-5-6-luna-high",
@@ -1516,7 +1722,11 @@
             "artificial_analysis_healthcare_and_medical_index": 29.7,
             "artificial_analysis_engineering_index": 31.7,
             "artificial_analysis_economics_index": 38
-          }
+          },
+          "listCostPerTask": 0.044,
+          "costPerTask": 0.044,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-5-6-luna-xhigh",
@@ -1533,7 +1743,11 @@
             "artificial_analysis_healthcare_and_medical_index": 33,
             "artificial_analysis_engineering_index": 34,
             "artificial_analysis_economics_index": 40.6
-          }
+          },
+          "listCostPerTask": 0.0853,
+          "costPerTask": 0.0853,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "gpt-5-6-luna",
@@ -1550,7 +1764,11 @@
             "artificial_analysis_healthcare_and_medical_index": 35.7,
             "artificial_analysis_engineering_index": 36.2,
             "artificial_analysis_economics_index": 42.7
-          }
+          },
+          "listCostPerTask": 0.1783,
+          "costPerTask": 0.1783,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "gpt-5-6-luna"
@@ -1585,6 +1803,8 @@
         "artificial_analysis_engineering_index": 44.9,
         "artificial_analysis_economics_index": 51.2
       },
+      "listCostPerTask": 0.2128,
+      "costPerTask": 0.2128,
       "variants": [
         {
           "aaSlug": "claude-haiku-5-5-low",
@@ -1601,7 +1821,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 31.2,
             "artificial_analysis_economics_index": 37.5
-          }
+          },
+          "listCostPerTask": 0.0245,
+          "costPerTask": 0.0245,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "claude-haiku-5-5-medium",
@@ -1618,7 +1842,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 35.2,
             "artificial_analysis_economics_index": 43.3
-          }
+          },
+          "listCostPerTask": 0.047,
+          "costPerTask": 0.047,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "claude-haiku-5-5-high",
@@ -1635,7 +1863,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 39.2,
             "artificial_analysis_economics_index": 45.8
-          }
+          },
+          "listCostPerTask": 0.0794,
+          "costPerTask": 0.0794,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "claude-haiku-5-5-xhigh",
@@ -1652,7 +1884,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 43.1,
             "artificial_analysis_economics_index": 48.7
-          }
+          },
+          "listCostPerTask": 0.1238,
+          "costPerTask": 0.1238,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "claude-haiku-5-5",
@@ -1669,7 +1905,11 @@
             "artificial_analysis_healthcare_and_medical_index": 44.1,
             "artificial_analysis_engineering_index": 44.9,
             "artificial_analysis_economics_index": 51.2
-          }
+          },
+          "listCostPerTask": 0.2128,
+          "costPerTask": 0.2128,
+          "priceFactor": 1,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "claude-haiku-5-5"
@@ -1704,6 +1944,8 @@
         "artificial_analysis_engineering_index": 55.2,
         "artificial_analysis_economics_index": 60.4
       },
+      "listCostPerTask": 1.9903,
+      "costPerTask": 3.9806,
       "variants": [
         {
           "aaSlug": "gemini-4-argon",
@@ -1720,7 +1962,11 @@
             "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 55.2,
             "artificial_analysis_economics_index": 60.4
-          }
+          },
+          "listCostPerTask": 1.9903,
+          "costPerTask": 3.9806,
+          "priceFactor": 2,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "gemini-4-argon"
@@ -1745,6 +1991,8 @@
         "go-plus": "unlimited"
       },
       "scores": {},
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [],
       "defaultVariant": null
     },
@@ -1768,6 +2016,8 @@
         "go-plus": "unlimited"
       },
       "scores": {},
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [],
       "defaultVariant": null
     }

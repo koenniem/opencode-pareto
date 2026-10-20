@@ -2,7 +2,15 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import type { AAModel, AASnapshot } from './fetch-aa';
 import type { GoPricing } from './scrape-go';
 import { loadAASlugs, loadPricing, loadRoster, validateRoster } from './validate-roster';
-import type { Dataset, DatasetModel, ModelVariant, RosterEntry, IndexKey } from '../src/types';
+import { adjustCostPerTask } from '../src/compute';
+import type {
+  Dataset,
+  DatasetModel,
+  ModelVariant,
+  RosterEntry,
+  IndexKey,
+  Prices,
+} from '../src/types';
 import { labOf } from '../src/labs';
 
 const PLAN_PRICES = { go: 10, 'go-plus': 40 } as const;
@@ -21,10 +29,31 @@ function copyScores(aa: AAModel | undefined): Partial<Record<IndexKey, number | 
  * first in the build and reports the missing slug. If the roster forgot its
  * own default rung, append it so the primary point is never lost.
  */
+function variantOf(
+  found: AAModel,
+  effort: string,
+  order: number,
+  prices: Prices | null,
+): ModelVariant {
+  const cost = adjustCostPerTask(found.costPerTask ?? null, found.pricing ?? null, prices);
+  return {
+    aaSlug: found.slug,
+    aaName: found.name,
+    effort,
+    order,
+    scores: copyScores(found),
+    listCostPerTask: found.costPerTask ?? null,
+    costPerTask: cost.costPerTask,
+    priceFactor: cost.priceFactor,
+    priceFactorApproximate: cost.priceFactorApproximate,
+  };
+}
+
 function buildVariants(
   entry: RosterEntry,
   aa: AAModel | undefined,
   bySlug: Map<string, AAModel>,
+  prices: Prices | null,
 ): ModelVariant[] {
   if (!aa) return [];
 
@@ -35,23 +64,18 @@ function buildVariants(
     const found = bySlug.get(rung.aaSlug);
     if (!found || seen.has(found.slug)) continue;
     seen.add(found.slug);
-    variants.push({
-      aaSlug: found.slug,
-      aaName: found.name,
-      effort: rung.label,
-      order: variants.length,
-      scores: copyScores(found),
-    });
+    variants.push(variantOf(found, rung.label, variants.length, prices));
   }
 
   if (!seen.has(aa.slug)) {
-    variants.push({
-      aaSlug: aa.slug,
-      aaName: aa.name,
-      effort: entry.aaVariant ?? aa.variant ?? 'Default',
-      order: variants.length,
-      scores: copyScores(aa),
-    });
+    variants.push(
+      variantOf(
+        aa,
+        entry.aaVariant ?? aa.variant ?? 'Default',
+        variants.length,
+        prices,
+      ),
+    );
   }
 
   return variants;
@@ -92,7 +116,18 @@ export function buildDataset(
     }
 
     const scores = copyScores(aa);
-    const variants = buildVariants(entry, aa, bySlug);
+    const prices =
+      priceRow && entry.tier !== 'unpriced'
+        ? {
+            input: priceRow.input,
+            output: priceRow.output,
+            cachedRead: priceRow.cachedRead,
+            cachedWrite: priceRow.cachedWrite,
+          }
+        : null;
+    const variants = buildVariants(entry, aa, bySlug, prices);
+    const primary =
+      (aa ? variants.find((variant) => variant.aaSlug === aa.slug) : undefined) ?? variants[0];
 
     return {
       goId: entry.goId,
@@ -103,17 +138,11 @@ export function buildDataset(
       tier: entry.tier,
       priceRow: entry.priceRow,
       promoLabel: priceRow?.promo?.label ?? null,
-      prices:
-        priceRow && entry.tier !== 'unpriced'
-          ? {
-              input: priceRow.input,
-              output: priceRow.output,
-              cachedRead: priceRow.cachedRead,
-              cachedWrite: priceRow.cachedWrite,
-            }
-          : null,
+      prices,
       allowances: priceRow && entry.tier !== 'unpriced' ? { ...priceRow.allowance } : null,
       scores,
+      listCostPerTask: primary?.listCostPerTask ?? null,
+      costPerTask: primary?.costPerTask ?? null,
       variants,
       defaultVariant: aa?.slug ?? null,
     };

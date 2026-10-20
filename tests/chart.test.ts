@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { buildScene, formatPrice, logTicks, type ChartPoint } from '../src/chart';
+import {
+  buildScene,
+  formatCostPerTask,
+  formatCostTick,
+  logTicks,
+  type ChartPoint,
+} from '../src/chart';
 import { linearScale, logScale } from '../src/scales';
 
-const OPTS = { width: 800, height: 400, xLabel: 'Effective $/1M', yLabel: 'Intelligence' };
+const OPTS = { width: 800, height: 400, xLabel: 'Go $/task', yLabel: 'Intelligence' };
 
 const pts: ChartPoint[] = [
   { id: 'a', label: 'A', cost: 0.001, score: 40, frontier: false },
@@ -60,11 +66,22 @@ describe('logTicks', () => {
   });
 });
 
-describe('formatPrice', () => {
-  it('scales decimals with magnitude', () => {
-    expect(formatPrice(1.2)).toBe('$1.20');
-    expect(formatPrice(0.048)).toBe('$0.048');
-    expect(formatPrice(0.001)).toBe('$0.0010');
+describe('formatCostPerTask', () => {
+  it('scales decimals with magnitude and drops redundant zeros', () => {
+    expect(formatCostPerTask(1.2)).toBe('$1.20');
+    expect(formatCostPerTask(0.048)).toBe('$0.048');
+    expect(formatCostPerTask(0.01)).toBe('$0.01');
+    expect(formatCostPerTask(0.001)).toBe('$0.001');
+    expect(formatCostPerTask(3.6057)).toBe('$3.61');
+  });
+});
+
+describe('formatCostTick', () => {
+  it('drops redundant zeros from decade labels', () => {
+    expect(formatCostTick(1)).toBe('$1');
+    expect(formatCostTick(0.1)).toBe('$0.1');
+    expect(formatCostTick(0.01)).toBe('$0.01');
+    expect(formatCostTick(1.5)).toBe('$1.5');
   });
 });
 
@@ -96,6 +113,11 @@ describe('buildScene', () => {
     const labels = textShapes(buildScene(pts, OPTS)).map((s) => s.text);
     expect(labels).toContain('A');
     expect(labels).toContain('B');
+  });
+
+  it('puts the cost per task in the native point description', () => {
+    const dot = circles(buildScene(pts, OPTS)).find((c) => c.id === 'b')!;
+    expect(dot.title ?? '').toContain('$0.01/task');
   });
 
   it('never emits two overlapping labels', () => {
@@ -258,23 +280,26 @@ describe('effort ladders', () => {
   const ladder: ChartPoint[] = [
     {
       id: 'g::low', group: 'g', label: 'G', effort: 'Low', effortOrder: 0,
-      cost: 0.01, score: 30, frontier: false, lab: 'openai',
+      cost: 0.03, score: 30, frontier: false, lab: 'openai',
     },
     {
       id: 'g::max', group: 'g', label: 'G', effort: 'Max', effortOrder: 1, isDefault: true,
-      cost: 0.01, score: 45, frontier: true, lab: 'openai',
+      cost: 0.12, score: 45, frontier: true, lab: 'openai',
     },
   ];
 
-  it('draws a vertical rail at the shared price', () => {
+  it('connects the rungs in effort order, not with a vertical rail', () => {
     const rails = buildScene(ladder, OPTS).shapes.filter(
-      (s) => s.kind === 'line' && s.cls.includes('ladder'),
+      (s) => s.kind === 'path' && s.cls === 'ladder',
     );
     expect(rails).toHaveLength(1);
     const rail = rails[0];
-    if (rail.kind !== 'line') throw new Error('not a line');
-    expect(rail.x1).toBeCloseTo(rail.x2, 6);
-    expect(Math.abs(rail.y1 - rail.y2)).toBeGreaterThan(10);
+    if (rail.kind !== 'path') throw new Error('not a path');
+    const match = /M ([\d.]+) ([\d.]+) L ([\d.]+) ([\d.]+)/.exec(rail.d);
+    expect(match).not.toBeNull();
+    const [x1, y1, x2, y2] = match!.slice(1).map(Number);
+    expect(x2).toBeGreaterThan(x1);
+    expect(y2).toBeLessThan(y1);
   });
 
   it('labels the model once, at its best rung', () => {

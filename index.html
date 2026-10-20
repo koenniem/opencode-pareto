@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OpenCode Pareto — cost vs capability for OpenCode Go</title>
+    <title>OpenCode Pareto — cost per task vs capability for OpenCode Go</title>
     <meta
       name="description"
-      content="Which model gives the most capability per dollar on the OpenCode Go subscription. Effective price against Artificial Analysis scores, with the Pareto frontier and effort levels."
+      content="Which model gives the most capability per dollar on the OpenCode Go subscription. Artificial Analysis cost per task against its scores, adjusted to OpenCode prices and the plan's usage multiplier, with the Pareto frontier and effort levels."
     />
     <meta name="theme-color" content="#f4f0e6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#12110e" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/src/style.css" />
     <script>
       // Set before first paint so a dark-mode visitor never sees a white flash.
@@ -84,8 +85,9 @@
         <h1>Which model is actually worth your <em>$10</em>?</h1>
         <p class="standfirst">
           Go sells monthly dollar allowances, not tokens, and the discount is different on every
-          model. This chart prices each model by what it actually costs you, then asks which one
-          gives the most capability for the money.
+          model. This chart prices each model by the cost of a real task — Artificial Analysis’s
+          weighted benchmark cost — after OpenCode’s prices and the plan’s usage multiplier. Then it
+          asks which model gives the most capability for the money.
         </p>
         <dl class="stat-line">
           <div class="stat">
@@ -97,7 +99,7 @@
             <dd id="stat-frontier">—</dd>
           </div>
           <div class="stat">
-            <dt>Scores</dt>
+            <dt>Data</dt>
             <dd id="stat-freshness">—</dd>
           </div>
         </dl>
@@ -107,7 +109,7 @@
         <div class="section-head">
           <div>
             <p class="section-index">01 — The chart</p>
-            <h2 id="chart-heading">Effective price vs capability</h2>
+            <h2 id="chart-heading">Cost per task vs capability</h2>
           </div>
           <div class="chart-options">
             <label class="switch" for="show-efforts">
@@ -123,9 +125,10 @@
           <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
           <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true" hidden></div>
           <p class="chart-footnote">
-            Log price axis · higher is better · hover or focus a point for its calculation. Effort
-            changes the score, not the published per-token rate: thinking harder spends more tokens
-            per task, so the rungs share one price.
+            Log cost axis · higher is better · hover or focus a point for its calculation. Cost per
+            task is Artificial Analysis’s weighted cost for one Intelligence Index task, adjusted to
+            OpenCode’s token prices and divided by the plan’s usage multiplier. Effort changes both
+            the score and the tokens a task burns.
           </p>
           <ul id="legend" class="legend" aria-label="Labs"></ul>
           <noscript>
@@ -138,7 +141,7 @@
 
       <section class="details" id="details" aria-live="polite">
         <p class="note">
-          Hover, focus or click a point to see its effort, allowance and effective price.
+          Hover, focus or click a point to see its effort, cost per task and allowance.
         </p>
       </section>
 
@@ -161,7 +164,7 @@
           <h2 id="display-heading">How wide is “close”?</h2>
           <p class="note">
             When one model dominates, the strict frontier collapses to a couple of points. The
-            corridor flags models within this many points of the best available at their price or
+            corridor flags models within this many points of the best available at their cost or
             cheaper — candidates worth a look, not equals.
           </p>
           <div class="slider-row">
@@ -172,36 +175,12 @@
           <output id="band-count" class="band-count" for="tolerance"></output>
         </section>
 
-        <section class="panel mix" aria-labelledby="mix-heading">
-          <p class="section-index">03 — Token mix</p>
-          <h2 id="mix-heading">What a token is made of</h2>
-          <p class="note">
-            Every model is priced on one global mix: the median of OpenCode’s own published
-            per-request token profiles. It is extremely cache-heavy because agentic coding re-reads
-            a large context every turn. Change it to see how the frontier moves.
-          </p>
-          <div class="mix-controls">
-            <div class="control">
-              <label for="mix-input">Input %</label>
-              <input id="mix-input" type="number" min="0" max="100" step="0.1" value="1.14" />
-            </div>
-            <div class="control">
-              <label for="mix-cached">Cached read %</label>
-              <input id="mix-cached" type="number" min="0" max="100" step="0.1" value="98.50" />
-            </div>
-            <div class="control">
-              <label for="mix-output">Output %</label>
-              <input id="mix-output" type="number" min="0" max="100" step="0.1" value="0.36" />
-            </div>
-            <button type="button" id="mix-reset" class="button">Reset to default</button>
-          </div>
-        </section>
       </div>
 
       <section class="data" aria-labelledby="table-heading">
         <div class="section-head">
           <div>
-            <p class="section-index">04 — All models</p>
+            <p class="section-index">03 — All models</p>
             <h2 id="table-heading">The whole roster</h2>
           </div>
         </div>
@@ -212,18 +191,21 @@
     <footer class="site-footer">
       <div class="wrap">
         <p>
-          Scores:
+          Scores and costs:
           <a href="https://artificialanalysis.ai" rel="noopener">Source: Artificial Analysis
-          (artificialanalysis.ai)</a>. Scores are reproduced unaltered; effective prices are our
-          own calculation and are not endorsed by Artificial Analysis.
+          (artificialanalysis.ai)</a>. Scores are reproduced unaltered; Go costs are our own
+          calculation and are not endorsed by Artificial Analysis.
         </p>
         <p>
           Prices from the <a href="https://opencode.ai/docs/go/" rel="noopener">OpenCode Go
           documentation</a>. <span id="freshness"></span>
         </p>
         <p class="note">
-          Not affiliated with OpenCode or Artificial Analysis. The effective price assumes you use
-          your full monthly allowance on that one model; per-model allowances do not pool.
+          Not affiliated with OpenCode or Artificial Analysis. AA cost per task is a weighted
+          benchmark cost at AA’s token prices; Go cost applies OpenCode’s price basis and the plan’s
+          usage multiplier. Where the two price bases differ non-proportionally, the adjustment is an
+          estimate. It assumes you use your full monthly allowance on that one model; per-model
+          allowances do not pool.
         </p>
       </div>
     </footer>

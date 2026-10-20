@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { nearFrontier, paretoFrontier, toFrontierInputs } from '../src/frontier';
-import { DEFAULT_MIX } from '../src/compute';
-import type { DatasetModel, IndexKey } from '../src/types';
+import type { DatasetModel, IndexKey, ModelVariant } from '../src/types';
 
 const IDX: IndexKey = 'artificial_analysis_intelligence_index';
 
@@ -18,8 +17,24 @@ function model(over: Partial<DatasetModel>): DatasetModel {
     prices: { input: 1, output: 4, cachedRead: 0.1, cachedWrite: null },
     allowances: { go: 60, 'go-plus': 180 },
     scores: { [IDX]: 50 },
+    listCostPerTask: 6,
+    costPerTask: 6,
     variants: [],
     defaultVariant: null,
+    ...over,
+  };
+}
+
+function variant(
+  over: Partial<ModelVariant> & Pick<ModelVariant, 'aaSlug' | 'effort' | 'order'>,
+): ModelVariant {
+  return {
+    aaName: over.aaSlug,
+    scores: { [IDX]: 50 },
+    listCostPerTask: 6,
+    costPerTask: 6,
+    priceFactor: 1,
+    priceFactorApproximate: false,
     ...over,
   };
 }
@@ -86,7 +101,6 @@ describe('toFrontierInputs', () => {
       [model({ goId: 'f', allowances: { go: 'unlimited', 'go-plus': 'unlimited' } })],
       'go',
       IDX,
-      DEFAULT_MIX,
       10,
     );
     expect(buckets.f).toBe('free');
@@ -98,21 +112,44 @@ describe('toFrontierInputs', () => {
       [model({ goId: 'u', allowances: { go: null, 'go-plus': null } })],
       'go',
       IDX,
-      DEFAULT_MIX,
       10,
     );
     expect(buckets.u).toBe('unpriced');
   });
 
-  it('buckets a null cache price as incomplete', () => {
-    const { buckets, inputs } = toFrontierInputs(
-      [model({ prices: { input: 1, output: 4, cachedRead: null, cachedWrite: null } })],
+  it('buckets a model with no Go price as unpriced', () => {
+    const { buckets } = toFrontierInputs(
+      [model({ prices: null, costPerTask: 6 })],
       'go',
       IDX,
-      DEFAULT_MIX,
       10,
     );
-    expect(buckets.m).toBe('incomplete');
+    expect(buckets.m).toBe('unpriced');
+  });
+
+  it('buckets a model whose rungs have no AA cost as unpriced', () => {
+    const { buckets, inputs } = toFrontierInputs(
+      [
+        model({
+          costPerTask: null,
+          listCostPerTask: null,
+          variants: [
+            variant({
+              aaSlug: 'm',
+              effort: 'Default',
+              order: 0,
+              listCostPerTask: null,
+              costPerTask: null,
+              priceFactor: null,
+            }),
+          ],
+        }),
+      ],
+      'go',
+      IDX,
+      10,
+    );
+    expect(buckets.m).toBe('unpriced');
     expect(inputs).toHaveLength(0);
   });
 
@@ -121,7 +158,6 @@ describe('toFrontierInputs', () => {
       [model({ scores: { [IDX]: null } })],
       'go',
       IDX,
-      DEFAULT_MIX,
       10,
     );
     expect(buckets.m).toBe('unscored');
@@ -129,30 +165,31 @@ describe('toFrontierInputs', () => {
   });
 
   it('buckets a model with no scores at all as unscored', () => {
-    const { buckets } = toFrontierInputs([model({ scores: {} })], 'go', IDX, DEFAULT_MIX, 10);
+    const { buckets } = toFrontierInputs([model({ scores: {} })], 'go', IDX, 10);
     expect(buckets.m).toBe('unscored');
   });
 
   it('buckets one valid model as plotted', () => {
-    const { buckets, inputs } = toFrontierInputs([model({})], 'go', IDX, DEFAULT_MIX, 10);
+    const { buckets, inputs } = toFrontierInputs([model({})], 'go', IDX, 10);
     expect(buckets.m).toBe('plotted');
     expect(inputs).toHaveLength(1);
-    expect(inputs[0]).toMatchObject({ id: 'm::m', cost: expect.any(Number), score: 50 });
+    expect(inputs[0]).toMatchObject({ id: 'm::m', cost: 1, score: 50 });
   });
 
   it('uses the requested plan allowance', () => {
     const m = model({ allowances: { go: 60, 'go-plus': 180 } });
-    const go = toFrontierInputs([m], 'go', IDX, DEFAULT_MIX, 10).inputs[0];
-    const plus = toFrontierInputs([m], 'go-plus', IDX, DEFAULT_MIX, 40).inputs[0];
+    const go = toFrontierInputs([m], 'go', IDX, 10).inputs[0];
+    const plus = toFrontierInputs([m], 'go-plus', IDX, 40).inputs[0];
     // Go: 60/10 = 6x. Go Plus: 180/40 = 4.5x. The allowance grows less than
-    // the subscription, so this model is dearer per token on Go Plus.
-    expect(plus.cost).toBeCloseTo(go.cost * (6 / 4.5), 10);
+    // the subscription, so this model is dearer per task on Go Plus.
+    expect(go.cost).toBeCloseTo(1, 10);
+    expect(plus.cost).toBeCloseTo(6 / 4.5, 10);
   });
 
   it('reproduces the multiplier difference between plans', () => {
     const m = model({ allowances: { go: 15, 'go-plus': 120 } });
-    const go = toFrontierInputs([m], 'go', IDX, DEFAULT_MIX, 10).inputs[0];
-    const plus = toFrontierInputs([m], 'go-plus', IDX, DEFAULT_MIX, 40).inputs[0];
+    const go = toFrontierInputs([m], 'go', IDX, 10).inputs[0];
+    const plus = toFrontierInputs([m], 'go-plus', IDX, 40).inputs[0];
     expect(plus.cost).toBeCloseTo(go.cost / 2, 10);
   });
 });
@@ -161,71 +198,135 @@ describe('effort variants', () => {
   const ladder = model({
     goId: 'ladder',
     variants: [
-      {
+      variant({
         aaSlug: 'ladder-low',
-        aaName: 'Ladder (Low)',
         effort: 'Low',
         order: 0,
         scores: { [IDX]: 30 },
-      },
-      {
+        listCostPerTask: 3,
+        costPerTask: 3,
+      }),
+      variant({
         aaSlug: 'ladder',
-        aaName: 'Ladder (Max)',
         effort: 'Max',
         order: 1,
         scores: { [IDX]: 50 },
-      },
+        listCostPerTask: 6,
+        costPerTask: 6,
+      }),
     ],
     defaultVariant: 'ladder',
   });
 
   it('uses only the default rung by default', () => {
-    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10);
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, 10);
     expect(inputs).toHaveLength(1);
     expect(inputs[0]).toMatchObject({
       modelId: 'ladder',
       effort: 'Max',
       score: 50,
+      cost: 1,
       isDefault: true,
     });
   });
 
-  it('includes every scored rung when all efforts are requested', () => {
-    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10, 'all');
+  it('includes every scored rung with its own cost when all efforts are requested', () => {
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, 10, 'all');
     expect(inputs.map((i) => i.effort)).toEqual(['Low', 'Max']);
+    expect(inputs.map((i) => i.cost)).toEqual([0.5, 1]);
     expect(inputs.every((i) => i.modelId === 'ladder')).toBe(true);
     expect(new Set(inputs.map((i) => i.id)).size).toBe(2);
   });
 
-  it('keeps only the better rung on a shared-price frontier', () => {
-    const { inputs } = toFrontierInputs([ladder], 'go', IDX, DEFAULT_MIX, 10, 'all');
-    expect(paretoFrontier(inputs)).toEqual([inputs.find((i) => i.effort === 'Max')!.id]);
+  it('keeps both rungs when the higher effort earns its higher cost', () => {
+    const { inputs } = toFrontierInputs([ladder], 'go', IDX, 10, 'all');
+    expect(paretoFrontier(inputs)).toEqual([
+      inputs.find((i) => i.effort === 'Low')!.id,
+      inputs.find((i) => i.effort === 'Max')!.id,
+    ]);
+  });
+
+  it('drops a dearer rung with no score gain', () => {
+    const flat = model({
+      goId: 'flat',
+      variants: [
+        variant({
+          aaSlug: 'flat-low',
+          effort: 'Low',
+          order: 0,
+          scores: { [IDX]: 30 },
+          listCostPerTask: 3,
+          costPerTask: 3,
+        }),
+        variant({
+          aaSlug: 'flat',
+          effort: 'Max',
+          order: 1,
+          scores: { [IDX]: 30 },
+          listCostPerTask: 60,
+          costPerTask: 60,
+        }),
+      ],
+      defaultVariant: 'flat',
+    });
+    const { inputs } = toFrontierInputs([flat], 'go', IDX, 10, 'all');
+    expect(paretoFrontier(inputs)).toEqual([inputs.find((i) => i.effort === 'Low')!.id]);
   });
 
   it('skips a rung with no score on the selected index', () => {
     const sparse = model({
       goId: 'sparse',
       variants: [
-        {
+        variant({
           aaSlug: 'sparse-low',
-          aaName: 'Sparse (Low)',
           effort: 'Low',
           order: 0,
           scores: { [IDX]: null },
-        },
-        {
+          listCostPerTask: 3,
+          costPerTask: 3,
+        }),
+        variant({
           aaSlug: 'sparse',
-          aaName: 'Sparse (Max)',
           effort: 'Max',
           order: 1,
           scores: { [IDX]: 40 },
-        },
+          listCostPerTask: 6,
+          costPerTask: 6,
+        }),
       ],
       defaultVariant: 'sparse',
     });
-    expect(
-      toFrontierInputs([sparse], 'go', IDX, DEFAULT_MIX, 10, 'all').inputs.map((i) => i.effort),
-    ).toEqual(['Max']);
+    const { inputs } = toFrontierInputs([sparse], 'go', IDX, 10, 'all');
+    expect(inputs.map((i) => i.effort)).toEqual(['Max']);
+  });
+
+  it('skips a rung with no cost', () => {
+    const missing = model({
+      goId: 'missing',
+      variants: [
+        variant({
+          aaSlug: 'missing-low',
+          effort: 'Low',
+          order: 0,
+          scores: { [IDX]: 40 },
+          listCostPerTask: null,
+          costPerTask: null,
+          priceFactor: null,
+        }),
+        variant({
+          aaSlug: 'missing',
+          effort: 'Max',
+          order: 1,
+          scores: { [IDX]: 50 },
+          listCostPerTask: 6,
+          costPerTask: 6,
+        }),
+      ],
+      defaultVariant: 'missing',
+    });
+    const { inputs, buckets } = toFrontierInputs([missing], 'go', IDX, 10, 'all');
+    expect(inputs.map((i) => i.effort)).toEqual(['Max']);
+    expect(buckets.missing).toBe('plotted');
   });
 
   it('buckets a model as unscored when every visible rung is null', () => {
@@ -233,26 +334,31 @@ describe('effort variants', () => {
       goId: 'blank',
       scores: { [IDX]: null },
       variants: [
-        {
+        variant({
           aaSlug: 'blank-low',
-          aaName: 'Blank (Low)',
           effort: 'Low',
           order: 0,
           scores: { [IDX]: null },
-        },
+          listCostPerTask: 3,
+          costPerTask: 3,
+        }),
       ],
       defaultVariant: 'blank-low',
     });
-    expect(toFrontierInputs([blank], 'go', IDX, DEFAULT_MIX, 10, 'all').buckets.blank).toBe(
-      'unscored',
-    );
+    const { buckets } = toFrontierInputs([blank], 'go', IDX, 10, 'all');
+    expect(buckets.blank).toBe('unscored');
   });
 
-  it('falls back to the model score when no variants were attached', () => {
+  it('falls back to the model score and cost when no variants were attached', () => {
     const legacy = model({ goId: 'legacy', aaSlug: 'legacy', defaultVariant: null });
-    const { inputs } = toFrontierInputs([legacy], 'go', IDX, DEFAULT_MIX, 10, 'all');
+    const { inputs } = toFrontierInputs([legacy], 'go', IDX, 10, 'all');
     expect(inputs).toHaveLength(1);
-    expect(inputs[0]).toMatchObject({ id: 'legacy::legacy', score: 50, isDefault: true });
+    expect(inputs[0]).toMatchObject({
+      id: 'legacy::legacy',
+      score: 50,
+      cost: 1,
+      isDefault: true,
+    });
   });
 });
 

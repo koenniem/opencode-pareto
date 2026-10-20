@@ -109,13 +109,24 @@ export function logMinorTicks(min: number, max: number): number[] {
   return ticks;
 }
 
-/** Prices span four orders of magnitude, so decimals follow magnitude. */
-export function formatPrice(value: number): string {
+/** Costs span several orders of magnitude, so decimals follow magnitude. */
+export function formatCostPerTask(value: number): string {
   if (!Number.isFinite(value)) return '—';
   if (value >= 1) return `$${value.toFixed(2)}`;
-  if (value >= 0.01) return `$${value.toFixed(3)}`;
-  return `$${value.toFixed(4)}`;
+  if (value >= 0.01) return `$${Number(value.toFixed(3))}`;
+  if (value >= 0.001) return `$${Number(value.toFixed(4))}`;
+  return `$${Number(value.toFixed(5))}`;
 }
+
+/** Axis labels use the same scale without redundant trailing zeros. */
+export function formatCostTick(value: number): string {
+  if (!Number.isFinite(value)) return '—';
+  if (value >= 1) return `$${Number(value.toFixed(2))}`;
+  if (value >= 0.01) return `$${Number(value.toFixed(3))}`;
+  if (value >= 0.001) return `$${Number(value.toFixed(4))}`;
+  return `$${Number(value.toFixed(5))}`;
+}
+
 
 /** A stable readable step: 1, 2, 2.5, 5 or 10 times a power of ten. */
 function niceStep(raw: number): number {
@@ -328,7 +339,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
       shapes: [],
       empty:
         usable.length === 0
-          ? 'No models can be plotted yet. Scores arrive with the first Artificial Analysis fetch.'
+          ? 'No models can be plotted yet. Scores and costs arrive with the first Artificial Analysis fetch.'
           : 'Only one model can be plotted, so there is no frontier to draw.',
       yDomain: [0, 100],
     };
@@ -386,7 +397,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
       kind: 'text',
       x: px,
       y: floor + 20,
-      text: formatPrice(value),
+      text: formatCostTick(value),
       cls: 'tick',
       anchor: 'middle',
     });
@@ -438,20 +449,28 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
   const ladderShapes: Shape[] = [];
   for (const group of groups.values()) {
     if (group.length < 2) continue;
-    const xs = group.map((point) => x(point.cost));
-    const ys = group.map((point) => scoreY(point.score));
-    const railX = xs.reduce((sum, value) => sum + value, 0) / xs.length;
-    const top = Math.min(...ys);
-    const bottom = Math.max(...ys);
+    const ordered = [...group].sort(
+      (a, b) => (a.effortOrder ?? 0) - (b.effortOrder ?? 0) || a.cost - b.cost,
+    );
+    const xs = ordered.map((point) => x(point.cost));
+    const ys = ordered.map((point) => scoreY(point.score));
     ladderShapes.push({
-      kind: 'line',
-      x1: railX,
-      y1: top,
-      x2: railX,
-      y2: bottom,
+      kind: 'path',
+      d: `M ${ordered
+        .map((point) => `${x(point.cost).toFixed(2)} ${scoreY(point.score).toFixed(2)}`)
+        .join(' L ')}`,
       cls: 'ladder',
     });
-    occupied.push({ x: railX - 2, y: top, w: 4, h: Math.max(bottom - top, 1) });
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    occupied.push({
+      x: left - 2,
+      y: top,
+      w: Math.max(right - left, 4) + 4,
+      h: Math.max(bottom - top, 1),
+    });
   }
 
   const pointShapes: Shape[] = [];
@@ -477,7 +496,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
       id: point.id,
       title:
         point.title ??
-        `${point.label}${effort}: ${formatPrice(point.cost)}/1M · score ${point.score}`,
+        `${point.label}${effort}: ${formatCostPerTask(point.cost)}/task · score ${point.score}`,
     });
     occupied.push({ x: cx - r - 3, y: cy - r - 3, w: r * 2 + 6, h: r * 2 + 6 });
   }

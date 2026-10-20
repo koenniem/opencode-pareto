@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig, type Plugin } from 'vite';
 import { renderTableHtml } from './src/table';
-import { DEFAULT_MIX } from './src/compute';
 import type { Dataset } from './src/types';
 
 function readDataset(): Dataset {
@@ -32,7 +31,6 @@ function injectTable(): Plugin {
         renderTableHtml(dataset, {
           plan: 'go',
           index: 'artificial_analysis_intelligence_index',
-          mix: DEFAULT_MIX,
         }),
       );
     },

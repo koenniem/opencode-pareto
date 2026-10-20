@@ -1,12 +1,12 @@
-import type { Allowance, Mix, Prices } from './types';
+import type { AAPricing, Allowance, Mix, Prices } from './types';
 
 /**
- * Default token mix: the median share of OpenCode's own published per-request
- * token profiles. Cache-heavy by nature, and aggressively so — agentic coding
- * re-reads a large context every turn.
+ * The cache-heavy mix used only to translate Artificial Analysis's price basis
+ * to OpenCode's when the two price vectors are not proportional. It is not a
+ * chart input: the cost per task itself comes from AA's measured token usage.
  *
- * Pinned by a regression test against those published profiles; see
- * `tests/compute.test.ts`.
+ * Cache-heavy by nature, and aggressively so — agentic coding re-reads a large
+ * context every turn.
  */
 export const DEFAULT_MIX: Mix = {
   input: 0.0114,
@@ -14,48 +14,6 @@ export const DEFAULT_MIX: Mix = {
   output: 0.0036,
   cacheWrite: 0,
 };
-
-/** Scale a mix so its components sum to one. A zero mix stays zero. */
-export function normalizeMix(mix: Mix): Mix {
-  const total = mix.input + mix.cached + mix.output + mix.cacheWrite;
-  if (total === 0) return { input: 0, cached: 0, output: 0, cacheWrite: 0 };
-  return {
-    input: mix.input / total,
-    cached: mix.cached / total,
-    output: mix.output / total,
-    cacheWrite: mix.cacheWrite / total,
-  };
-}
-
-/**
- * Blended price per 1M tokens.
- *
- * Returns `null` when a component carrying non-zero weight has no published
- * price. Substituting a fallback would move the point by orders of magnitude
- * at realistic cache weights, so this fails closed instead.
- */
-export function blendedPrice(prices: Prices, mix: Mix): number | null {
-  const weights: Array<[number, number | null]> = [
-    [mix.input, prices.input],
-    [mix.cached, prices.cachedRead],
-    [mix.output, prices.output],
-    [mix.cacheWrite, prices.cachedWrite],
-  ];
-
-  const totalWeight = weights.reduce((sum, [weight]) => sum + weight, 0);
-  // A mix with no weight prices nothing. Returning 0 here would render a real
-  // model as free, which is the exact class of error this project exists to
-  // avoid.
-  if (totalWeight === 0) return null;
-
-  let total = 0;
-  for (const [weight, price] of weights) {
-    if (weight === 0) continue;
-    if (price === null || !Number.isFinite(price)) return null;
-    total += weight * price;
-  }
-  return total / totalWeight;
-}
 
 /** Allowance in dollars divided by the monthly subscription price. */
 export function multiplier(allowance: Allowance, planPrice: number): number | null {
@@ -65,19 +23,113 @@ export function multiplier(allowance: Allowance, planPrice: number): number | nu
   return allowance / planPrice;
 }
 
+export interface PriceAdjustment {
+  factor: number;
+  exact: boolean;
+}
+
 /**
- * What a model costs per 1M blended tokens once the plan multiplies it.
- * `null` when the model cannot be priced (free, unpriced, or missing a price).
+ * Ratio from Artificial Analysis's price basis to OpenCode's.
+ *
+ * When every published price moves by the same ratio, the answer is exact
+ * regardless of token mix. When they differ, the free AA API withholds token
+ * counts, so the ratio is weighted with the cache-heavy mix and marked
+ * approximate.
  */
-export function effectivePrice(
-  prices: Prices,
+export function priceAdjustment(
+  aa: AAPricing | null,
+  go: Prices | null,
+  mix: Mix = DEFAULT_MIX,
+): PriceAdjustment | null {
+  if (!aa || !go) return null;
+
+  const entries: Array<{ weight: number; aa: number | null; go: number | null }> = [
+    { weight: mix.input, aa: aa.input, go: go.input },
+    { weight: mix.cached, aa: aa.cachedRead, go: go.cachedRead },
+    { weight: mix.output, aa: aa.output, go: go.output },
+    { weight: mix.cacheWrite, aa: aa.cachedWrite, go: go.cachedWrite },
+  ];
+
+  const ratios: number[] = [];
+  let incomplete = false;
+  let weightedGo = 0;
+  let weightedAA = 0;
+  let weightTotal = 0;
+
+  for (const entry of entries) {
+    if (entry.aa === null && entry.go === null) continue;
+    if (
+      entry.aa === null ||
+      entry.go === null ||
+      !Number.isFinite(entry.aa) ||
+      !Number.isFinite(entry.go) ||
+      entry.aa <= 0
+    ) {
+      incomplete = true;
+      continue;
+    }
+    ratios.push(entry.go / entry.aa);
+    weightedGo += entry.weight * entry.go;
+    weightedAA += entry.weight * entry.aa;
+    weightTotal += entry.weight;
+  }
+
+  if (ratios.length === 0) return { factor: 1, exact: !incomplete };
+
+  const min = Math.min(...ratios);
+  const max = Math.max(...ratios);
+  const equal = max - min <= 1e-9 * Math.max(1, max);
+  if (equal && !incomplete) return { factor: ratios[0], exact: true };
+
+  const factor = weightTotal > 0 && weightedAA > 0 ? weightedGo / weightedAA : ratios[0];
+  return { factor, exact: false };
+}
+
+export interface AdjustedCost {
+  costPerTask: number | null;
+  priceFactor: number | null;
+  priceFactorApproximate: boolean;
+}
+
+/** Translate AA's list cost per task into OpenCode's price basis. */
+export function adjustCostPerTask(
+  listCostPerTask: number | null,
+  aaPricing: AAPricing | null,
+  goPrices: Prices | null,
+  mix: Mix = DEFAULT_MIX,
+): AdjustedCost {
+  if (listCostPerTask === null || !Number.isFinite(listCostPerTask) || listCostPerTask < 0) {
+    return { costPerTask: null, priceFactor: null, priceFactorApproximate: false };
+  }
+
+  const adjustment = priceAdjustment(aaPricing, goPrices, mix);
+  if (adjustment === null) {
+    return {
+      costPerTask: listCostPerTask,
+      priceFactor: null,
+      priceFactorApproximate: false,
+    };
+  }
+
+  return {
+    costPerTask: listCostPerTask * adjustment.factor,
+    priceFactor: adjustment.factor,
+    priceFactorApproximate: !adjustment.exact,
+  };
+}
+
+/**
+ * What one task costs on the plan after its usage multiplier: list cost per
+ * task divided by allowance / subscription price. The multiplier is a usage
+ * multiplier, so a larger allowance makes each task cheaper.
+ */
+export function effectiveCostPerTask(
+  costPerTask: number | null,
   allowance: Allowance,
   planPrice: number,
-  mix: Mix,
 ): number | null {
+  if (costPerTask === null || !Number.isFinite(costPerTask) || costPerTask < 0) return null;
   const m = multiplier(allowance, planPrice);
   if (m === null) return null;
-  const blended = blendedPrice(prices, mix);
-  if (blended === null) return null;
-  return blended / m;
+  return costPerTask / m;
 }

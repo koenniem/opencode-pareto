@@ -1,7 +1,7 @@
-import { effectivePrice } from './compute';
-import type { DatasetModel, EffortSelection, IndexKey, Mix, Plan } from './types';
+import { effectiveCostPerTask } from './compute';
+import type { DatasetModel, EffortSelection, IndexKey, Plan } from './types';
 
-export type Bucket = 'plotted' | 'free' | 'unpriced' | 'incomplete' | 'unscored';
+export type Bucket = 'plotted' | 'free' | 'unpriced' | 'unscored';
 
 /** The minimum a Pareto calculation needs. */
 export interface CostScorePoint {
@@ -24,6 +24,7 @@ interface VisibleVariant {
   effort: string;
   order: number;
   scores: DatasetModel['scores'];
+  costPerTask: number | null;
 }
 
 function defaultSlug(model: DatasetModel): string {
@@ -35,11 +36,19 @@ function defaultSlug(model: DatasetModel): string {
  *
  * `default` is the primary rung used by the table and the default chart. `all`
  * exposes the whole ladder. A model with no attached variants falls back to its
- * primary score map, so a snapshot without effort data still plots.
+ * primary score and cost, so a snapshot without effort data still plots.
  */
 export function visibleVariants(model: DatasetModel, selection: EffortSelection): VisibleVariant[] {
   if (model.variants.length === 0) {
-    return [{ aaSlug: defaultSlug(model), effort: 'Default', order: 0, scores: model.scores }];
+    return [
+      {
+        aaSlug: defaultSlug(model),
+        effort: 'Default',
+        order: 0,
+        scores: model.scores,
+        costPerTask: model.costPerTask,
+      },
+    ];
   }
   if (selection === 'all') return model.variants;
 
@@ -71,19 +80,19 @@ export function paretoFrontier(points: CostScorePoint[]): string[] {
 /**
  * Split every model into exactly one bucket and return the plottable points.
  *
- * Precedence: free -> unpriced -> incomplete -> unscored -> plotted. A model
- * lands in the first bucket that applies, so a free model that also lacks a
- * score is reported as free rather than disappearing.
+ * Precedence: free -> unpriced -> unscored -> plotted. A model lands in the
+ * first bucket that applies, so a free model that also lacks a score is
+ * reported as free rather than disappearing.
  *
- * Every rung of a ladder shares the model's price: effort changes the score,
- * not the published per-token rate. When `all` is requested the points tie on
- * cost, and `paretoFrontier` keeps only the best rung at that price.
+ * Every visible rung carries its own cost per task. Effort changes both the
+ * score and the tokens a task burns, so a higher rung can cost more and still
+ * earn its place on the frontier. A rung without a published cost is skipped;
+ * a model is `unpriced` only when no visible rung can be costed.
  */
 export function toFrontierInputs(
   models: DatasetModel[],
   plan: Plan,
   index: IndexKey,
-  mix: Mix,
   planPrice: number,
   efforts: EffortSelection = 'default',
 ): { inputs: FrontierInput[]; buckets: Record<string, Bucket> } {
@@ -102,20 +111,19 @@ export function toFrontierInputs(
       continue;
     }
 
-    const cost = effectivePrice(model.prices, allowance, planPrice, mix);
-    if (cost === null || !Number.isFinite(cost) || cost <= 0) {
-      buckets[model.goId] = 'incomplete';
-      continue;
-    }
-
     const primarySlug = defaultSlug(model);
     let scored = 0;
+    let costed = 0;
 
     for (const variant of visibleVariants(model, efforts)) {
       const score = variant.scores[index];
       if (score === null || score === undefined || !Number.isFinite(score)) continue;
-
       scored += 1;
+
+      const cost = effectiveCostPerTask(variant.costPerTask, allowance, planPrice);
+      if (cost === null || !Number.isFinite(cost) || cost <= 0) continue;
+      costed += 1;
+
       inputs.push({
         id: `${model.goId}::${variant.aaSlug}`,
         modelId: model.goId,
@@ -128,7 +136,7 @@ export function toFrontierInputs(
       });
     }
 
-    buckets[model.goId] = scored > 0 ? 'plotted' : 'unscored';
+    buckets[model.goId] = costed > 0 ? 'plotted' : scored > 0 ? 'unpriced' : 'unscored';
   }
 
   return { inputs, buckets };
@@ -139,11 +147,10 @@ export function computeFrontier(
   models: DatasetModel[],
   plan: Plan,
   index: IndexKey,
-  mix: Mix,
   planPrice: number,
   efforts: EffortSelection = 'default',
 ): { inputs: FrontierInput[]; buckets: Record<string, Bucket>; frontier: string[] } {
-  const { inputs, buckets } = toFrontierInputs(models, plan, index, mix, planPrice, efforts);
+  const { inputs, buckets } = toFrontierInputs(models, plan, index, planPrice, efforts);
   return { inputs, buckets, frontier: paretoFrontier(inputs) };
 }
 
@@ -153,7 +160,7 @@ export function computeFrontier(
  * A strict frontier is the truth, but when one subsidised model dominates
  * everything it collapses to a couple of points and stops answering "what is
  * good value at the performance I need". A point is near when its score is
- * within `tolerance` of the best score available at its price or cheaper.
+ * within `tolerance` of the best score available at its cost or cheaper.
  *
  * The tolerance is deliberately caller-supplied and shown in the UI: a band
  * that cannot be seen is a band that flatters bad-value models.

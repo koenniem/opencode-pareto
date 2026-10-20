@@ -8,11 +8,11 @@ import { readFileSync } from 'node:fs';
 import { parse as parseYaml } from 'yaml';
 import { describe, expect, it } from 'vitest';
 
-import { DEFAULT_MIX, blendedPrice, effectivePrice } from '../src/compute';
+import { DEFAULT_MIX } from '../src/compute';
 import { buildDataset } from '../scripts/build-dataset';
 import { parseAAResponse, type AASnapshot } from '../scripts/fetch-aa';
 import { parseGoDocs, type GoPricing } from '../scripts/scrape-go';
-import type { Prices, RosterEntry } from '../src/types';
+import type { RosterEntry } from '../src/types';
 
 const roster = parseYaml(
   readFileSync(new URL('../data/roster.yaml', import.meta.url), 'utf8'),
@@ -70,21 +70,6 @@ describe('AA variant selection', () => {
   });
 });
 
-// --- Finding 2: an all-zero mix prices models at zero -----------------------
-
-describe('all-zero mix', () => {
-  const zero = { input: 0, cached: 0, output: 0, cacheWrite: 0 };
-  const prices: Prices = { input: 1.4, output: 4.4, cachedRead: 0.26, cachedWrite: null };
-
-  it('refuses to price rather than returning zero', () => {
-    expect(blendedPrice(prices, zero)).toBeNull();
-  });
-
-  it('propagates the refusal to the effective price', () => {
-    expect(effectivePrice(prices, 60, 10, zero)).toBeNull();
-  });
-});
-
 // --- Finding 3: empty or malformed AA data silently erases scores -----------
 
 describe('AA snapshot integrity', () => {
@@ -116,10 +101,10 @@ describe('unreadable required prices', () => {
   });
 });
 
-// --- Finding 9: the displayed default mix is not the mix used --------------
+// --- Finding 9: the price-basis mix is pinned ------------------------------
 
-describe('default mix display', () => {
-  it('states a percentage that matches the constant used for pricing', () => {
+describe('price-basis mix', () => {
+  it('keeps the documented cache-heavy share', () => {
     expect(DEFAULT_MIX.cached).toBeCloseTo(0.985, 6);
     expect((DEFAULT_MIX.cached * 100).toFixed(2)).toBe('98.50');
   });

@@ -41,6 +41,14 @@ export interface Prices {
   cachedWrite: number | null;
 }
 
+/** Artificial Analysis's per-1M-token prices; any field may be unpublished. */
+export interface AAPricing {
+  input: number | null;
+  output: number | null;
+  cachedRead: number | null;
+  cachedWrite: number | null;
+}
+
 /** `unlimited` is a free model; `null` means no published price. */
 export type Allowance = number | 'unlimited' | null;
 
@@ -97,6 +105,14 @@ export interface ModelVariant {
   /** Position in the roster ladder; 0 is the least thinking. */
   order: number;
   scores: Partial<Record<IndexKey, number | null>>;
+  /** AA's list-price cost to complete one Intelligence Index task. */
+  listCostPerTask: number | null;
+  /** Cost per task translated into OpenCode's token-price basis. */
+  costPerTask: number | null;
+  /** OpenCode price / AA price; 1 when they match, null when not comparable. */
+  priceFactor: number | null;
+  /** True when the factor used the cache-heavy mix, not an exact ratio. */
+  priceFactorApproximate: boolean;
 }
 
 export interface DatasetModel {
@@ -113,6 +129,10 @@ export interface DatasetModel {
   allowances: Allowances | null;
   /** Scores of the default configuration. Kept as the primary view. */
   scores: Partial<Record<IndexKey, number | null>>;
+  /** Default rung's AA list-price cost per task, or null. */
+  listCostPerTask: number | null;
+  /** Default rung's OpenCode-basis cost per task, or null. */
+  costPerTask: number | null;
   /**
    * Every scored configuration the roster names, lowest thinking first. Empty
    * when Artificial Analysis has no counterpart. `scores` is always the

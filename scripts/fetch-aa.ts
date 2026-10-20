@@ -1,5 +1,5 @@
 import { writeFileSync } from 'node:fs';
-import { INDEX_KEYS, type IndexKey } from '../src/types';
+import { INDEX_KEYS, type AAPricing, type IndexKey } from '../src/types';
 import { loadRoster } from './validate-roster';
 
 const BASE_URL = 'https://artificialanalysis.ai/api/v2/language/models/free';
@@ -12,6 +12,10 @@ export interface AAModel {
   /** The configuration in the trailing parentheses of `name`, if any. */
   variant: string | null;
   scores: Partial<Record<IndexKey, number | null>>;
+  /** AA's weighted cost to complete one Intelligence Index task, at AA prices. */
+  costPerTask?: number | null;
+  /** AA's per-token prices, used to translate cost to OpenCode's price basis. */
+  pricing?: AAPricing | null;
 }
 
 export interface AASnapshot {
@@ -30,6 +34,33 @@ function scoreOf(value: unknown): number | null {
 function variantOf(name: string): string | null {
   const match = /\(([^()]+)\)\s*$/.exec(name);
   return match ? match[1].trim() : null;
+}
+
+function finiteOrNull(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
+/**
+ * AA nests the per-task figure as `cost_per_task.total_cost`. The total
+ * benchmark cost is not used; the per-task figure is the decision unit.
+ */
+function costPerTaskOf(value: unknown): number | null {
+  if (typeof value !== 'object' || value === null) return null;
+  const perTask = (value as Record<string, unknown>).cost_per_task;
+  if (typeof perTask !== 'object' || perTask === null) return null;
+  return finiteOrNull((perTask as Record<string, unknown>).total_cost);
+}
+
+function pricingOf(value: unknown): AAPricing | null {
+  if (typeof value !== 'object' || value === null) return null;
+  const raw = value as Record<string, unknown>;
+  const pricing: AAPricing = {
+    input: finiteOrNull(raw.price_1m_input_tokens),
+    output: finiteOrNull(raw.price_1m_output_tokens),
+    cachedRead: finiteOrNull(raw.price_1m_cache_hit_tokens),
+    cachedWrite: finiteOrNull(raw.price_1m_cache_write_tokens),
+  };
+  return Object.values(pricing).every((price) => price === null) ? null : pricing;
 }
 
 /** AA documents the index version as a number; older responses used a string. */
@@ -80,6 +111,8 @@ export function parseAAResponse(body: unknown): AASnapshot {
       name: typeof model.name === 'string' ? model.name : model.slug,
       variant: variantOf(typeof model.name === 'string' ? model.name : ''),
       scores,
+      costPerTask: costPerTaskOf(model.artificial_analysis_intelligence_index_cost),
+      pricing: pricingOf(model.pricing),
     };
   });
 
@@ -103,7 +136,7 @@ function pageUrl(page: number): string {
 /**
  * Fetch every page of the Free-tier model list.
  *
- * Free tier allows 100 requests per 24h; this uses one or two.
+ * A refresh uses a handful of pages, well inside the free-tier limit.
  */
 export async function fetchAA(
   apiKey: string,

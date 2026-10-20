@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T10:30:49.368Z",
+  "fetchedAt": "2026-10-20T11:42:43.188Z",
   "intelligenceIndexVersion": "4.3",
   "models": [
     {
@@ -16,6 +16,13 @@
         "artificial_analysis_healthcare_and_medical_index": 25.5,
         "artificial_analysis_engineering_index": 28.6,
         "artificial_analysis_economics_index": 40.5
+      },
+      "costPerTask": 0.0541,
+      "pricing": {
+        "input": 0.435,
+        "output": 0.87,
+        "cachedRead": 0.0036,
+        "cachedWrite": null
       }
     },
     {
@@ -32,6 +39,13 @@
         "artificial_analysis_healthcare_and_medical_index": 43.8,
         "artificial_analysis_engineering_index": 41.6,
         "artificial_analysis_economics_index": 52.9
+      },
+      "costPerTask": 0.9747,
+      "pricing": {
+        "input": 1.25,
+        "output": 4.25,
+        "cachedRead": 0.15,
+        "cachedWrite": null
       }
     },
     {
@@ -48,6 +62,13 @@
         "artificial_analysis_healthcare_and_medical_index": 19.9,
         "artificial_analysis_engineering_index": 22.7,
         "artificial_analysis_economics_index": 27.9
+      },
+      "costPerTask": 0.0098,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -64,6 +85,13 @@
         "artificial_analysis_healthcare_and_medical_index": 40.8,
         "artificial_analysis_engineering_index": 45,
         "artificial_analysis_economics_index": 52.8
+      },
+      "costPerTask": 1.0264,
+      "pricing": {
+        "input": 1,
+        "output": 2.7,
+        "cachedRead": 0.1,
+        "cachedWrite": null
       }
     },
     {
@@ -80,6 +108,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 37.3,
         "artificial_analysis_economics_index": 43.6
+      },
+      "costPerTask": 0.0624,
+      "pricing": {
+        "input": 0.14,
+        "output": 0.28,
+        "cachedRead": 0.0028,
+        "cachedWrite": null
       }
     },
     {
@@ -96,6 +131,13 @@
         "artificial_analysis_healthcare_and_medical_index": 44.8,
         "artificial_analysis_engineering_index": 43.8,
         "artificial_analysis_economics_index": 48.9
+      },
+      "costPerTask": 0.2836,
+      "pricing": {
+        "input": 0.15,
+        "output": 0.5,
+        "cachedRead": 0.03,
+        "cachedWrite": null
       }
     },
     {
@@ -112,6 +154,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 33.7,
         "artificial_analysis_economics_index": 41.6
+      },
+      "costPerTask": 0.0422,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -128,6 +177,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 39.2,
         "artificial_analysis_economics_index": 45.8
+      },
+      "costPerTask": 0.0794,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -144,6 +200,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 42.5,
         "artificial_analysis_economics_index": 52.8
+      },
+      "costPerTask": 1.248,
+      "pricing": {
+        "input": 2,
+        "output": 6,
+        "cachedRead": 0.5,
+        "cachedWrite": null
       }
     },
     {
@@ -160,6 +223,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 24.6,
         "artificial_analysis_economics_index": 33.9
+      },
+      "costPerTask": 0.0191,
+      "pricing": {
+        "input": 0.14,
+        "output": 0.28,
+        "cachedRead": 0.0028,
+        "cachedWrite": null
       }
     },
     {
@@ -176,6 +246,13 @@
         "artificial_analysis_healthcare_and_medical_index": 41.8,
         "artificial_analysis_engineering_index": 46.9,
         "artificial_analysis_economics_index": 53.2
+      },
+      "costPerTask": 0.1332,
+      "pricing": {
+        "input": 0.435,
+        "output": 0.87,
+        "cachedRead": 0.0036,
+        "cachedWrite": null
       }
     },
     {
@@ -192,6 +269,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 46.6,
         "artificial_analysis_economics_index": 55.3
+      },
+      "costPerTask": 2.7261,
+      "pricing": {
+        "input": 2,
+        "output": 6,
+        "cachedRead": 0.5,
+        "cachedWrite": null
       }
     },
     {
@@ -208,6 +292,13 @@
         "artificial_analysis_healthcare_and_medical_index": 29.7,
         "artificial_analysis_engineering_index": 31.2,
         "artificial_analysis_economics_index": 43.7
+      },
+      "costPerTask": 0.5076,
+      "pricing": {
+        "input": 0.3,
+        "output": 1.2,
+        "cachedRead": 0.06,
+        "cachedWrite": 0.375
       }
     },
     {
@@ -224,6 +315,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 29.4,
         "artificial_analysis_economics_index": 37.1
+      },
+      "costPerTask": 0.0175,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -240,6 +338,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 43.1,
         "artificial_analysis_economics_index": 48.7
+      },
+      "costPerTask": 0.1238,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -256,6 +361,13 @@
         "artificial_analysis_healthcare_and_medical_index": 35.7,
         "artificial_analysis_engineering_index": 36.2,
         "artificial_analysis_economics_index": 42.7
+      },
+      "costPerTask": 0.1783,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -272,6 +384,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 31.2,
         "artificial_analysis_economics_index": 37.5
+      },
+      "costPerTask": 0.0245,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -288,6 +407,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": null,
         "artificial_analysis_economics_index": null
+      },
+      "costPerTask": null,
+      "pricing": {
+        "input": 0.435,
+        "output": 0.87,
+        "cachedRead": 0.0036,
+        "cachedWrite": null
       }
     },
     {
@@ -304,6 +430,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 29.7,
         "artificial_analysis_economics_index": 37
+      },
+      "costPerTask": 1.1463,
+      "pricing": {
+        "input": 3,
+        "output": 15,
+        "cachedRead": 0.3,
+        "cachedWrite": null
       }
     },
     {
@@ -320,6 +453,13 @@
         "artificial_analysis_healthcare_and_medical_index": 24.2,
         "artificial_analysis_engineering_index": 26.2,
         "artificial_analysis_economics_index": 32
+      },
+      "costPerTask": 0.0156,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -336,6 +476,13 @@
         "artificial_analysis_healthcare_and_medical_index": 47.2,
         "artificial_analysis_engineering_index": 47.4,
         "artificial_analysis_economics_index": 55.7
+      },
+      "costPerTask": 3.7383,
+      "pricing": {
+        "input": 2,
+        "output": 6,
+        "cachedRead": 0.5,
+        "cachedWrite": null
       }
     },
     {
@@ -352,6 +499,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 24.1,
         "artificial_analysis_economics_index": 31.1
+      },
+      "costPerTask": 0.1462,
+      "pricing": {
+        "input": 0.75,
+        "output": 2.95,
+        "cachedRead": 0.015,
+        "cachedWrite": null
       }
     },
     {
@@ -368,6 +522,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 20.7,
         "artificial_analysis_economics_index": 24.2
+      },
+      "costPerTask": 0.0113,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -384,6 +545,13 @@
         "artificial_analysis_healthcare_and_medical_index": 37.4,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 45.2
+      },
+      "costPerTask": 0.0678,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -400,6 +568,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 24.7,
         "artificial_analysis_economics_index": 32
+      },
+      "costPerTask": 0.2212,
+      "pricing": {
+        "input": 0.3,
+        "output": 1.2,
+        "cachedRead": 0.007,
+        "cachedWrite": null
       }
     },
     {
@@ -416,6 +591,13 @@
         "artificial_analysis_healthcare_and_medical_index": 44.1,
         "artificial_analysis_engineering_index": 44.9,
         "artificial_analysis_economics_index": 51.2
+      },
+      "costPerTask": 0.2128,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -432,6 +614,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 31.8,
         "artificial_analysis_economics_index": 40
+      },
+      "costPerTask": 0.029,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -448,6 +637,13 @@
         "artificial_analysis_healthcare_and_medical_index": 38.2,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 43.7
+      },
+      "costPerTask": 0.674,
+      "pricing": {
+        "input": 1.32,
+        "output": 3.96,
+        "cachedRead": 0.044,
+        "cachedWrite": null
       }
     },
     {
@@ -464,6 +660,13 @@
         "artificial_analysis_healthcare_and_medical_index": 33,
         "artificial_analysis_engineering_index": 34,
         "artificial_analysis_economics_index": 40.6
+      },
+      "costPerTask": 0.0853,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -480,6 +683,13 @@
         "artificial_analysis_healthcare_and_medical_index": 26.5,
         "artificial_analysis_engineering_index": 29.1,
         "artificial_analysis_economics_index": 36.5
+      },
+      "costPerTask": 0.5412,
+      "pricing": {
+        "input": 0.95,
+        "output": 4,
+        "cachedRead": 0.19,
+        "cachedWrite": null
       }
     },
     {
@@ -496,6 +706,13 @@
         "artificial_analysis_healthcare_and_medical_index": 49.7,
         "artificial_analysis_engineering_index": 49.4,
         "artificial_analysis_economics_index": 56.3
+      },
+      "costPerTask": 1.6049,
+      "pricing": {
+        "input": 1.25,
+        "output": 4.25,
+        "cachedRead": 0.15,
+        "cachedWrite": null
       }
     },
     {
@@ -512,6 +729,13 @@
         "artificial_analysis_healthcare_and_medical_index": 23,
         "artificial_analysis_engineering_index": 28.8,
         "artificial_analysis_economics_index": 37.3
+      },
+      "costPerTask": 0.217,
+      "pricing": {
+        "input": 0.4,
+        "output": 1.6,
+        "cachedRead": 0.08,
+        "cachedWrite": null
       }
     },
     {
@@ -528,6 +752,13 @@
         "artificial_analysis_healthcare_and_medical_index": 29.7,
         "artificial_analysis_engineering_index": 31.7,
         "artificial_analysis_economics_index": 38
+      },
+      "costPerTask": 0.044,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -544,6 +775,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 35.2,
         "artificial_analysis_economics_index": 43.3
+      },
+      "costPerTask": 0.047,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -560,6 +798,13 @@
         "artificial_analysis_healthcare_and_medical_index": 41.4,
         "artificial_analysis_engineering_index": 46.4,
         "artificial_analysis_economics_index": 52.3
+      },
+      "costPerTask": 5.4085,
+      "pricing": {
+        "input": 2,
+        "output": 6,
+        "cachedRead": 0.25,
+        "cachedWrite": null
       }
     },
     {
@@ -576,6 +821,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 26.7,
         "artificial_analysis_economics_index": 35.2
+      },
+      "costPerTask": 0.0718,
+      "pricing": {
+        "input": 0.136,
+        "output": 0.555,
+        "cachedRead": 0.034,
+        "cachedWrite": null
       }
     },
     {
@@ -592,6 +844,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 22.8,
         "artificial_analysis_economics_index": 30.1
+      },
+      "costPerTask": 0.0045,
+      "pricing": {
+        "input": 0.1,
+        "output": 0.5,
+        "cachedRead": 0.01,
+        "cachedWrite": 0.125
       }
     },
     {
@@ -608,6 +867,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 38,
         "artificial_analysis_economics_index": 40.5
+      },
+      "costPerTask": 0.8522,
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cachedRead": 0.26,
+        "cachedWrite": null
       }
     },
     {
@@ -624,6 +890,13 @@
         "artificial_analysis_healthcare_and_medical_index": 46.7,
         "artificial_analysis_engineering_index": 47.1,
         "artificial_analysis_economics_index": 51.2
+      },
+      "costPerTask": 2.0056,
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cachedRead": 0.26,
+        "cachedWrite": null
       }
     },
     {
@@ -640,6 +913,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 55.2,
         "artificial_analysis_economics_index": 60.4
+      },
+      "costPerTask": 1.9903,
+      "pricing": {
+        "input": 2,
+        "output": 10,
+        "cachedRead": 0.1,
+        "cachedWrite": null
       }
     },
     {
@@ -656,6 +936,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 43.4,
         "artificial_analysis_economics_index": 50
+      },
+      "costPerTask": 0.2201,
+      "pricing": {
+        "input": 0.15,
+        "output": 0.6,
+        "cachedRead": 0.015,
+        "cachedWrite": null
       }
     },
     {
@@ -672,6 +959,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 21.9,
         "artificial_analysis_economics_index": 26.2
+      },
+      "costPerTask": 0.3555,
+      "pricing": {
+        "input": 1.32,
+        "output": 3.96,
+        "cachedRead": 0.044,
+        "cachedWrite": null
       }
     },
     {
@@ -688,6 +982,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 45.6,
         "artificial_analysis_economics_index": 54.9
+      },
+      "costPerTask": 1.3678,
+      "pricing": {
+        "input": 1.25,
+        "output": 4.25,
+        "cachedRead": 0.15,
+        "cachedWrite": null
       }
     },
     {
@@ -704,6 +1005,13 @@
         "artificial_analysis_healthcare_and_medical_index": 40.6,
         "artificial_analysis_engineering_index": 39.3,
         "artificial_analysis_economics_index": 44.4
+      },
+      "costPerTask": 0.4857,
+      "pricing": {
+        "input": 0.3,
+        "output": 1.2,
+        "cachedRead": 0.006,
+        "cachedWrite": null
       }
     },
     {
@@ -720,6 +1028,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 18.3,
         "artificial_analysis_economics_index": 21.6
+      },
+      "costPerTask": 0.0101,
+      "pricing": {
+        "input": 0.2,
+        "output": 1.2,
+        "cachedRead": 0.02,
+        "cachedWrite": 0.25
       }
     },
     {
@@ -736,6 +1051,13 @@
         "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": null,
         "artificial_analysis_economics_index": null
+      },
+      "costPerTask": null,
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cachedRead": 0.26,
+        "cachedWrite": null
       }
     },
     {
@@ -752,6 +1074,13 @@
         "artificial_analysis_healthcare_and_medical_index": 32.4,
         "artificial_analysis_engineering_index": 37.2,
         "artificial_analysis_economics_index": 45.6
+      },
+      "costPerTask": 1.4726,
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cachedRead": 0.26,
+        "cachedWrite": null
       }
     },
     {
@@ -768,6 +1097,13 @@
         "artificial_analysis_healthcare_and_medical_index": 45,
         "artificial_analysis_engineering_index": 43.3,
         "artificial_analysis_economics_index": 53.4
+      },
+      "costPerTask": 2.0001,
+      "pricing": {
+        "input": 3,
+        "output": 15,
+        "cachedRead": 0.3,
+        "cachedWrite": null
       }
     }
   ]
