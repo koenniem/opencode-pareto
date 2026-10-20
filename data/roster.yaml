@@ -174,17 +174,12 @@
   notes: uses the ≤256K tier; >256K is priced separately in Go's table
 
 - goId: deepseek-v4.1-flash
-  display: DeepSeek V4.1 Flash
-  aaSlug: deepseek-v4-1-flash
+  display: DeepSeek V4.1 Flash 1017
+  aaSlug: deepseek-v4-1-flash-1017
   aaVariant: Max
   tier: standard
   priceRow: DeepSeek V4.1 Flash (Off-Peak)
-  efforts:
-    - aaSlug: deepseek-v4-1-flash-non-reasoning
-      label: Non-reasoning
-    - aaSlug: deepseek-v4-1-flash
-      label: Max
-  notes: off-peak pricing; peak hours are 01:00-04:00 and 06:00-10:00 UTC Mon-Fri
+  notes: 1017 release; off-peak pricing; peak hours are 01:00-04:00 and 06:00-10:00 UTC Mon-Fri
 
 - goId: deepseek-v4-pro
   display: DeepSeek V4 Pro

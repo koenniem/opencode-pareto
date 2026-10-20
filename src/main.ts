@@ -1,6 +1,12 @@
 import datasetJson from '../data/dataset.json';
 import { effectiveCostPerTask, multiplier } from './compute';
-import { buildScene, formatCostPerTask, type ChartPoint, type Scene } from './chart';
+import {
+  buildScene,
+  formatCostPerTask,
+  type ChartPoint,
+  type CostScale,
+  type Scene,
+} from './chart';
 import { computeFrontier, nearFrontier, type Bucket, type FrontierInput } from './frontier';
 import { LAB_NAMES, labOf } from './labs';
 import { paintScene } from './render';
@@ -24,9 +30,12 @@ const dataset = datasetJson as unknown as Dataset;
 interface UiState {
   plan: Plan;
   index: IndexKey;
+  scale: CostScale;
   tolerance: number;
   efforts: EffortSelection;
   sort: SortState | null;
+  /** Lab currently highlighted from the legend, or null. */
+  labFocus: string | null;
   /** Chart point id (`goId::aaSlug`) currently shown in the inspector. */
   selected: string | null;
 }
@@ -34,9 +43,11 @@ interface UiState {
 const state: UiState = {
   plan: 'go',
   index: 'artificial_analysis_intelligence_index',
+  scale: 'log',
   tolerance: 2,
   efforts: 'default',
   sort: null,
+  labFocus: null,
   selected: null,
 };
 
@@ -356,10 +367,11 @@ function paintChart(): void {
   const scene = buildScene(chartPoints, {
     width,
     height,
-    xLabel: 'Go cost per task · log scale',
+    xLabel: `Go cost per task · ${state.scale} scale`,
     yLabel: INDEX_LABELS[state.index],
+    scale: state.scale,
     tolerance: state.tolerance,
-    maxLabels: state.efforts === 'all' ? 10 : 12,
+    maxLabels: state.efforts === 'all' ? 16 : 20,
   });
 
   lastScene = scene;
@@ -368,6 +380,7 @@ function paintChart(): void {
   if (scene.empty) empty.textContent = scene.empty;
 
   attachPointInteractions(svg);
+  setLabFocus(state.labFocus);
 }
 
 function renderStats(frontier: string[]): void {
@@ -383,16 +396,46 @@ function renderStats(frontier: string[]): void {
   if (statFrontier) statFrontier.textContent = String(frontierModels.size);
 }
 
+function setLabFocus(lab: string | null): void {
+  state.labFocus = lab;
+  const svg = document.getElementById('chart') as SVGSVGElement | null;
+  if (!svg) return;
+  svg.classList.toggle('has-lab-focus', lab !== null);
+  svg.querySelectorAll<SVGElement>('.point, .point-label, .leader, .ladder').forEach((node) => {
+    const active = lab !== null && node.classList.contains(`lab-${lab}`);
+    node.classList.toggle('is-lab-active', active);
+  });
+}
+
 function renderLegend(labs: string[]): void {
   const host = document.getElementById('legend');
   if (!host) return;
 
   const frag = document.createDocumentFragment();
   for (const lab of labs) {
+    const name = LAB_NAMES[lab as keyof typeof LAB_NAMES] ?? lab;
     const item = el('li', undefined, 'legend-item');
+    item.dataset.lab = lab;
+    item.tabIndex = 0;
+    item.setAttribute('role', 'button');
+    item.setAttribute('aria-label', `Highlight ${name} models`);
     const swatch = el('span', undefined, `legend-swatch lab-${lab}`);
     swatch.setAttribute('aria-hidden', 'true');
-    item.append(swatch, el('span', LAB_NAMES[lab as keyof typeof LAB_NAMES] ?? lab));
+    item.append(swatch, el('span', name));
+
+    const activate = () => {
+      item.classList.add('is-active');
+      setLabFocus(lab);
+    };
+    const deactivate = () => {
+      item.classList.remove('is-active');
+      setLabFocus(null);
+    };
+    item.addEventListener('mouseenter', activate);
+    item.addEventListener('mouseleave', deactivate);
+    item.addEventListener('focus', activate);
+    item.addEventListener('blur', deactivate);
+    if (state.labFocus === lab) item.classList.add('is-active');
     frag.append(item);
   }
   host.replaceChildren(frag);
@@ -521,6 +564,19 @@ function wireControls(): void {
     state.efforts = efforts.checked ? 'all' : 'default';
     state.selected = null;
     render();
+  });
+
+  const scaleButtons = document.querySelectorAll<HTMLButtonElement>('[data-scale]');
+  scaleButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.scale = button.dataset.scale === 'linear' ? 'linear' : 'log';
+      scaleButtons.forEach((candidate) => {
+        const active = candidate === button;
+        candidate.classList.toggle('is-active', active);
+        candidate.setAttribute('aria-pressed', String(active));
+      });
+      render();
+    });
   });
 
   const tolerance = document.getElementById('tolerance') as HTMLInputElement | null;

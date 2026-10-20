@@ -23,14 +23,18 @@ export interface ChartPoint {
   isDefault?: boolean;
 }
 
+export type CostScale = 'log' | 'linear';
+
 export interface SceneOptions {
   width: number;
   height: number;
   xLabel: string;
   yLabel: string;
+  /** Cost axis: logarithmic (default) or linear from zero. */
+  scale?: CostScale;
   /** Score points below the best-at-price level that still count as near. */
   tolerance?: number;
-  /** Maximum permanent point labels. Default 12. */
+  /** Maximum permanent point labels. Default 18. */
   maxLabels?: number;
 }
 
@@ -65,7 +69,7 @@ export interface Scene {
 }
 
 const PAD = { top: 24, right: 26, bottom: 58, left: 74 };
-const MAX_LABELS = 12;
+const MAX_LABELS = 18;
 
 /** Rough glyph metrics for collision estimation; no text measurement needed. */
 const CHAR_WIDTH = 6.6;
@@ -238,6 +242,7 @@ interface LabelCandidate {
   x: number;
   y: number;
   priority: number;
+  lab?: string;
 }
 
 /**
@@ -262,6 +267,10 @@ function placeLabels(candidates: LabelCandidate[], bounds: Box, occupied: Box[])
       { dx: -14, dy: -10, anchor: 'end' },
       { dx: 0, dy: -16, anchor: 'middle' },
       { dx: 0, dy: 20, anchor: 'middle' },
+      { dx: 30, dy: 20, anchor: 'start' },
+      { dx: -30, dy: 20, anchor: 'end' },
+      { dx: 30, dy: -26, anchor: 'start' },
+      { dx: -30, dy: -26, anchor: 'end' },
     ];
 
     for (const offset of offsets) {
@@ -298,7 +307,7 @@ function placeLabels(candidates: LabelCandidate[], bounds: Box, occupied: Box[])
           y1: candidate.y + uy * 8,
           x2: lx,
           y2: ly,
-          cls: 'leader',
+          cls: candidate.lab ? `leader lab-${candidate.lab}` : 'leader',
         });
       }
 
@@ -309,7 +318,7 @@ function placeLabels(candidates: LabelCandidate[], bounds: Box, occupied: Box[])
         x: offset.anchor === 'end' ? anchorX + width : anchorX,
         y: anchorY,
         text: candidate.text,
-        cls: 'point-label',
+        cls: candidate.lab ? `point-label lab-${candidate.lab}` : 'point-label',
         anchor: offset.anchor,
       });
       break;
@@ -346,13 +355,21 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
   }
 
   const costs = usable.map((p) => p.cost);
+  const scale = opts.scale ?? 'log';
   const logPad = 0.12;
-  const xDomain: [number, number] = [
-    10 ** (Math.log10(Math.min(...costs)) - logPad),
-    10 ** (Math.log10(Math.max(...costs)) + logPad),
-  ];
+  const maxCost = Math.max(...costs);
+  const xDomain: [number, number] =
+    scale === 'linear'
+      ? [0, maxCost * 1.05]
+      : [
+          10 ** (Math.log10(Math.min(...costs)) - logPad),
+          10 ** (Math.log10(maxCost) + logPad),
+        ];
   const yDomain = scoreDomain(usable.map((p) => p.score));
-  const x = logScale(xDomain, [PAD.left, width - PAD.right]);
+  const x =
+    scale === 'linear'
+      ? linearScale(xDomain, [PAD.left, width - PAD.right])
+      : logScale(xDomain, [PAD.left, width - PAD.right]);
   const y = linearScale(yDomain, [height - PAD.bottom, PAD.top]);
   const plot = { left: PAD.left, right: width - PAD.right };
   const floor = height - PAD.bottom;
@@ -390,7 +407,12 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     });
   }
 
-  for (const value of logTicks(xDomain[0], xDomain[1])) {
+  const xTicks =
+    scale === 'linear'
+      ? niceTicks(xDomain[0], xDomain[1], 5)
+      : logTicks(xDomain[0], xDomain[1]);
+
+  for (const value of xTicks) {
     const px = x(value);
     shapes.push({ kind: 'line', x1: px, y1: PAD.top, x2: px, y2: floor, cls: 'grid' });
     shapes.push({
@@ -403,9 +425,11 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     });
   }
 
-  for (const value of logMinorTicks(xDomain[0], xDomain[1])) {
-    const px = x(value);
-    shapes.push({ kind: 'line', x1: px, y1: floor, x2: px, y2: floor - 4, cls: 'tick-minor' });
+  if (scale === 'log') {
+    for (const value of logMinorTicks(xDomain[0], xDomain[1])) {
+      const px = x(value);
+      shapes.push({ kind: 'line', x1: px, y1: floor, x2: px, y2: floor - 4, cls: 'tick-minor' });
+    }
   }
 
   shapes.push({
@@ -422,6 +446,24 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     y: PAD.top,
     text: opts.yLabel,
     cls: 'axis-label',
+    anchor: 'start',
+  });
+
+  // The upper-left corner is the preferred direction. A small arrow makes that
+  // explicit without implying a threshold quadrant or shading real data.
+  const tipX = PAD.left + 14;
+  const tipY = PAD.top + 14;
+  shapes.push({
+    kind: 'path',
+    d: `M ${PAD.left + 60} ${PAD.top + 56} L ${tipX} ${tipY} M ${tipX} ${tipY} L ${tipX} ${tipY + 16} M ${tipX} ${tipY} L ${tipX + 16} ${tipY}`,
+    cls: 'direction-arrow',
+  });
+  shapes.push({
+    kind: 'text',
+    x: PAD.left + 70,
+    y: PAD.top + 18,
+    text: 'Better value',
+    cls: 'direction-label',
     anchor: 'start',
   });
 
@@ -445,7 +487,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
     else groups.set(key, [point]);
   }
 
-  const occupied: Box[] = [];
+  const occupied: Box[] = [{ x: PAD.left + 8, y: PAD.top + 8, w: 150, h: 78 }];
   const ladderShapes: Shape[] = [];
   for (const group of groups.values()) {
     if (group.length < 2) continue;
@@ -459,7 +501,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
       d: `M ${ordered
         .map((point) => `${x(point.cost).toFixed(2)} ${scoreY(point.score).toFixed(2)}`)
         .join(' L ')}`,
-      cls: 'ladder',
+      cls: `ladder${ordered[0].lab ? ` lab-${ordered[0].lab}` : ''}`,
     });
     const left = Math.min(...xs);
     const right = Math.max(...xs);
@@ -551,6 +593,7 @@ export function buildScene(points: ChartPoint[], opts: SceneOptions): Scene {
       x: x(point.cost),
       y: scoreY(point.score),
       priority,
+      lab: point.lab,
     }));
 
   const labels = placeLabels(

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-20T11:42:44.284Z",
-  "aaFetchedAt": "2026-10-20T11:42:43.188Z",
+  "generatedAt": "2026-10-20T12:20:47.204Z",
+  "aaFetchedAt": "2026-10-20T12:20:46.089Z",
   "intelligenceIndexVersion": "4.3",
   "plans": {
     "go": {
@@ -1057,10 +1057,10 @@
     },
     {
       "goId": "deepseek-v4.1-flash",
-      "display": "DeepSeek V4.1 Flash",
+      "display": "DeepSeek V4.1 Flash 1017",
       "lab": "deepseek",
-      "aaSlug": "deepseek-v4-1-flash",
-      "aaName": "DeepSeek V4.1 Flash (Max)",
+      "aaSlug": "deepseek-v4-1-flash-1017",
+      "aaName": "DeepSeek V4.1 Flash 1017 (Max)",
       "tier": "standard",
       "priceRow": "DeepSeek V4.1 Flash (Off-Peak)",
       "promoLabel": null,
@@ -1075,63 +1075,42 @@
         "go-plus": 160
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 39.5,
+        "artificial_analysis_intelligence_index": 45.1,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 45,
-        "artificial_analysis_strategy_and_ops_index": 51.7,
-        "artificial_analysis_legal_index": 41.3,
-        "artificial_analysis_healthcare_and_medical_index": 40.6,
-        "artificial_analysis_engineering_index": 39.3,
-        "artificial_analysis_economics_index": 44.4
+        "artificial_analysis_finance_and_accounting_index": 48.3,
+        "artificial_analysis_strategy_and_ops_index": 52.5,
+        "artificial_analysis_legal_index": 46.4,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": 45.2,
+        "artificial_analysis_economics_index": 50.5
       },
-      "listCostPerTask": 0.4857,
-      "costPerTask": 0.24285,
+      "listCostPerTask": 0.262,
+      "costPerTask": 0.131,
       "variants": [
         {
-          "aaSlug": "deepseek-v4-1-flash-non-reasoning",
-          "aaName": "DeepSeek V4.1 Flash (Non-reasoning)",
-          "effort": "Non-reasoning",
+          "aaSlug": "deepseek-v4-1-flash-1017",
+          "aaName": "DeepSeek V4.1 Flash 1017 (Max)",
+          "effort": "Max",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 24.7,
+            "artificial_analysis_intelligence_index": 45.1,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 29.6,
-            "artificial_analysis_strategy_and_ops_index": 35.6,
-            "artificial_analysis_legal_index": 29.7,
+            "artificial_analysis_finance_and_accounting_index": 48.3,
+            "artificial_analysis_strategy_and_ops_index": 52.5,
+            "artificial_analysis_legal_index": 46.4,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 24.7,
-            "artificial_analysis_economics_index": 32
+            "artificial_analysis_engineering_index": 45.2,
+            "artificial_analysis_economics_index": 50.5
           },
-          "listCostPerTask": 0.2212,
-          "costPerTask": 0.10315613255893406,
-          "priceFactor": 0.46634779637854457,
-          "priceFactorApproximate": true
-        },
-        {
-          "aaSlug": "deepseek-v4-1-flash",
-          "aaName": "DeepSeek V4.1 Flash (Max)",
-          "effort": "Max",
-          "order": 1,
-          "scores": {
-            "artificial_analysis_intelligence_index": 39.5,
-            "artificial_analysis_coding_index": null,
-            "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 45,
-            "artificial_analysis_strategy_and_ops_index": 51.7,
-            "artificial_analysis_legal_index": 41.3,
-            "artificial_analysis_healthcare_and_medical_index": 40.6,
-            "artificial_analysis_engineering_index": 39.3,
-            "artificial_analysis_economics_index": 44.4
-          },
-          "listCostPerTask": 0.4857,
-          "costPerTask": 0.24285,
+          "listCostPerTask": 0.262,
+          "costPerTask": 0.131,
           "priceFactor": 0.5,
           "priceFactorApproximate": false
         }
       ],
-      "defaultVariant": "deepseek-v4-1-flash"
+      "defaultVariant": "deepseek-v4-1-flash-1017"
     },
     {
       "goId": "deepseek-v4-pro",

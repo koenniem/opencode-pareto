@@ -85,6 +85,50 @@ describe('formatCostTick', () => {
   });
 });
 
+describe('cost scale', () => {
+  it('spaces linear costs proportionally from zero', () => {
+    const [a, b] = circles(buildScene(pts, { ...OPTS, scale: 'linear' }));
+    // a is 0.001, b is 0.01. From a zero origin the offsets must have the
+    // same 1:10 ratio as the costs.
+    expect((b.cx - 74) / (a.cx - 74)).toBeCloseTo(10, 2);
+  });
+
+  it('labels the linear axis from zero', () => {
+    const ticks = textShapes(buildScene(pts, { ...OPTS, scale: 'linear' }))
+      .filter((s) => s.cls === 'tick' && s.text.startsWith('$'))
+      .map((s) => s.text);
+    expect(ticks).toContain('$0');
+    expect(ticks).toContain('$0.01');
+  });
+
+  it('keeps the log scale as the default', () => {
+    const log = circles(buildScene(pts, OPTS));
+    const linear = circles(buildScene(pts, { ...OPTS, scale: 'linear' }));
+    expect((log[1].cx - 74) / (log[0].cx - 74)).not.toBeCloseTo(10, 2);
+    expect((linear[1].cx - 74) / (linear[0].cx - 74)).toBeCloseTo(10, 2);
+  });
+});
+
+describe('preferred direction', () => {
+  it('draws an up-left value arrow in the upper-left plot corner', () => {
+    const arrow = buildScene(pts, OPTS).shapes.find(
+      (s) => s.kind === 'path' && s.cls === 'direction-arrow',
+    );
+    expect(arrow).toBeDefined();
+    if (!arrow || arrow.kind !== 'path') throw new Error('missing direction arrow');
+    const [x0, y0, x1, y1] = (arrow.d.match(/[\d.]+/g) ?? []).slice(0, 4).map(Number);
+    expect(x1).toBeLessThan(x0);
+    expect(y1).toBeLessThan(y0);
+    expect(x0).toBeLessThan(200);
+    expect(y1).toBeLessThan(100);
+  });
+
+  it('labels the preferred direction', () => {
+    const label = textShapes(buildScene(pts, OPTS)).find((s) => s.cls === 'direction-label');
+    expect(label?.text.toLowerCase()).toContain('better');
+  });
+});
+
 describe('buildScene', () => {
   it('builds one circle per point', () => {
     expect(circles(buildScene(pts, OPTS))).toHaveLength(2);
@@ -105,7 +149,9 @@ describe('buildScene', () => {
       { ...pts[0], frontier: true },
       { ...pts[1], frontier: true },
     ];
-    expect(buildScene(two, OPTS).shapes.filter((s) => s.kind === 'path')).toHaveLength(1);
+    expect(
+      buildScene(two, OPTS).shapes.filter((s) => s.kind === 'path' && s.cls === 'frontier-line'),
+    ).toHaveLength(1);
     expect(buildScene([pts[1]], OPTS).shapes.filter((s) => s.kind === 'path')).toHaveLength(0);
   });
 
@@ -290,11 +336,12 @@ describe('effort ladders', () => {
 
   it('connects the rungs in effort order, not with a vertical rail', () => {
     const rails = buildScene(ladder, OPTS).shapes.filter(
-      (s) => s.kind === 'path' && s.cls === 'ladder',
+      (s) => s.kind === 'path' && s.cls.includes('ladder'),
     );
     expect(rails).toHaveLength(1);
     const rail = rails[0];
     if (rail.kind !== 'path') throw new Error('not a path');
+    expect(rail.cls).toContain('lab-openai');
     const match = /M ([\d.]+) ([\d.]+) L ([\d.]+) ([\d.]+)/.exec(rail.d);
     expect(match).not.toBeNull();
     const [x1, y1, x2, y2] = match!.slice(1).map(Number);
@@ -304,8 +351,9 @@ describe('effort ladders', () => {
 
   it('labels the model once, at its best rung', () => {
     const scene = buildScene(ladder, OPTS);
-    const labels = textShapes(scene).filter((s) => s.cls === 'point-label');
+    const labels = textShapes(scene).filter((s) => s.cls.includes('point-label'));
     expect(labels.map((l) => l.text)).toEqual(['G']);
+    expect(labels[0].cls).toContain('lab-openai');
     const maxDot = circles(scene).find((d) => d.id === 'g::max')!;
     expect(Math.abs(labels[0].y - maxDot.cy)).toBeLessThan(30);
   });

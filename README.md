@@ -31,6 +31,7 @@ plan:
 | GPT-6 Luna (Max) | $0.068 | $15 | 1.5× | $0.045 |
 | Kimi K3 (Max) | $2.00 | $15 | 1.5× | $1.33 |
 | GLM-5.3 (Max) | $2.01 | $15 | 1.5× | $1.34 |
+| DeepSeek V4.1 Flash 1017 (Max) | $0.262 | $80 | 8× | $0.016 |
 | Muse Spark 1.3 Contributor (Max) | $1.60 (adjusted) | $60 | 6× | $0.0058 (estimate) |
 
 The point is the spread: GPT-6 Luna costs about 30× less per task than GLM-5.3
@@ -61,8 +62,18 @@ from a user-chosen blend.
 ### Reading the chart
 
 - **Colour = lab.** Every dot is coloured by who built the model, with the
-  legend under the chart. The most useful names are placed at their dots and
-  never overlap; the rest are available on hover and in the table.
+  legend under the chart. The chart names the frontier and the highest-priority
+  points (roughly twenty in the default view and ten in the all-efforts view),
+  never overlaps them, and leaves the rest to hover and the table.
+- **Log or linear.** The cost axis starts logarithmic because the costs span
+  three orders of magnitude. The Log/Linear toggle above the chart switches to a
+  true zero-based dollar axis; linear shows the money distances, log keeps the
+  cheap end readable.
+- **The upper-left arrow.** An arrow and “Better value” label mark the preferred
+  direction: cheaper and more capable. It is a direction cue, not a threshold or
+  a shaded quadrant.
+- **Hover a lab.** Hover or focus a legend item to dim every other lab. That
+  lab's dots, ladders and labels stay at full opacity; leave or blur to restore.
 - **The band.** A strict frontier says Muse Spark 1.3 Contributor dominates
   everything, which is true but leaves nothing to choose between. The band
   flags models within N score points of the best available at their cost or
@@ -192,6 +203,10 @@ is repeated, or the ladder omits its default. Each rung carries its own AA cost
 per task; a rung with no published cost is skipped rather than estimated. Only
 thinking settings belong here: `qwen3-8-max` 0803/0902 are release snapshots,
 not effort levels, so they are not a ladder.
+
+DeepSeek V4.1 Flash is mapped to AA's `deepseek-v4-1-flash-1017` (Max), not the
+older 0813 row. AA has no 1017 Non-reasoning sibling, so it is a single-rung
+model; do not attach the older release's Non-reasoning score.
 
 ## Development
 

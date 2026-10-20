@@ -112,6 +112,10 @@
             <h2 id="chart-heading">Cost per task vs capability</h2>
           </div>
           <div class="chart-options">
+            <div class="scale-toggle" role="group" aria-label="Cost axis scale">
+              <button type="button" class="scale-button is-active" data-scale="log" aria-pressed="true">Log</button>
+              <button type="button" class="scale-button" data-scale="linear" aria-pressed="false">Linear</button>
+            </div>
             <label class="switch" for="show-efforts">
               <input type="checkbox" id="show-efforts" />
               <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
@@ -125,12 +129,12 @@
           <svg id="chart" class="chart" aria-labelledby="chart-heading"></svg>
           <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true" hidden></div>
           <p class="chart-footnote">
-            Log cost axis · higher is better · hover or focus a point for its calculation. Cost per
-            task is Artificial Analysis’s weighted cost for one Intelligence Index task, adjusted to
-            OpenCode’s token prices and divided by the plan’s usage multiplier. Effort changes both
-            the score and the tokens a task burns.
+            Cost axis · log or linear · higher is better · hover or focus a point for its
+            calculation. Cost per task is Artificial Analysis’s weighted cost for one Intelligence
+            Index task, adjusted to OpenCode’s token prices and divided by the plan’s usage
+            multiplier. Effort changes both the score and the tokens a task burns.
           </p>
-          <ul id="legend" class="legend" aria-label="Labs"></ul>
+          <ul id="legend" class="legend" aria-label="Labs; hover or focus to highlight"></ul>
           <noscript>
             <p class="note">
               The chart needs JavaScript. The full table below has the same numbers.
