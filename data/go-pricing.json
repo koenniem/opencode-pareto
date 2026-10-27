@@ -1,6 +1,6 @@
 {
   "source": "https://opencode.ai/docs/go/",
-  "scrapedAt": "2026-10-19T11:34:04.106Z",
+  "scrapedAt": "2026-10-27T14:37:45.208Z",
   "rows": {
     "GLM-5.3-Flash": {
       "input": 0.15,
@@ -35,11 +35,22 @@
       },
       "promo": null
     },
+    "Kimi K3.1 Pro": {
+      "input": 2,
+      "output": 10,
+      "cachedRead": 0.2,
+      "cachedWrite": 2,
+      "allowance": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "promo": null
+    },
     "Kimi K3": {
       "input": 3,
       "output": 15,
       "cachedRead": 0.3,
-      "cachedWrite": null,
+      "cachedWrite": 3,
       "allowance": {
         "go": 15,
         "go-plus": 60
@@ -68,7 +79,18 @@
       },
       "promo": null
     },
-    "LongCat 2.5 Preview Free": {
+    "Step 5 Preview": {
+      "input": 1,
+      "output": 2.7,
+      "cachedRead": 0.1,
+      "cachedWrite": null,
+      "allowance": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "promo": null
+    },
+    "Beam Free": {
       "input": 0,
       "output": 0,
       "cachedRead": 0,
@@ -86,25 +108,7 @@
       },
       "note": "limited time"
     },
-    "Step 5 Preview": {
-      "input": 1,
-      "output": 2.7,
-      "cachedRead": 0.1,
-      "cachedWrite": null,
-      "allowance": {
-        "go": 60,
-        "go-plus": 240
-      },
-      "promo": {
-        "label": "4x · Limited time",
-        "baseAllowance": {
-          "go": 15,
-          "go-plus": 60
-        }
-      },
-      "note": "limited time"
-    },
-    "Beam Free": {
+    "Iceman Contributor Free": {
       "input": 0,
       "output": 0,
       "cachedRead": 0,
@@ -166,23 +170,16 @@
       },
       "promo": null
     },
-    "MiniMax M3.1 Flash Free": {
-      "input": 0,
-      "output": 0,
-      "cachedRead": 0,
+    "MiniMax M3.1 Flash": {
+      "input": 0.15,
+      "output": 0.6,
+      "cachedRead": 0.015,
       "cachedWrite": null,
       "allowance": {
-        "go": "unlimited",
-        "go-plus": "unlimited"
+        "go": 20,
+        "go-plus": 80
       },
-      "promo": {
-        "label": "limited time",
-        "baseAllowance": {
-          "go": null,
-          "go-plus": null
-        }
-      },
-      "note": "limited time"
+      "promo": null
     },
     "MiniMax M3": {
       "input": 0.3,
@@ -415,23 +412,16 @@
       },
       "promo": null
     },
-    "Gemini 4 Argon Contributor": {
+    "Gemini 4 Argon (50% off)": {
       "input": 4,
       "output": 20,
       "cachedRead": 0.2,
       "cachedWrite": null,
       "allowance": {
-        "go": 60,
-        "go-plus": 240
+        "go": 30,
+        "go-plus": 120
       },
-      "promo": {
-        "label": "2x · Limited time",
-        "baseAllowance": {
-          "go": 30,
-          "go-plus": 120
-        }
-      },
-      "note": "limited time"
+      "promo": null
     }
   }
 }

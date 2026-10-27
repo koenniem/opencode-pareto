@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-20T12:20:47.204Z",
-  "aaFetchedAt": "2026-10-20T12:20:46.089Z",
+  "generatedAt": "2026-10-27T14:37:48.294Z",
+  "aaFetchedAt": "2026-10-27T14:37:46.497Z",
   "intelligenceIndexVersion": "4.3",
   "plans": {
     "go": {
@@ -39,7 +39,7 @@
         "artificial_analysis_finance_and_accounting_index": 42,
         "artificial_analysis_strategy_and_ops_index": 45.1,
         "artificial_analysis_legal_index": 39.9,
-        "artificial_analysis_healthcare_and_medical_index": 44.8,
+        "artificial_analysis_healthcare_and_medical_index": 38.9,
         "artificial_analysis_engineering_index": 43.8,
         "artificial_analysis_economics_index": 48.9
       },
@@ -58,7 +58,7 @@
             "artificial_analysis_finance_and_accounting_index": 42,
             "artificial_analysis_strategy_and_ops_index": 45.1,
             "artificial_analysis_legal_index": 39.9,
-            "artificial_analysis_healthcare_and_medical_index": 44.8,
+            "artificial_analysis_healthcare_and_medical_index": 38.9,
             "artificial_analysis_engineering_index": 43.8,
             "artificial_analysis_economics_index": 48.9
           },
@@ -96,7 +96,7 @@
         "artificial_analysis_finance_and_accounting_index": 44.7,
         "artificial_analysis_strategy_and_ops_index": 47.6,
         "artificial_analysis_legal_index": 42,
-        "artificial_analysis_healthcare_and_medical_index": 46.7,
+        "artificial_analysis_healthcare_and_medical_index": 42,
         "artificial_analysis_engineering_index": 47.1,
         "artificial_analysis_economics_index": 51.2
       },
@@ -115,7 +115,7 @@
             "artificial_analysis_finance_and_accounting_index": 35.5,
             "artificial_analysis_strategy_and_ops_index": 39,
             "artificial_analysis_legal_index": 33.1,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 32.8,
             "artificial_analysis_engineering_index": 38,
             "artificial_analysis_economics_index": 40.5
           },
@@ -136,7 +136,7 @@
             "artificial_analysis_finance_and_accounting_index": 44.7,
             "artificial_analysis_strategy_and_ops_index": 47.6,
             "artificial_analysis_legal_index": 42,
-            "artificial_analysis_healthcare_and_medical_index": 46.7,
+            "artificial_analysis_healthcare_and_medical_index": 42,
             "artificial_analysis_engineering_index": 47.1,
             "artificial_analysis_economics_index": 51.2
           },
@@ -174,12 +174,12 @@
         "artificial_analysis_finance_and_accounting_index": 33.3,
         "artificial_analysis_strategy_and_ops_index": 30.6,
         "artificial_analysis_legal_index": 34.3,
-        "artificial_analysis_healthcare_and_medical_index": 32.4,
+        "artificial_analysis_healthcare_and_medical_index": 33.3,
         "artificial_analysis_engineering_index": 37.2,
         "artificial_analysis_economics_index": 45.6
       },
-      "listCostPerTask": 1.4726,
-      "costPerTask": 1.4726,
+      "listCostPerTask": 1.2831,
+      "costPerTask": 1.2831,
       "variants": [
         {
           "aaSlug": "glm-5-2-non-reasoning",
@@ -214,12 +214,12 @@
             "artificial_analysis_finance_and_accounting_index": 33.3,
             "artificial_analysis_strategy_and_ops_index": 30.6,
             "artificial_analysis_legal_index": 34.3,
-            "artificial_analysis_healthcare_and_medical_index": 32.4,
+            "artificial_analysis_healthcare_and_medical_index": 33.3,
             "artificial_analysis_engineering_index": 37.2,
             "artificial_analysis_economics_index": 45.6
           },
-          "listCostPerTask": 1.4726,
-          "costPerTask": 1.4726,
+          "listCostPerTask": 1.2831,
+          "costPerTask": 1.2831,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -239,7 +239,7 @@
         "input": 3,
         "output": 15,
         "cachedRead": 0.3,
-        "cachedWrite": null
+        "cachedWrite": 3
       },
       "allowances": {
         "go": 15,
@@ -252,7 +252,7 @@
         "artificial_analysis_finance_and_accounting_index": 46.9,
         "artificial_analysis_strategy_and_ops_index": 50.5,
         "artificial_analysis_legal_index": 48.6,
-        "artificial_analysis_healthcare_and_medical_index": 45,
+        "artificial_analysis_healthcare_and_medical_index": 42.5,
         "artificial_analysis_engineering_index": 43.3,
         "artificial_analysis_economics_index": 53.4
       },
@@ -271,14 +271,14 @@
             "artificial_analysis_finance_and_accounting_index": 32.3,
             "artificial_analysis_strategy_and_ops_index": 38.9,
             "artificial_analysis_legal_index": 34.3,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 30.3,
             "artificial_analysis_engineering_index": 29.7,
             "artificial_analysis_economics_index": 37
           },
           "listCostPerTask": 1.1463,
           "costPerTask": 1.1463,
           "priceFactor": 1,
-          "priceFactorApproximate": false
+          "priceFactorApproximate": true
         },
         {
           "aaSlug": "kimi-k3",
@@ -292,14 +292,14 @@
             "artificial_analysis_finance_and_accounting_index": 46.9,
             "artificial_analysis_strategy_and_ops_index": 50.5,
             "artificial_analysis_legal_index": 48.6,
-            "artificial_analysis_healthcare_and_medical_index": 45,
+            "artificial_analysis_healthcare_and_medical_index": 42.5,
             "artificial_analysis_engineering_index": 43.3,
             "artificial_analysis_economics_index": 53.4
           },
           "listCostPerTask": 2.0001,
           "costPerTask": 2.0001,
           "priceFactor": 1,
-          "priceFactorApproximate": false
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "kimi-k3"
@@ -330,7 +330,7 @@
         "artificial_analysis_finance_and_accounting_index": 28.9,
         "artificial_analysis_strategy_and_ops_index": 28,
         "artificial_analysis_legal_index": 27.7,
-        "artificial_analysis_healthcare_and_medical_index": 26.5,
+        "artificial_analysis_healthcare_and_medical_index": 25.9,
         "artificial_analysis_engineering_index": 29.1,
         "artificial_analysis_economics_index": 36.5
       },
@@ -349,7 +349,7 @@
             "artificial_analysis_finance_and_accounting_index": 28.9,
             "artificial_analysis_strategy_and_ops_index": 28,
             "artificial_analysis_legal_index": 27.7,
-            "artificial_analysis_healthcare_and_medical_index": 26.5,
+            "artificial_analysis_healthcare_and_medical_index": 25.9,
             "artificial_analysis_engineering_index": 29.1,
             "artificial_analysis_economics_index": 36.5
           },
@@ -426,7 +426,7 @@
       "aaName": "Step 5 Preview",
       "tier": "standard",
       "priceRow": "Step 5 Preview",
-      "promoLabel": "4x · Limited time",
+      "promoLabel": null,
       "prices": {
         "input": 1,
         "output": 2.7,
@@ -434,8 +434,8 @@
         "cachedWrite": null
       },
       "allowances": {
-        "go": 60,
-        "go-plus": 240
+        "go": 15,
+        "go-plus": 60
       },
       "scores": {
         "artificial_analysis_intelligence_index": 43.7,
@@ -444,7 +444,7 @@
         "artificial_analysis_finance_and_accounting_index": 45.4,
         "artificial_analysis_strategy_and_ops_index": 47.1,
         "artificial_analysis_legal_index": 46.2,
-        "artificial_analysis_healthcare_and_medical_index": 40.8,
+        "artificial_analysis_healthcare_and_medical_index": 41.1,
         "artificial_analysis_engineering_index": 45,
         "artificial_analysis_economics_index": 52.8
       },
@@ -463,7 +463,7 @@
             "artificial_analysis_finance_and_accounting_index": 45.4,
             "artificial_analysis_strategy_and_ops_index": 47.1,
             "artificial_analysis_legal_index": 46.2,
-            "artificial_analysis_healthcare_and_medical_index": 40.8,
+            "artificial_analysis_healthcare_and_medical_index": 41.1,
             "artificial_analysis_engineering_index": 45,
             "artificial_analysis_economics_index": 52.8
           },
@@ -501,7 +501,7 @@
         "artificial_analysis_finance_and_accounting_index": 40.3,
         "artificial_analysis_strategy_and_ops_index": 46.1,
         "artificial_analysis_legal_index": 37.2,
-        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_healthcare_and_medical_index": 35.6,
         "artificial_analysis_engineering_index": 37.3,
         "artificial_analysis_economics_index": 43.6
       },
@@ -520,7 +520,7 @@
             "artificial_analysis_finance_and_accounting_index": 40.3,
             "artificial_analysis_strategy_and_ops_index": 46.1,
             "artificial_analysis_legal_index": 37.2,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 35.6,
             "artificial_analysis_engineering_index": 37.3,
             "artificial_analysis_economics_index": 43.6
           },
@@ -558,7 +558,7 @@
         "artificial_analysis_finance_and_accounting_index": 46.1,
         "artificial_analysis_strategy_and_ops_index": 47.8,
         "artificial_analysis_legal_index": 44.8,
-        "artificial_analysis_healthcare_and_medical_index": 41.8,
+        "artificial_analysis_healthcare_and_medical_index": 41,
         "artificial_analysis_engineering_index": 46.9,
         "artificial_analysis_economics_index": 53.2
       },
@@ -577,7 +577,7 @@
             "artificial_analysis_finance_and_accounting_index": 46.1,
             "artificial_analysis_strategy_and_ops_index": 47.8,
             "artificial_analysis_legal_index": 44.8,
-            "artificial_analysis_healthcare_and_medical_index": 41.8,
+            "artificial_analysis_healthcare_and_medical_index": 41,
             "artificial_analysis_engineering_index": 46.9,
             "artificial_analysis_economics_index": 53.2
           },
@@ -619,8 +619,8 @@
         "artificial_analysis_engineering_index": 24.6,
         "artificial_analysis_economics_index": 33.9
       },
-      "listCostPerTask": 0.0191,
-      "costPerTask": 0.0191,
+      "listCostPerTask": 0.0418,
+      "costPerTask": 0.04284024618678083,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-0424",
@@ -638,10 +638,10 @@
             "artificial_analysis_engineering_index": 24.6,
             "artificial_analysis_economics_index": 33.9
           },
-          "listCostPerTask": 0.0191,
-          "costPerTask": 0.0191,
-          "priceFactor": 1,
-          "priceFactorApproximate": false
+          "listCostPerTask": 0.0418,
+          "costPerTask": 0.04284024618678083,
+          "priceFactor": 1.0248862724110248,
+          "priceFactorApproximate": true
         }
       ],
       "defaultVariant": "mimo-v2-5-0424"
@@ -672,12 +672,12 @@
         "artificial_analysis_finance_and_accounting_index": 27,
         "artificial_analysis_strategy_and_ops_index": 20.2,
         "artificial_analysis_legal_index": 29.6,
-        "artificial_analysis_healthcare_and_medical_index": 25.5,
+        "artificial_analysis_healthcare_and_medical_index": 24.9,
         "artificial_analysis_engineering_index": 28.6,
         "artificial_analysis_economics_index": 40.5
       },
-      "listCostPerTask": 0.0541,
-      "costPerTask": 0.05421448075105268,
+      "listCostPerTask": 0.1493,
+      "costPerTask": 0.08706491373921738,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-pro-non-reasoning",
@@ -712,13 +712,13 @@
             "artificial_analysis_finance_and_accounting_index": 27,
             "artificial_analysis_strategy_and_ops_index": 20.2,
             "artificial_analysis_legal_index": 29.6,
-            "artificial_analysis_healthcare_and_medical_index": 25.5,
+            "artificial_analysis_healthcare_and_medical_index": 24.9,
             "artificial_analysis_engineering_index": 28.6,
             "artificial_analysis_economics_index": 40.5
           },
-          "listCostPerTask": 0.0541,
-          "costPerTask": 0.05421448075105268,
-          "priceFactor": 1.002116095213543,
+          "listCostPerTask": 0.1493,
+          "costPerTask": 0.08706491373921738,
+          "priceFactor": 0.5831541442680334,
           "priceFactorApproximate": true
         }
       ],
@@ -750,7 +750,7 @@
         "artificial_analysis_finance_and_accounting_index": 30.1,
         "artificial_analysis_strategy_and_ops_index": 25,
         "artificial_analysis_legal_index": 31.5,
-        "artificial_analysis_healthcare_and_medical_index": 29.7,
+        "artificial_analysis_healthcare_and_medical_index": 27.8,
         "artificial_analysis_engineering_index": 31.2,
         "artificial_analysis_economics_index": 43.7
       },
@@ -769,7 +769,7 @@
             "artificial_analysis_finance_and_accounting_index": 30.1,
             "artificial_analysis_strategy_and_ops_index": 25,
             "artificial_analysis_legal_index": 31.5,
-            "artificial_analysis_healthcare_and_medical_index": 29.7,
+            "artificial_analysis_healthcare_and_medical_index": 27.8,
             "artificial_analysis_engineering_index": 31.2,
             "artificial_analysis_economics_index": 43.7
           },
@@ -807,12 +807,12 @@
         "artificial_analysis_finance_and_accounting_index": 49.8,
         "artificial_analysis_strategy_and_ops_index": 51.2,
         "artificial_analysis_legal_index": 50.9,
-        "artificial_analysis_healthcare_and_medical_index": 49.7,
+        "artificial_analysis_healthcare_and_medical_index": 45.3,
         "artificial_analysis_engineering_index": 49.4,
         "artificial_analysis_economics_index": 56.3
       },
-      "listCostPerTask": 1.6049,
-      "costPerTask": 0.034668736604624925,
+      "listCostPerTask": 1.3146,
+      "costPerTask": 0.02839773265651438,
       "variants": [
         {
           "aaSlug": "muse-spark-1-3-xhigh",
@@ -826,12 +826,12 @@
             "artificial_analysis_finance_and_accounting_index": 47.8,
             "artificial_analysis_strategy_and_ops_index": 49.1,
             "artificial_analysis_legal_index": 48.8,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 43.3,
             "artificial_analysis_engineering_index": 45.6,
             "artificial_analysis_economics_index": 54.9
           },
-          "listCostPerTask": 1.3678,
-          "costPerTask": 0.029546948674562885,
+          "listCostPerTask": 1.1201,
+          "costPerTask": 0.024196181613085167,
           "priceFactor": 0.021601804850535814,
           "priceFactorApproximate": true
         },
@@ -847,12 +847,12 @@
             "artificial_analysis_finance_and_accounting_index": 49.8,
             "artificial_analysis_strategy_and_ops_index": 51.2,
             "artificial_analysis_legal_index": 50.9,
-            "artificial_analysis_healthcare_and_medical_index": 49.7,
+            "artificial_analysis_healthcare_and_medical_index": 45.3,
             "artificial_analysis_engineering_index": 49.4,
             "artificial_analysis_economics_index": 56.3
           },
-          "listCostPerTask": 1.6049,
-          "costPerTask": 0.034668736604624925,
+          "listCostPerTask": 1.3146,
+          "costPerTask": 0.02839773265651438,
           "priceFactor": 0.021601804850535814,
           "priceFactorApproximate": true
         }
@@ -885,12 +885,12 @@
         "artificial_analysis_finance_and_accounting_index": 44.3,
         "artificial_analysis_strategy_and_ops_index": 42.8,
         "artificial_analysis_legal_index": 46.8,
-        "artificial_analysis_healthcare_and_medical_index": 43.8,
+        "artificial_analysis_healthcare_and_medical_index": 40.2,
         "artificial_analysis_engineering_index": 41.6,
         "artificial_analysis_economics_index": 52.9
       },
-      "listCostPerTask": 0.9747,
-      "costPerTask": 0.021055279187817258,
+      "listCostPerTask": 0.812,
+      "costPerTask": 0.01754066553863508,
       "variants": [
         {
           "aaSlug": "muse-spark-1-2",
@@ -904,12 +904,12 @@
             "artificial_analysis_finance_and_accounting_index": 44.3,
             "artificial_analysis_strategy_and_ops_index": 42.8,
             "artificial_analysis_legal_index": 46.8,
-            "artificial_analysis_healthcare_and_medical_index": 43.8,
+            "artificial_analysis_healthcare_and_medical_index": 40.2,
             "artificial_analysis_engineering_index": 41.6,
             "artificial_analysis_economics_index": 52.9
           },
-          "listCostPerTask": 0.9747,
-          "costPerTask": 0.021055279187817258,
+          "listCostPerTask": 0.812,
+          "costPerTask": 0.01754066553863508,
           "priceFactor": 0.021601804850535814,
           "priceFactorApproximate": true
         }
@@ -1024,7 +1024,7 @@
         "artificial_analysis_finance_and_accounting_index": 24.5,
         "artificial_analysis_strategy_and_ops_index": 18.7,
         "artificial_analysis_legal_index": 27.3,
-        "artificial_analysis_healthcare_and_medical_index": 23,
+        "artificial_analysis_healthcare_and_medical_index": 22.9,
         "artificial_analysis_engineering_index": 28.8,
         "artificial_analysis_economics_index": 37.3
       },
@@ -1043,7 +1043,7 @@
             "artificial_analysis_finance_and_accounting_index": 24.5,
             "artificial_analysis_strategy_and_ops_index": 18.7,
             "artificial_analysis_legal_index": 27.3,
-            "artificial_analysis_healthcare_and_medical_index": 23,
+            "artificial_analysis_healthcare_and_medical_index": 22.9,
             "artificial_analysis_engineering_index": 28.8,
             "artificial_analysis_economics_index": 37.3
           },
@@ -1081,7 +1081,7 @@
         "artificial_analysis_finance_and_accounting_index": 48.3,
         "artificial_analysis_strategy_and_ops_index": 52.5,
         "artificial_analysis_legal_index": 46.4,
-        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_healthcare_and_medical_index": 43.7,
         "artificial_analysis_engineering_index": 45.2,
         "artificial_analysis_economics_index": 50.5
       },
@@ -1100,7 +1100,7 @@
             "artificial_analysis_finance_and_accounting_index": 48.3,
             "artificial_analysis_strategy_and_ops_index": 52.5,
             "artificial_analysis_legal_index": 46.4,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 43.7,
             "artificial_analysis_engineering_index": 45.2,
             "artificial_analysis_economics_index": 50.5
           },
@@ -1138,7 +1138,7 @@
         "artificial_analysis_finance_and_accounting_index": 41.4,
         "artificial_analysis_strategy_and_ops_index": 46.5,
         "artificial_analysis_legal_index": 41.1,
-        "artificial_analysis_healthcare_and_medical_index": 38.2,
+        "artificial_analysis_healthcare_and_medical_index": null,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 43.7
       },
@@ -1178,7 +1178,7 @@
             "artificial_analysis_finance_and_accounting_index": 41.4,
             "artificial_analysis_strategy_and_ops_index": 46.5,
             "artificial_analysis_legal_index": 41.1,
-            "artificial_analysis_healthcare_and_medical_index": 38.2,
+            "artificial_analysis_healthcare_and_medical_index": null,
             "artificial_analysis_engineering_index": 37.1,
             "artificial_analysis_economics_index": 43.7
           },
@@ -1245,8 +1245,8 @@
         "artificial_analysis_engineering_index": 26.7,
         "artificial_analysis_economics_index": 35.2
       },
-      "listCostPerTask": 0.0718,
-      "costPerTask": 0.07397231521879996,
+      "listCostPerTask": 0.0724,
+      "costPerTask": 0.07459046827076765,
       "variants": [
         {
           "aaSlug": "hy3",
@@ -1264,8 +1264,8 @@
             "artificial_analysis_engineering_index": 26.7,
             "artificial_analysis_economics_index": 35.2
           },
-          "listCostPerTask": 0.0718,
-          "costPerTask": 0.07397231521879996,
+          "listCostPerTask": 0.0724,
+          "costPerTask": 0.07459046827076765,
           "priceFactor": 1.0302550866128128,
           "priceFactorApproximate": true
         }
@@ -1280,17 +1280,9 @@
       "aaName": "MiniMax-M3.1-Flash",
       "tier": "free",
       "priceRow": "MiniMax M3.1 Flash Free",
-      "promoLabel": "limited time",
-      "prices": {
-        "input": 0,
-        "output": 0,
-        "cachedRead": 0,
-        "cachedWrite": null
-      },
-      "allowances": {
-        "go": "unlimited",
-        "go-plus": "unlimited"
-      },
+      "promoLabel": null,
+      "prices": null,
+      "allowances": null,
       "scores": {
         "artificial_analysis_intelligence_index": 42.7,
         "artificial_analysis_coding_index": null,
@@ -1298,12 +1290,12 @@
         "artificial_analysis_finance_and_accounting_index": 49,
         "artificial_analysis_strategy_and_ops_index": 54.6,
         "artificial_analysis_legal_index": 46.8,
-        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_healthcare_and_medical_index": 42.9,
         "artificial_analysis_engineering_index": 43.4,
         "artificial_analysis_economics_index": 50
       },
       "listCostPerTask": 0.2201,
-      "costPerTask": 0,
+      "costPerTask": 0.2201,
       "variants": [
         {
           "aaSlug": "minimax-m3-1-flash",
@@ -1317,13 +1309,13 @@
             "artificial_analysis_finance_and_accounting_index": 49,
             "artificial_analysis_strategy_and_ops_index": 54.6,
             "artificial_analysis_legal_index": 46.8,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 42.9,
             "artificial_analysis_engineering_index": 43.4,
             "artificial_analysis_economics_index": 50
           },
           "listCostPerTask": 0.2201,
-          "costPerTask": 0,
-          "priceFactor": 0,
+          "costPerTask": 0.2201,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -1355,12 +1347,12 @@
         "artificial_analysis_finance_and_accounting_index": 51.9,
         "artificial_analysis_strategy_and_ops_index": 54.4,
         "artificial_analysis_legal_index": 54.1,
-        "artificial_analysis_healthcare_and_medical_index": 47.2,
+        "artificial_analysis_healthcare_and_medical_index": 47.9,
         "artificial_analysis_engineering_index": 47.4,
         "artificial_analysis_economics_index": 55.7
       },
-      "listCostPerTask": 3.7383,
-      "costPerTask": 3.7383,
+      "listCostPerTask": 3.2367,
+      "costPerTask": 3.2367,
       "variants": [
         {
           "aaSlug": "grok-4-7-low",
@@ -1374,12 +1366,12 @@
             "artificial_analysis_finance_and_accounting_index": 48,
             "artificial_analysis_strategy_and_ops_index": 50.8,
             "artificial_analysis_legal_index": 50.7,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 44.3,
             "artificial_analysis_engineering_index": 42.5,
             "artificial_analysis_economics_index": 52.8
           },
-          "listCostPerTask": 1.248,
-          "costPerTask": 1.248,
+          "listCostPerTask": 1.0294,
+          "costPerTask": 1.0294,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1395,12 +1387,12 @@
             "artificial_analysis_finance_and_accounting_index": 51.7,
             "artificial_analysis_strategy_and_ops_index": 54.4,
             "artificial_analysis_legal_index": 54.2,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 46.7,
             "artificial_analysis_engineering_index": 46.6,
             "artificial_analysis_economics_index": 55.3
           },
-          "listCostPerTask": 2.7261,
-          "costPerTask": 2.7261,
+          "listCostPerTask": 2.3638,
+          "costPerTask": 2.3638,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1416,12 +1408,12 @@
             "artificial_analysis_finance_and_accounting_index": 51.9,
             "artificial_analysis_strategy_and_ops_index": 54.4,
             "artificial_analysis_legal_index": 54.1,
-            "artificial_analysis_healthcare_and_medical_index": 47.2,
+            "artificial_analysis_healthcare_and_medical_index": 47.9,
             "artificial_analysis_engineering_index": 47.4,
             "artificial_analysis_economics_index": 55.7
           },
-          "listCostPerTask": 3.7383,
-          "costPerTask": 3.7383,
+          "listCostPerTask": 3.2367,
+          "costPerTask": 3.2367,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -1454,7 +1446,7 @@
         "artificial_analysis_finance_and_accounting_index": 40.3,
         "artificial_analysis_strategy_and_ops_index": 45.7,
         "artificial_analysis_legal_index": 40.3,
-        "artificial_analysis_healthcare_and_medical_index": 37.4,
+        "artificial_analysis_healthcare_and_medical_index": 38.9,
         "artificial_analysis_engineering_index": 37.1,
         "artificial_analysis_economics_index": 45.2
       },
@@ -1473,7 +1465,7 @@
             "artificial_analysis_finance_and_accounting_index": 20.2,
             "artificial_analysis_strategy_and_ops_index": 19.8,
             "artificial_analysis_legal_index": 19.3,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 20.6,
             "artificial_analysis_engineering_index": 20.7,
             "artificial_analysis_economics_index": 24.2
           },
@@ -1494,7 +1486,7 @@
             "artificial_analysis_finance_and_accounting_index": 24.3,
             "artificial_analysis_strategy_and_ops_index": 22.8,
             "artificial_analysis_legal_index": 25.5,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 23,
             "artificial_analysis_engineering_index": 22.8,
             "artificial_analysis_economics_index": 30.1
           },
@@ -1515,7 +1507,7 @@
             "artificial_analysis_finance_and_accounting_index": 32.9,
             "artificial_analysis_strategy_and_ops_index": 37.5,
             "artificial_analysis_legal_index": 33,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 32.4,
             "artificial_analysis_engineering_index": 29.4,
             "artificial_analysis_economics_index": 37.1
           },
@@ -1536,7 +1528,7 @@
             "artificial_analysis_finance_and_accounting_index": 36.4,
             "artificial_analysis_strategy_and_ops_index": 41.2,
             "artificial_analysis_legal_index": 35.4,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 34.1,
             "artificial_analysis_engineering_index": 31.8,
             "artificial_analysis_economics_index": 40
           },
@@ -1557,7 +1549,7 @@
             "artificial_analysis_finance_and_accounting_index": 37.2,
             "artificial_analysis_strategy_and_ops_index": 42.6,
             "artificial_analysis_legal_index": 37.2,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 35.9,
             "artificial_analysis_engineering_index": 33.7,
             "artificial_analysis_economics_index": 41.6
           },
@@ -1578,7 +1570,7 @@
             "artificial_analysis_finance_and_accounting_index": 40.3,
             "artificial_analysis_strategy_and_ops_index": 45.7,
             "artificial_analysis_legal_index": 40.3,
-            "artificial_analysis_healthcare_and_medical_index": 37.4,
+            "artificial_analysis_healthcare_and_medical_index": 38.9,
             "artificial_analysis_engineering_index": 37.1,
             "artificial_analysis_economics_index": 45.2
           },
@@ -1616,7 +1608,7 @@
         "artificial_analysis_finance_and_accounting_index": 40.1,
         "artificial_analysis_strategy_and_ops_index": 44.1,
         "artificial_analysis_legal_index": 36.9,
-        "artificial_analysis_healthcare_and_medical_index": 35.7,
+        "artificial_analysis_healthcare_and_medical_index": 35.8,
         "artificial_analysis_engineering_index": 36.2,
         "artificial_analysis_economics_index": 42.7
       },
@@ -1635,7 +1627,7 @@
             "artificial_analysis_finance_and_accounting_index": 16.1,
             "artificial_analysis_strategy_and_ops_index": 14.7,
             "artificial_analysis_legal_index": 17,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 15.6,
             "artificial_analysis_engineering_index": 18.3,
             "artificial_analysis_economics_index": 21.6
           },
@@ -1656,7 +1648,7 @@
             "artificial_analysis_finance_and_accounting_index": 23,
             "artificial_analysis_strategy_and_ops_index": 21.7,
             "artificial_analysis_legal_index": 24,
-            "artificial_analysis_healthcare_and_medical_index": 19.9,
+            "artificial_analysis_healthcare_and_medical_index": 21.3,
             "artificial_analysis_engineering_index": 22.7,
             "artificial_analysis_economics_index": 27.9
           },
@@ -1677,7 +1669,7 @@
             "artificial_analysis_finance_and_accounting_index": 27,
             "artificial_analysis_strategy_and_ops_index": 28.5,
             "artificial_analysis_legal_index": 27.7,
-            "artificial_analysis_healthcare_and_medical_index": 24.2,
+            "artificial_analysis_healthcare_and_medical_index": 25,
             "artificial_analysis_engineering_index": 26.2,
             "artificial_analysis_economics_index": 32
           },
@@ -1698,7 +1690,7 @@
             "artificial_analysis_finance_and_accounting_index": 34.1,
             "artificial_analysis_strategy_and_ops_index": 36.8,
             "artificial_analysis_legal_index": 33,
-            "artificial_analysis_healthcare_and_medical_index": 29.7,
+            "artificial_analysis_healthcare_and_medical_index": 30.4,
             "artificial_analysis_engineering_index": 31.7,
             "artificial_analysis_economics_index": 38
           },
@@ -1719,7 +1711,7 @@
             "artificial_analysis_finance_and_accounting_index": 37.2,
             "artificial_analysis_strategy_and_ops_index": 40.6,
             "artificial_analysis_legal_index": 34.8,
-            "artificial_analysis_healthcare_and_medical_index": 33,
+            "artificial_analysis_healthcare_and_medical_index": 32.8,
             "artificial_analysis_engineering_index": 34,
             "artificial_analysis_economics_index": 40.6
           },
@@ -1740,7 +1732,7 @@
             "artificial_analysis_finance_and_accounting_index": 40.1,
             "artificial_analysis_strategy_and_ops_index": 44.1,
             "artificial_analysis_legal_index": 36.9,
-            "artificial_analysis_healthcare_and_medical_index": 35.7,
+            "artificial_analysis_healthcare_and_medical_index": 35.8,
             "artificial_analysis_engineering_index": 36.2,
             "artificial_analysis_economics_index": 42.7
           },
@@ -1778,7 +1770,7 @@
         "artificial_analysis_finance_and_accounting_index": 43.9,
         "artificial_analysis_strategy_and_ops_index": 40.4,
         "artificial_analysis_legal_index": 42.3,
-        "artificial_analysis_healthcare_and_medical_index": 44.1,
+        "artificial_analysis_healthcare_and_medical_index": 39.9,
         "artificial_analysis_engineering_index": 44.9,
         "artificial_analysis_economics_index": 51.2
       },
@@ -1797,7 +1789,7 @@
             "artificial_analysis_finance_and_accounting_index": 28.8,
             "artificial_analysis_strategy_and_ops_index": 28,
             "artificial_analysis_legal_index": 30.6,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 27,
             "artificial_analysis_engineering_index": 31.2,
             "artificial_analysis_economics_index": 37.5
           },
@@ -1818,7 +1810,7 @@
             "artificial_analysis_finance_and_accounting_index": 35.4,
             "artificial_analysis_strategy_and_ops_index": 33.5,
             "artificial_analysis_legal_index": 35.5,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 32,
             "artificial_analysis_engineering_index": 35.2,
             "artificial_analysis_economics_index": 43.3
           },
@@ -1839,7 +1831,7 @@
             "artificial_analysis_finance_and_accounting_index": 37.7,
             "artificial_analysis_strategy_and_ops_index": 37.5,
             "artificial_analysis_legal_index": 37.6,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 34.1,
             "artificial_analysis_engineering_index": 39.2,
             "artificial_analysis_economics_index": 45.8
           },
@@ -1860,7 +1852,7 @@
             "artificial_analysis_finance_and_accounting_index": 40.8,
             "artificial_analysis_strategy_and_ops_index": 39.3,
             "artificial_analysis_legal_index": 39.9,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 35.4,
             "artificial_analysis_engineering_index": 43.1,
             "artificial_analysis_economics_index": 48.7
           },
@@ -1881,7 +1873,7 @@
             "artificial_analysis_finance_and_accounting_index": 43.9,
             "artificial_analysis_strategy_and_ops_index": 40.4,
             "artificial_analysis_legal_index": 42.3,
-            "artificial_analysis_healthcare_and_medical_index": 44.1,
+            "artificial_analysis_healthcare_and_medical_index": 39.9,
             "artificial_analysis_engineering_index": 44.9,
             "artificial_analysis_economics_index": 51.2
           },
@@ -1901,17 +1893,9 @@
       "aaName": "Gemini 4 Argon (High)",
       "tier": "standard",
       "priceRow": "Gemini 4 Argon Contributor",
-      "promoLabel": "2x · Limited time",
-      "prices": {
-        "input": 4,
-        "output": 20,
-        "cachedRead": 0.2,
-        "cachedWrite": null
-      },
-      "allowances": {
-        "go": 60,
-        "go-plus": 240
-      },
+      "promoLabel": null,
+      "prices": null,
+      "allowances": null,
       "scores": {
         "artificial_analysis_intelligence_index": 52.6,
         "artificial_analysis_coding_index": null,
@@ -1919,12 +1903,12 @@
         "artificial_analysis_finance_and_accounting_index": 53.8,
         "artificial_analysis_strategy_and_ops_index": 56.2,
         "artificial_analysis_legal_index": 60,
-        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_healthcare_and_medical_index": 47.8,
         "artificial_analysis_engineering_index": 55.2,
         "artificial_analysis_economics_index": 60.4
       },
-      "listCostPerTask": 1.9903,
-      "costPerTask": 3.9806,
+      "listCostPerTask": 1.62,
+      "costPerTask": 1.62,
       "variants": [
         {
           "aaSlug": "gemini-4-argon",
@@ -1938,13 +1922,13 @@
             "artificial_analysis_finance_and_accounting_index": 53.8,
             "artificial_analysis_strategy_and_ops_index": 56.2,
             "artificial_analysis_legal_index": 60,
-            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_healthcare_and_medical_index": 47.8,
             "artificial_analysis_engineering_index": 55.2,
             "artificial_analysis_economics_index": 60.4
           },
-          "listCostPerTask": 1.9903,
-          "costPerTask": 3.9806,
-          "priceFactor": 2,
+          "listCostPerTask": 1.62,
+          "costPerTask": 1.62,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -1958,17 +1942,9 @@
       "aaName": null,
       "tier": "free",
       "priceRow": "LongCat 2.5 Preview Free",
-      "promoLabel": "limited time",
-      "prices": {
-        "input": 0,
-        "output": 0,
-        "cachedRead": 0,
-        "cachedWrite": null
-      },
-      "allowances": {
-        "go": "unlimited",
-        "go-plus": "unlimited"
-      },
+      "promoLabel": null,
+      "prices": null,
+      "allowances": null,
       "scores": {},
       "listCostPerTask": null,
       "costPerTask": null,
