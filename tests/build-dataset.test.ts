@@ -9,8 +9,11 @@ import type { RosterEntry } from '../src/types';
 const roster = parseYaml(
   readFileSync(new URL('../data/roster.yaml', import.meta.url), 'utf8'),
 ) as RosterEntry[];
+// The pricing table is refreshed daily in CI, so the assertions below read a
+// frozen snapshot: a re-price must not turn into a test failure. Live drift is
+// reported by `npm run scrape:go` and `npm run validate:roster` instead.
 const pricing = JSON.parse(
-  readFileSync(new URL('../data/go-pricing.json', import.meta.url), 'utf8'),
+  readFileSync(new URL('./fixtures/go-pricing.json', import.meta.url), 'utf8'),
 ) as GoPricing;
 
 const snapshot: AASnapshot = {

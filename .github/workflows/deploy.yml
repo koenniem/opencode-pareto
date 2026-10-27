@@ -59,8 +59,12 @@ jobs:
           path: data/aa-full.json
           if-no-files-found: ignore
 
+      # Warnings (a model left the table, a priced row is missing from the
+      # roster) are not fatal, so surface them where a human will see them.
       - name: Validate the roster
-        run: npm run validate:roster
+        run: |
+          set -o pipefail
+          npm run validate:roster 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Build the dataset
         run: npm run data:build

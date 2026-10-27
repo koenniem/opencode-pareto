@@ -5,8 +5,11 @@ import { rosterWarnings, suggestSlugs, validateRoster } from '../scripts/validat
 import type { GoPricing } from '../scripts/scrape-go';
 import type { RosterEntry } from '../src/types';
 
+// Frozen on purpose: the real pricing table is refreshed daily in CI, and a
+// re-price must not fail the build. Live drift is reported by
+// `npm run validate:roster` (warnings) rather than asserted here.
 const pricing = JSON.parse(
-  readFileSync(new URL('../data/go-pricing.json', import.meta.url), 'utf8'),
+  readFileSync(new URL('./fixtures/go-pricing.json', import.meta.url), 'utf8'),
 ) as GoPricing;
 
 function entry(goId: string, over: Partial<RosterEntry> = {}): RosterEntry {
@@ -177,7 +180,7 @@ describe('the committed roster', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it('resolves every standard priceRow against the live pricing table', () => {
+  it('resolves every standard priceRow against the pricing snapshot', () => {
     for (const row of roster) {
       if (row.tier !== 'standard' && row.tier !== 'free') continue;
       expect(pricing.rows[row.priceRow!], `${row.goId} -> ${row.priceRow}`).toBeDefined();
