@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { diffPricing, parseGoDocs } from '../scripts/scrape-go';
+import { diffPricing, implausibleDrift, parseGoDocs } from '../scripts/scrape-go';
 
 const html = readFileSync(new URL('./fixtures/go-docs.html', import.meta.url), 'utf8');
 
@@ -75,5 +75,28 @@ describe('parseGoDocs', () => {
     const q = structuredClone(p);
     delete q.rows['Kimi K3'];
     expect(diffPricing(p, q)).toContainEqual(expect.stringContaining('Kimi K3'));
+  });
+});
+
+describe('implausibleDrift', () => {
+  const committed = parseGoDocs(html);
+
+  it('allows ordinary churn: a model added, one dropped, a price changed', () => {
+    const scraped = structuredClone(committed);
+    delete scraped.rows['Kimi K3'];
+    scraped.rows['Brand New Model'] = structuredClone(scraped.rows['GLM-5.2']);
+    scraped.rows['GLM-5.2'].input = 2.1;
+    expect(implausibleDrift(committed, scraped)).toEqual([]);
+  });
+
+  it('refuses a scrape that lost a quarter of the table', () => {
+    const scraped = structuredClone(committed);
+    for (const name of Object.keys(scraped.rows).slice(0, 12)) delete scraped.rows[name];
+    expect(implausibleDrift(committed, scraped)).toHaveLength(1);
+    expect(implausibleDrift(committed, scraped)[0]).toContain('12 of 36');
+  });
+
+  it('has nothing to compare against without a committed file', () => {
+    expect(implausibleDrift(null, committed)).toEqual([]);
   });
 });

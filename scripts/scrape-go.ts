@@ -18,6 +18,14 @@ export interface GoPricing {
 }
 
 const SOURCE = 'https://opencode.ai/docs/go/';
+const COMMITTED_PATH = 'data/go-pricing.json';
+
+/**
+ * Removals above this share of the committed table mean a broken scrape, not a
+ * re-price. OpenCode adds and drops models one at a time; it has never retired
+ * a quarter of the catalogue in a single day.
+ */
+const MAX_REMOVED_FRACTION = 0.25;
 const REQUIRED_HEADERS = [
   'Model',
   'Input',
@@ -200,24 +208,72 @@ export function diffPricing(committed: GoPricing, scraped: GoPricing): string[] 
   return differences;
 }
 
+/**
+ * Differences too large to be an ordinary re-price.
+ *
+ * `--write` was safe because a human read the diff first. The scheduled
+ * workflow has no human, so this check takes that job: routine churn passes, a
+ * parse that suddenly loses a big chunk of the table stops the build before it
+ * overwrites good data with a partial scrape.
+ */
+export function implausibleDrift(
+  committed: GoPricing | null,
+  scraped: GoPricing,
+): string[] {
+  if (!committed) return [];
+  const before = Object.keys(committed.rows);
+  if (before.length === 0) return [];
+
+  const removed = before.filter((name) => !(name in scraped.rows));
+  const share = removed.length / before.length;
+  if (share <= MAX_REMOVED_FRACTION) return [];
+
+  return [
+    `scrape dropped ${removed.length} of ${before.length} rows ` +
+      `(${Math.round(share * 100)}%), which looks like a broken parse rather than a re-price`,
+  ];
+}
+
+function readCommitted(path: string): GoPricing | null {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8')) as GoPricing;
+  } catch {
+    return null;
+  }
+}
+
 async function main(): Promise<void> {
   const write = process.argv.includes('--write');
-  const path = 'data/go-pricing.json';
+  const force = process.argv.includes('--force');
   const response = await fetch(SOURCE);
   if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
   const scraped = parseGoDocs(await response.text());
 
   if (write) {
-    writeFileSync(path, `${JSON.stringify(scraped, null, 2)}\n`);
-    console.log(`Wrote ${Object.keys(scraped.rows).length} rows to ${path}`);
+    const committed = readCommitted(COMMITTED_PATH);
+
+    const problems = implausibleDrift(committed, scraped);
+    if (problems.length > 0 && !force) {
+      for (const problem of problems) console.error(problem);
+      console.error(`If the change is real, run: npm run scrape:go -- --write --force`);
+      process.exit(1);
+    }
+
+    // The applied diff is the audit trail: the scheduled workflow appends it to
+    // the job summary, so an unattended re-price is still visible.
+    const differences = committed ? diffPricing(committed, scraped) : [];
+    writeFileSync(COMMITTED_PATH, `${JSON.stringify(scraped, null, 2)}\n`);
+    console.log(`Wrote ${Object.keys(scraped.rows).length} rows to ${COMMITTED_PATH}`);
+    if (differences.length > 0) {
+      console.log(`Go pricing changed (${differences.length} difference(s)):`);
+      for (const line of differences) console.log(`  ${line}`);
+    }
     return;
   }
 
-  let committed: GoPricing;
-  try {
-    committed = JSON.parse(readFileSync(path, 'utf8')) as GoPricing;
-  } catch {
-    console.error(`${path} is missing. Run: npm run scrape:go -- --write`);
+  const committed = readCommitted(COMMITTED_PATH);
+  if (!committed) {
+    console.error(`${COMMITTED_PATH} is missing. Run: npm run scrape:go -- --write`);
     process.exit(1);
   }
 

@@ -32,9 +32,16 @@ jobs:
 
       # Data refresh runs only on the schedule or by hand. A push builds
       # whatever is committed, so a code change never silently re-prices.
-      - name: Check Go pricing for drift
+      # There is no human in a scheduled run, so the scrape accepts the drift
+      # itself instead of failing the nightly build. The applied diff is the
+      # audit trail: it is appended to the job summary below and the commit
+      # step turns it into a reviewable diff. A scrape that loses an implausible
+      # share of the table still fails here rather than overwriting good data.
+      - name: Refresh Go pricing
         if: github.event_name != 'push'
-        run: npm run scrape:go
+        run: |
+          set -o pipefail
+          npm run scrape:go -- --write | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Fetch Artificial Analysis scores
         if: github.event_name != 'push'
@@ -58,6 +65,11 @@ jobs:
       - name: Build the dataset
         run: npm run data:build
 
+      - run: npm test
+      - run: npm run build
+
+      # Committed only after the whole pipeline is green: a red build must not
+      # leave unbuilt data behind, or every later run fails on it.
       - name: Commit refreshed data
         if: github.event_name != 'push'
         run: |
@@ -70,9 +82,6 @@ jobs:
             git commit -m 'chore: refresh pricing and scores'
             git push
           fi
-
-      - run: npm test
-      - run: npm run build
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

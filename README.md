@@ -166,6 +166,12 @@ licensing; only the configurations the roster plots are committed.
 That is intended: the committed file is the reviewed source of truth, so a
 price change lands as a visible diff rather than a silent re-pricing.
 
+The scheduled workflow has no human to review that diff, so it runs
+`scrape:go -- --write` and lets the commit be the diff. Because nothing is
+reviewing the numbers, `--write` refuses a scrape that drops more than a
+quarter of the rows: that is a broken parse, not a re-price. If OpenCode really
+did retire that much of the catalogue at once, `--write --force` overrides it.
+
 ### What counts as "on Go"
 
 Only models in OpenCode's **published Go pricing table** count. The inference
