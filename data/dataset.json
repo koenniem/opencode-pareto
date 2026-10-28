@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-27T14:39:37.367Z",
-  "aaFetchedAt": "2026-10-27T14:39:35.810Z",
-  "intelligenceIndexVersion": "4.3",
+  "generatedAt": "2026-10-28T11:44:10.023Z",
+  "aaFetchedAt": "2026-10-28T11:44:07.656Z",
+  "intelligenceIndexVersion": "5",
   "plans": {
     "go": {
       "label": "Go",
@@ -33,18 +33,18 @@
         "go-plus": 180
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 41.8,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 71.5,
         "artificial_analysis_agentic_index": 50.9,
-        "artificial_analysis_finance_and_accounting_index": 42,
-        "artificial_analysis_strategy_and_ops_index": 45.1,
-        "artificial_analysis_legal_index": 39.9,
-        "artificial_analysis_healthcare_and_medical_index": 38.9,
-        "artificial_analysis_engineering_index": 43.8,
-        "artificial_analysis_economics_index": 48.9
+        "artificial_analysis_finance_and_accounting_index": 38.8,
+        "artificial_analysis_strategy_and_ops_index": 44.5,
+        "artificial_analysis_legal_index": 34.8,
+        "artificial_analysis_healthcare_and_medical_index": 36.6,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": 36.9
       },
-      "listCostPerTask": 0.2836,
-      "costPerTask": 0.2836,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "glm-5-3-flash",
@@ -52,19 +52,19 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 41.8,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 71.5,
             "artificial_analysis_agentic_index": 50.9,
-            "artificial_analysis_finance_and_accounting_index": 42,
-            "artificial_analysis_strategy_and_ops_index": 45.1,
-            "artificial_analysis_legal_index": 39.9,
-            "artificial_analysis_healthcare_and_medical_index": 38.9,
-            "artificial_analysis_engineering_index": 43.8,
-            "artificial_analysis_economics_index": 48.9
+            "artificial_analysis_finance_and_accounting_index": 38.8,
+            "artificial_analysis_strategy_and_ops_index": 44.5,
+            "artificial_analysis_legal_index": 34.8,
+            "artificial_analysis_healthcare_and_medical_index": 36.6,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": 36.9
           },
-          "listCostPerTask": 0.2836,
-          "costPerTask": 0.2836,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -90,18 +90,18 @@
         "go-plus": 120
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 44.8,
+        "artificial_analysis_intelligence_index": 31.7,
         "artificial_analysis_coding_index": 74.8,
         "artificial_analysis_agentic_index": 53.1,
-        "artificial_analysis_finance_and_accounting_index": 44.7,
-        "artificial_analysis_strategy_and_ops_index": 47.6,
-        "artificial_analysis_legal_index": 42,
-        "artificial_analysis_healthcare_and_medical_index": 42,
-        "artificial_analysis_engineering_index": 47.1,
-        "artificial_analysis_economics_index": 51.2
+        "artificial_analysis_finance_and_accounting_index": 42.1,
+        "artificial_analysis_strategy_and_ops_index": 47.4,
+        "artificial_analysis_legal_index": 35.8,
+        "artificial_analysis_healthcare_and_medical_index": 39.3,
+        "artificial_analysis_engineering_index": 37.6,
+        "artificial_analysis_economics_index": 39.3
       },
-      "listCostPerTask": 2.0056,
-      "costPerTask": 2.0056,
+      "listCostPerTask": 5.0093,
+      "costPerTask": 5.0093,
       "variants": [
         {
           "aaSlug": "glm-5-3-low",
@@ -109,18 +109,18 @@
           "effort": "Low",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 34.3,
+            "artificial_analysis_intelligence_index": 23.1,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 35.5,
-            "artificial_analysis_strategy_and_ops_index": 39,
-            "artificial_analysis_legal_index": 33.1,
-            "artificial_analysis_healthcare_and_medical_index": 32.8,
-            "artificial_analysis_engineering_index": 38,
-            "artificial_analysis_economics_index": 40.5
+            "artificial_analysis_finance_and_accounting_index": 31.2,
+            "artificial_analysis_strategy_and_ops_index": 38,
+            "artificial_analysis_legal_index": 27.7,
+            "artificial_analysis_healthcare_and_medical_index": 31,
+            "artificial_analysis_engineering_index": 28.3,
+            "artificial_analysis_economics_index": 29.9
           },
-          "listCostPerTask": 0.8522,
-          "costPerTask": 0.8522,
+          "listCostPerTask": 1.5749,
+          "costPerTask": 1.5749,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -130,18 +130,18 @@
           "effort": "Max",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 44.8,
+            "artificial_analysis_intelligence_index": 31.7,
             "artificial_analysis_coding_index": 74.8,
             "artificial_analysis_agentic_index": 53.1,
-            "artificial_analysis_finance_and_accounting_index": 44.7,
-            "artificial_analysis_strategy_and_ops_index": 47.6,
-            "artificial_analysis_legal_index": 42,
-            "artificial_analysis_healthcare_and_medical_index": 42,
-            "artificial_analysis_engineering_index": 47.1,
-            "artificial_analysis_economics_index": 51.2
+            "artificial_analysis_finance_and_accounting_index": 42.1,
+            "artificial_analysis_strategy_and_ops_index": 47.4,
+            "artificial_analysis_legal_index": 35.8,
+            "artificial_analysis_healthcare_and_medical_index": 39.3,
+            "artificial_analysis_engineering_index": 37.6,
+            "artificial_analysis_economics_index": 39.3
           },
-          "listCostPerTask": 2.0056,
-          "costPerTask": 2.0056,
+          "listCostPerTask": 5.0093,
+          "costPerTask": 5.0093,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -168,18 +168,18 @@
         "go-plus": 180
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 33.7,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 68.8,
         "artificial_analysis_agentic_index": 38.4,
-        "artificial_analysis_finance_and_accounting_index": 33.3,
-        "artificial_analysis_strategy_and_ops_index": 30.6,
-        "artificial_analysis_legal_index": 34.3,
-        "artificial_analysis_healthcare_and_medical_index": 33.3,
-        "artificial_analysis_engineering_index": 37.2,
-        "artificial_analysis_economics_index": 45.6
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 1.2831,
-      "costPerTask": 1.2831,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "glm-5-2-non-reasoning",
@@ -187,7 +187,7 @@
           "effort": "Non-reasoning",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 22.4,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 46.5,
             "artificial_analysis_agentic_index": null,
             "artificial_analysis_finance_and_accounting_index": null,
@@ -208,19 +208,19 @@
           "effort": "Max",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 33.7,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 68.8,
             "artificial_analysis_agentic_index": 38.4,
-            "artificial_analysis_finance_and_accounting_index": 33.3,
-            "artificial_analysis_strategy_and_ops_index": 30.6,
-            "artificial_analysis_legal_index": 34.3,
-            "artificial_analysis_healthcare_and_medical_index": 33.3,
-            "artificial_analysis_engineering_index": 37.2,
-            "artificial_analysis_economics_index": 45.6
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 1.2831,
-          "costPerTask": 1.2831,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -246,18 +246,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 43.6,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 76.2,
         "artificial_analysis_agentic_index": 50,
-        "artificial_analysis_finance_and_accounting_index": 46.9,
-        "artificial_analysis_strategy_and_ops_index": 50.5,
-        "artificial_analysis_legal_index": 48.6,
-        "artificial_analysis_healthcare_and_medical_index": 42.5,
-        "artificial_analysis_engineering_index": 43.3,
-        "artificial_analysis_economics_index": 53.4
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 2.0001,
-      "costPerTask": 2.0001,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "kimi-k3-low",
@@ -265,20 +265,20 @@
           "effort": "Low",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 30.1,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 72,
             "artificial_analysis_agentic_index": 29.3,
-            "artificial_analysis_finance_and_accounting_index": 32.3,
-            "artificial_analysis_strategy_and_ops_index": 38.9,
-            "artificial_analysis_legal_index": 34.3,
-            "artificial_analysis_healthcare_and_medical_index": 30.3,
-            "artificial_analysis_engineering_index": 29.7,
-            "artificial_analysis_economics_index": 37
+            "artificial_analysis_finance_and_accounting_index": 28.3,
+            "artificial_analysis_strategy_and_ops_index": 37,
+            "artificial_analysis_legal_index": 27.7,
+            "artificial_analysis_healthcare_and_medical_index": 29.2,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": 27.9
           },
-          "listCostPerTask": 1.1463,
-          "costPerTask": 1.1463,
-          "priceFactor": 1,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "kimi-k3",
@@ -286,20 +286,20 @@
           "effort": "Max",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 43.6,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 76.2,
             "artificial_analysis_agentic_index": 50,
-            "artificial_analysis_finance_and_accounting_index": 46.9,
-            "artificial_analysis_strategy_and_ops_index": 50.5,
-            "artificial_analysis_legal_index": 48.6,
-            "artificial_analysis_healthcare_and_medical_index": 42.5,
-            "artificial_analysis_engineering_index": 43.3,
-            "artificial_analysis_economics_index": 53.4
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 2.0001,
-          "costPerTask": 2.0001,
-          "priceFactor": 1,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "kimi-k3"
@@ -324,18 +324,18 @@
         "go-plus": 180
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 25.8,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 60.8,
         "artificial_analysis_agentic_index": 21,
-        "artificial_analysis_finance_and_accounting_index": 28.9,
-        "artificial_analysis_strategy_and_ops_index": 28,
-        "artificial_analysis_legal_index": 27.7,
-        "artificial_analysis_healthcare_and_medical_index": 25.9,
-        "artificial_analysis_engineering_index": 29.1,
-        "artificial_analysis_economics_index": 36.5
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.5412,
-      "costPerTask": 0.5412,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "kimi-k2-7-code",
@@ -343,19 +343,19 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 25.8,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 60.8,
             "artificial_analysis_agentic_index": 21,
-            "artificial_analysis_finance_and_accounting_index": 28.9,
-            "artificial_analysis_strategy_and_ops_index": 28,
-            "artificial_analysis_legal_index": 27.7,
-            "artificial_analysis_healthcare_and_medical_index": 25.9,
-            "artificial_analysis_engineering_index": 29.1,
-            "artificial_analysis_economics_index": 36.5
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.5412,
-          "costPerTask": 0.5412,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -381,18 +381,18 @@
         "go-plus": 240
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 19.1,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 45.3,
         "artificial_analysis_agentic_index": 14,
-        "artificial_analysis_finance_and_accounting_index": 21.9,
-        "artificial_analysis_strategy_and_ops_index": 15.8,
-        "artificial_analysis_legal_index": 22.8,
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
         "artificial_analysis_healthcare_and_medical_index": null,
-        "artificial_analysis_engineering_index": 24.1,
-        "artificial_analysis_economics_index": 31.1
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.1462,
-      "costPerTask": 0.05879010163499778,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "longcat-2-0",
@@ -400,20 +400,20 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 19.1,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 45.3,
             "artificial_analysis_agentic_index": 14,
-            "artificial_analysis_finance_and_accounting_index": 21.9,
-            "artificial_analysis_strategy_and_ops_index": 15.8,
-            "artificial_analysis_legal_index": 22.8,
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 24.1,
-            "artificial_analysis_economics_index": 31.1
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.1462,
-          "costPerTask": 0.05879010163499778,
-          "priceFactor": 0.4021210782147591,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "longcat-2-0"
@@ -438,18 +438,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 43.7,
+        "artificial_analysis_intelligence_index": 28.5,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 45.4,
-        "artificial_analysis_strategy_and_ops_index": 47.1,
-        "artificial_analysis_legal_index": 46.2,
-        "artificial_analysis_healthcare_and_medical_index": 41.1,
-        "artificial_analysis_engineering_index": 45,
-        "artificial_analysis_economics_index": 52.8
+        "artificial_analysis_finance_and_accounting_index": 40.5,
+        "artificial_analysis_strategy_and_ops_index": 44.2,
+        "artificial_analysis_legal_index": 38.6,
+        "artificial_analysis_healthcare_and_medical_index": 39.9,
+        "artificial_analysis_engineering_index": 37,
+        "artificial_analysis_economics_index": 40.2
       },
-      "listCostPerTask": 1.0264,
-      "costPerTask": 1.0264,
+      "listCostPerTask": 2.3453,
+      "costPerTask": 2.3453,
       "variants": [
         {
           "aaSlug": "step-5",
@@ -457,18 +457,18 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 43.7,
+            "artificial_analysis_intelligence_index": 28.5,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 45.4,
-            "artificial_analysis_strategy_and_ops_index": 47.1,
-            "artificial_analysis_legal_index": 46.2,
-            "artificial_analysis_healthcare_and_medical_index": 41.1,
-            "artificial_analysis_engineering_index": 45,
-            "artificial_analysis_economics_index": 52.8
+            "artificial_analysis_finance_and_accounting_index": 40.5,
+            "artificial_analysis_strategy_and_ops_index": 44.2,
+            "artificial_analysis_legal_index": 38.6,
+            "artificial_analysis_healthcare_and_medical_index": 39.9,
+            "artificial_analysis_engineering_index": 37,
+            "artificial_analysis_economics_index": 40.2
           },
-          "listCostPerTask": 1.0264,
-          "costPerTask": 1.0264,
+          "listCostPerTask": 2.3453,
+          "costPerTask": 2.3453,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -495,18 +495,18 @@
         "go-plus": 120
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 37.9,
+        "artificial_analysis_intelligence_index": 26.7,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 40.3,
-        "artificial_analysis_strategy_and_ops_index": 46.1,
-        "artificial_analysis_legal_index": 37.2,
-        "artificial_analysis_healthcare_and_medical_index": 35.6,
-        "artificial_analysis_engineering_index": 37.3,
-        "artificial_analysis_economics_index": 43.6
+        "artificial_analysis_finance_and_accounting_index": 36.9,
+        "artificial_analysis_strategy_and_ops_index": 45.7,
+        "artificial_analysis_legal_index": 33.8,
+        "artificial_analysis_healthcare_and_medical_index": 35.1,
+        "artificial_analysis_engineering_index": 31,
+        "artificial_analysis_economics_index": 34.2
       },
-      "listCostPerTask": 0.0624,
-      "costPerTask": 0.0624,
+      "listCostPerTask": 0.1285,
+      "costPerTask": 0.1285,
       "variants": [
         {
           "aaSlug": "mimo-v2-6-flash",
@@ -514,18 +514,18 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 37.9,
+            "artificial_analysis_intelligence_index": 26.7,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 40.3,
-            "artificial_analysis_strategy_and_ops_index": 46.1,
-            "artificial_analysis_legal_index": 37.2,
-            "artificial_analysis_healthcare_and_medical_index": 35.6,
-            "artificial_analysis_engineering_index": 37.3,
-            "artificial_analysis_economics_index": 43.6
+            "artificial_analysis_finance_and_accounting_index": 36.9,
+            "artificial_analysis_strategy_and_ops_index": 45.7,
+            "artificial_analysis_legal_index": 33.8,
+            "artificial_analysis_healthcare_and_medical_index": 35.1,
+            "artificial_analysis_engineering_index": 31,
+            "artificial_analysis_economics_index": 34.2
           },
-          "listCostPerTask": 0.0624,
-          "costPerTask": 0.0624,
+          "listCostPerTask": 0.1285,
+          "costPerTask": 0.1285,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -552,18 +552,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 46.3,
+        "artificial_analysis_intelligence_index": 29.9,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 46.1,
-        "artificial_analysis_strategy_and_ops_index": 47.8,
-        "artificial_analysis_legal_index": 44.8,
-        "artificial_analysis_healthcare_and_medical_index": 41,
-        "artificial_analysis_engineering_index": 46.9,
-        "artificial_analysis_economics_index": 53.2
+        "artificial_analysis_finance_and_accounting_index": 38.9,
+        "artificial_analysis_strategy_and_ops_index": 46.9,
+        "artificial_analysis_legal_index": 35,
+        "artificial_analysis_healthcare_and_medical_index": 35.8,
+        "artificial_analysis_engineering_index": 34.3,
+        "artificial_analysis_economics_index": 37.7
       },
-      "listCostPerTask": 0.1332,
-      "costPerTask": 0.13348186388244396,
+      "listCostPerTask": 0.2572,
+      "costPerTask": 0.2577442596889233,
       "variants": [
         {
           "aaSlug": "mimo-v2-6-pro",
@@ -571,18 +571,18 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 46.3,
+            "artificial_analysis_intelligence_index": 29.9,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 46.1,
-            "artificial_analysis_strategy_and_ops_index": 47.8,
-            "artificial_analysis_legal_index": 44.8,
-            "artificial_analysis_healthcare_and_medical_index": 41,
-            "artificial_analysis_engineering_index": 46.9,
-            "artificial_analysis_economics_index": 53.2
+            "artificial_analysis_finance_and_accounting_index": 38.9,
+            "artificial_analysis_strategy_and_ops_index": 46.9,
+            "artificial_analysis_legal_index": 35,
+            "artificial_analysis_healthcare_and_medical_index": 35.8,
+            "artificial_analysis_engineering_index": 34.3,
+            "artificial_analysis_economics_index": 37.7
           },
-          "listCostPerTask": 0.1332,
-          "costPerTask": 0.13348186388244396,
+          "listCostPerTask": 0.2572,
+          "costPerTask": 0.2577442596889233,
           "priceFactor": 1.002116095213543,
           "priceFactorApproximate": true
         }
@@ -609,18 +609,18 @@
         "go-plus": 120
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 21.8,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 56.8,
         "artificial_analysis_agentic_index": 15.8,
-        "artificial_analysis_finance_and_accounting_index": 22.2,
-        "artificial_analysis_strategy_and_ops_index": 18.9,
-        "artificial_analysis_legal_index": 24.4,
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
         "artificial_analysis_healthcare_and_medical_index": null,
-        "artificial_analysis_engineering_index": 24.6,
-        "artificial_analysis_economics_index": 33.9
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.0418,
-      "costPerTask": 0.04284024618678083,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-0424",
@@ -628,20 +628,20 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 21.8,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 56.8,
             "artificial_analysis_agentic_index": 15.8,
-            "artificial_analysis_finance_and_accounting_index": 22.2,
-            "artificial_analysis_strategy_and_ops_index": 18.9,
-            "artificial_analysis_legal_index": 24.4,
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 24.6,
-            "artificial_analysis_economics_index": 33.9
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0418,
-          "costPerTask": 0.04284024618678083,
-          "priceFactor": 1.0248862724110248,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "mimo-v2-5-0424"
@@ -666,18 +666,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 26,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 60.2,
         "artificial_analysis_agentic_index": 21.3,
-        "artificial_analysis_finance_and_accounting_index": 27,
-        "artificial_analysis_strategy_and_ops_index": 20.2,
-        "artificial_analysis_legal_index": 29.6,
-        "artificial_analysis_healthcare_and_medical_index": 24.9,
-        "artificial_analysis_engineering_index": 28.6,
-        "artificial_analysis_economics_index": 40.5
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.1493,
-      "costPerTask": 0.08706491373921738,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "mimo-v2-5-pro-non-reasoning",
@@ -685,7 +685,7 @@
           "effort": "Non-reasoning",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 18.3,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
             "artificial_analysis_finance_and_accounting_index": null,
@@ -706,20 +706,20 @@
           "effort": "Reasoning",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 26,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 60.2,
             "artificial_analysis_agentic_index": 21.3,
-            "artificial_analysis_finance_and_accounting_index": 27,
-            "artificial_analysis_strategy_and_ops_index": 20.2,
-            "artificial_analysis_legal_index": 29.6,
-            "artificial_analysis_healthcare_and_medical_index": 24.9,
-            "artificial_analysis_engineering_index": 28.6,
-            "artificial_analysis_economics_index": 40.5
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.1493,
-          "costPerTask": 0.08706491373921738,
-          "priceFactor": 0.5831541442680334,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "mimo-v2-5-pro"
@@ -744,18 +744,18 @@
         "go-plus": 180
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 29.2,
+        "artificial_analysis_intelligence_index": 18.7,
         "artificial_analysis_coding_index": 58.6,
         "artificial_analysis_agentic_index": 29.5,
-        "artificial_analysis_finance_and_accounting_index": 30.1,
-        "artificial_analysis_strategy_and_ops_index": 25,
-        "artificial_analysis_legal_index": 31.5,
-        "artificial_analysis_healthcare_and_medical_index": 27.8,
-        "artificial_analysis_engineering_index": 31.2,
-        "artificial_analysis_economics_index": 43.7
+        "artificial_analysis_finance_and_accounting_index": 25.1,
+        "artificial_analysis_strategy_and_ops_index": 27.9,
+        "artificial_analysis_legal_index": 23.5,
+        "artificial_analysis_healthcare_and_medical_index": 21.7,
+        "artificial_analysis_engineering_index": 26.1,
+        "artificial_analysis_economics_index": 28.4
       },
-      "listCostPerTask": 0.5076,
-      "costPerTask": 0.5076,
+      "listCostPerTask": 1.2851,
+      "costPerTask": 1.2851,
       "variants": [
         {
           "aaSlug": "minimax-m3",
@@ -763,18 +763,18 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 29.2,
+            "artificial_analysis_intelligence_index": 18.7,
             "artificial_analysis_coding_index": 58.6,
             "artificial_analysis_agentic_index": 29.5,
-            "artificial_analysis_finance_and_accounting_index": 30.1,
-            "artificial_analysis_strategy_and_ops_index": 25,
-            "artificial_analysis_legal_index": 31.5,
-            "artificial_analysis_healthcare_and_medical_index": 27.8,
-            "artificial_analysis_engineering_index": 31.2,
-            "artificial_analysis_economics_index": 43.7
+            "artificial_analysis_finance_and_accounting_index": 25.1,
+            "artificial_analysis_strategy_and_ops_index": 27.9,
+            "artificial_analysis_legal_index": 23.5,
+            "artificial_analysis_healthcare_and_medical_index": 21.7,
+            "artificial_analysis_engineering_index": 26.1,
+            "artificial_analysis_economics_index": 28.4
           },
-          "listCostPerTask": 0.5076,
-          "costPerTask": 0.5076,
+          "listCostPerTask": 1.2851,
+          "costPerTask": 1.2851,
           "priceFactor": 1,
           "priceFactorApproximate": true
         }
@@ -801,18 +801,18 @@
         "go-plus": 120
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 48.1,
+        "artificial_analysis_intelligence_index": 36.4,
         "artificial_analysis_coding_index": 75.8,
         "artificial_analysis_agentic_index": 55.5,
-        "artificial_analysis_finance_and_accounting_index": 49.8,
-        "artificial_analysis_strategy_and_ops_index": 51.2,
-        "artificial_analysis_legal_index": 50.9,
-        "artificial_analysis_healthcare_and_medical_index": 45.3,
-        "artificial_analysis_engineering_index": 49.4,
-        "artificial_analysis_economics_index": 56.3
+        "artificial_analysis_finance_and_accounting_index": 48.8,
+        "artificial_analysis_strategy_and_ops_index": 50.3,
+        "artificial_analysis_legal_index": 45.2,
+        "artificial_analysis_healthcare_and_medical_index": 43.6,
+        "artificial_analysis_engineering_index": 43.9,
+        "artificial_analysis_economics_index": 48.3
       },
-      "listCostPerTask": 1.3146,
-      "costPerTask": 0.02839773265651438,
+      "listCostPerTask": 2.3858,
+      "costPerTask": 0.05153758601240835,
       "variants": [
         {
           "aaSlug": "muse-spark-1-3-xhigh",
@@ -820,20 +820,20 @@
           "effort": "Xhigh",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 45.1,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 76.5,
             "artificial_analysis_agentic_index": 51.5,
-            "artificial_analysis_finance_and_accounting_index": 47.8,
-            "artificial_analysis_strategy_and_ops_index": 49.1,
-            "artificial_analysis_legal_index": 48.8,
-            "artificial_analysis_healthcare_and_medical_index": 43.3,
-            "artificial_analysis_engineering_index": 45.6,
-            "artificial_analysis_economics_index": 54.9
+            "artificial_analysis_finance_and_accounting_index": 46.2,
+            "artificial_analysis_strategy_and_ops_index": 47.9,
+            "artificial_analysis_legal_index": 43.2,
+            "artificial_analysis_healthcare_and_medical_index": 42.4,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": 45.2
           },
-          "listCostPerTask": 1.1201,
-          "costPerTask": 0.024196181613085167,
-          "priceFactor": 0.021601804850535814,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         },
         {
           "aaSlug": "muse-spark-1-3",
@@ -841,18 +841,18 @@
           "effort": "Max",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 48.1,
+            "artificial_analysis_intelligence_index": 36.4,
             "artificial_analysis_coding_index": 75.8,
             "artificial_analysis_agentic_index": 55.5,
-            "artificial_analysis_finance_and_accounting_index": 49.8,
-            "artificial_analysis_strategy_and_ops_index": 51.2,
-            "artificial_analysis_legal_index": 50.9,
-            "artificial_analysis_healthcare_and_medical_index": 45.3,
-            "artificial_analysis_engineering_index": 49.4,
-            "artificial_analysis_economics_index": 56.3
+            "artificial_analysis_finance_and_accounting_index": 48.8,
+            "artificial_analysis_strategy_and_ops_index": 50.3,
+            "artificial_analysis_legal_index": 45.2,
+            "artificial_analysis_healthcare_and_medical_index": 43.6,
+            "artificial_analysis_engineering_index": 43.9,
+            "artificial_analysis_economics_index": 48.3
           },
-          "listCostPerTask": 1.3146,
-          "costPerTask": 0.02839773265651438,
+          "listCostPerTask": 2.3858,
+          "costPerTask": 0.05153758601240835,
           "priceFactor": 0.021601804850535814,
           "priceFactorApproximate": true
         }
@@ -879,18 +879,18 @@
         "go-plus": 120
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 39.6,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 72.2,
         "artificial_analysis_agentic_index": 43.2,
-        "artificial_analysis_finance_and_accounting_index": 44.3,
-        "artificial_analysis_strategy_and_ops_index": 42.8,
-        "artificial_analysis_legal_index": 46.8,
-        "artificial_analysis_healthcare_and_medical_index": 40.2,
-        "artificial_analysis_engineering_index": 41.6,
-        "artificial_analysis_economics_index": 52.9
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.812,
-      "costPerTask": 0.01754066553863508,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "muse-spark-1-2",
@@ -898,20 +898,20 @@
           "effort": "Xhigh",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 39.6,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 72.2,
             "artificial_analysis_agentic_index": 43.2,
-            "artificial_analysis_finance_and_accounting_index": 44.3,
-            "artificial_analysis_strategy_and_ops_index": 42.8,
-            "artificial_analysis_legal_index": 46.8,
-            "artificial_analysis_healthcare_and_medical_index": 40.2,
-            "artificial_analysis_engineering_index": 41.6,
-            "artificial_analysis_economics_index": 52.9
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.812,
-          "costPerTask": 0.01754066553863508,
-          "priceFactor": 0.021601804850535814,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "muse-spark-1-2"
@@ -936,18 +936,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 45.4,
+        "artificial_analysis_intelligence_index": 33.6,
         "artificial_analysis_coding_index": 76.2,
         "artificial_analysis_agentic_index": 56,
-        "artificial_analysis_finance_and_accounting_index": 45.6,
+        "artificial_analysis_finance_and_accounting_index": 45,
         "artificial_analysis_strategy_and_ops_index": 47.3,
-        "artificial_analysis_legal_index": 46.1,
-        "artificial_analysis_healthcare_and_medical_index": 41.4,
-        "artificial_analysis_engineering_index": 46.4,
-        "artificial_analysis_economics_index": 52.3
+        "artificial_analysis_legal_index": 41,
+        "artificial_analysis_healthcare_and_medical_index": 40.8,
+        "artificial_analysis_engineering_index": 39.2,
+        "artificial_analysis_economics_index": 44.2
       },
-      "listCostPerTask": 5.4085,
-      "costPerTask": 5.4085,
+      "listCostPerTask": 10.0239,
+      "costPerTask": 10.0239,
       "variants": [
         {
           "aaSlug": "qwen3-8-max",
@@ -955,18 +955,18 @@
           "effort": "0902",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 45.4,
+            "artificial_analysis_intelligence_index": 33.6,
             "artificial_analysis_coding_index": 76.2,
             "artificial_analysis_agentic_index": 56,
-            "artificial_analysis_finance_and_accounting_index": 45.6,
+            "artificial_analysis_finance_and_accounting_index": 45,
             "artificial_analysis_strategy_and_ops_index": 47.3,
-            "artificial_analysis_legal_index": 46.1,
-            "artificial_analysis_healthcare_and_medical_index": 41.4,
-            "artificial_analysis_engineering_index": 46.4,
-            "artificial_analysis_economics_index": 52.3
+            "artificial_analysis_legal_index": 41,
+            "artificial_analysis_healthcare_and_medical_index": 40.8,
+            "artificial_analysis_engineering_index": 39.2,
+            "artificial_analysis_economics_index": 44.2
           },
-          "listCostPerTask": 5.4085,
-          "costPerTask": 5.4085,
+          "listCostPerTask": 10.0239,
+          "costPerTask": 10.0239,
           "priceFactor": 1,
           "priceFactorApproximate": true
         }
@@ -1018,18 +1018,18 @@
         "go-plus": 180
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 25.2,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 55.9,
         "artificial_analysis_agentic_index": 17.5,
-        "artificial_analysis_finance_and_accounting_index": 24.5,
-        "artificial_analysis_strategy_and_ops_index": 18.7,
-        "artificial_analysis_legal_index": 27.3,
-        "artificial_analysis_healthcare_and_medical_index": 22.9,
-        "artificial_analysis_engineering_index": 28.8,
-        "artificial_analysis_economics_index": 37.3
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.217,
-      "costPerTask": 0.12106418312387794,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "qwen3-7-plus",
@@ -1037,20 +1037,20 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 25.2,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 55.9,
             "artificial_analysis_agentic_index": 17.5,
-            "artificial_analysis_finance_and_accounting_index": 24.5,
-            "artificial_analysis_strategy_and_ops_index": 18.7,
-            "artificial_analysis_legal_index": 27.3,
-            "artificial_analysis_healthcare_and_medical_index": 22.9,
-            "artificial_analysis_engineering_index": 28.8,
-            "artificial_analysis_economics_index": 37.3
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.217,
-          "costPerTask": 0.12106418312387794,
-          "priceFactor": 0.5578994614003592,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "qwen3-7-plus"
@@ -1075,18 +1075,18 @@
         "go-plus": 160
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 45.1,
+        "artificial_analysis_intelligence_index": 32.5,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 48.3,
-        "artificial_analysis_strategy_and_ops_index": 52.5,
-        "artificial_analysis_legal_index": 46.4,
-        "artificial_analysis_healthcare_and_medical_index": 43.7,
-        "artificial_analysis_engineering_index": 45.2,
-        "artificial_analysis_economics_index": 50.5
+        "artificial_analysis_finance_and_accounting_index": 42.2,
+        "artificial_analysis_strategy_and_ops_index": 49.2,
+        "artificial_analysis_legal_index": 37.7,
+        "artificial_analysis_healthcare_and_medical_index": 41.3,
+        "artificial_analysis_engineering_index": 37.5,
+        "artificial_analysis_economics_index": 40.3
       },
-      "listCostPerTask": 0.262,
-      "costPerTask": 0.131,
+      "listCostPerTask": 0.6021,
+      "costPerTask": 0.30105,
       "variants": [
         {
           "aaSlug": "deepseek-v4-1-flash-1017",
@@ -1094,18 +1094,18 @@
           "effort": "Max",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 45.1,
+            "artificial_analysis_intelligence_index": 32.5,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 48.3,
-            "artificial_analysis_strategy_and_ops_index": 52.5,
-            "artificial_analysis_legal_index": 46.4,
-            "artificial_analysis_healthcare_and_medical_index": 43.7,
-            "artificial_analysis_engineering_index": 45.2,
-            "artificial_analysis_economics_index": 50.5
+            "artificial_analysis_finance_and_accounting_index": 42.2,
+            "artificial_analysis_strategy_and_ops_index": 49.2,
+            "artificial_analysis_legal_index": 37.7,
+            "artificial_analysis_healthcare_and_medical_index": 41.3,
+            "artificial_analysis_engineering_index": 37.5,
+            "artificial_analysis_economics_index": 40.3
           },
-          "listCostPerTask": 0.262,
-          "costPerTask": 0.131,
+          "listCostPerTask": 0.6021,
+          "costPerTask": 0.30105,
           "priceFactor": 0.5,
           "priceFactorApproximate": false
         }
@@ -1132,18 +1132,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 36,
+        "artificial_analysis_intelligence_index": 23.1,
         "artificial_analysis_coding_index": 68.8,
         "artificial_analysis_agentic_index": 41.3,
-        "artificial_analysis_finance_and_accounting_index": 41.4,
-        "artificial_analysis_strategy_and_ops_index": 46.5,
-        "artificial_analysis_legal_index": 41.1,
+        "artificial_analysis_finance_and_accounting_index": 30.4,
+        "artificial_analysis_strategy_and_ops_index": 41.1,
+        "artificial_analysis_legal_index": 27.5,
         "artificial_analysis_healthcare_and_medical_index": null,
-        "artificial_analysis_engineering_index": 37.1,
-        "artificial_analysis_economics_index": 43.7
+        "artificial_analysis_engineering_index": 29.8,
+        "artificial_analysis_economics_index": 30.6
       },
-      "listCostPerTask": 0.674,
-      "costPerTask": 0.337,
+      "listCostPerTask": 1.7691,
+      "costPerTask": 0.88455,
       "variants": [
         {
           "aaSlug": "deepseek-v4-pro-non-reasoning",
@@ -1151,19 +1151,19 @@
           "effort": "Non-reasoning",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 20.4,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 25.5,
-            "artificial_analysis_strategy_and_ops_index": 31.8,
-            "artificial_analysis_legal_index": 27.3,
+            "artificial_analysis_finance_and_accounting_index": 19.7,
+            "artificial_analysis_strategy_and_ops_index": 27.6,
+            "artificial_analysis_legal_index": 19.1,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 21.9,
-            "artificial_analysis_economics_index": 26.2
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": 20
           },
-          "listCostPerTask": 0.3555,
-          "costPerTask": 0.17775,
-          "priceFactor": 0.5,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1172,18 +1172,18 @@
           "effort": "Max",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 36,
+            "artificial_analysis_intelligence_index": 23.1,
             "artificial_analysis_coding_index": 68.8,
             "artificial_analysis_agentic_index": 41.3,
-            "artificial_analysis_finance_and_accounting_index": 41.4,
-            "artificial_analysis_strategy_and_ops_index": 46.5,
-            "artificial_analysis_legal_index": 41.1,
+            "artificial_analysis_finance_and_accounting_index": 30.4,
+            "artificial_analysis_strategy_and_ops_index": 41.1,
+            "artificial_analysis_legal_index": 27.5,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 37.1,
-            "artificial_analysis_economics_index": 43.7
+            "artificial_analysis_engineering_index": 29.8,
+            "artificial_analysis_economics_index": 30.6
           },
-          "listCostPerTask": 0.674,
-          "costPerTask": 0.337,
+          "listCostPerTask": 1.7691,
+          "costPerTask": 0.88455,
           "priceFactor": 0.5,
           "priceFactorApproximate": false
         }
@@ -1235,18 +1235,18 @@
         "go-plus": 240
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 25.3,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 58.8,
         "artificial_analysis_agentic_index": 24.1,
-        "artificial_analysis_finance_and_accounting_index": 27.3,
-        "artificial_analysis_strategy_and_ops_index": 23.9,
-        "artificial_analysis_legal_index": 26.5,
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
         "artificial_analysis_healthcare_and_medical_index": null,
-        "artificial_analysis_engineering_index": 26.7,
-        "artificial_analysis_economics_index": 35.2
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.0724,
-      "costPerTask": 0.07459046827076765,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "hy3",
@@ -1254,20 +1254,20 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 25.3,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 58.8,
             "artificial_analysis_agentic_index": 24.1,
-            "artificial_analysis_finance_and_accounting_index": 27.3,
-            "artificial_analysis_strategy_and_ops_index": 23.9,
-            "artificial_analysis_legal_index": 26.5,
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
             "artificial_analysis_healthcare_and_medical_index": null,
-            "artificial_analysis_engineering_index": 26.7,
-            "artificial_analysis_economics_index": 35.2
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0724,
-          "costPerTask": 0.07459046827076765,
-          "priceFactor": 1.0302550866128128,
-          "priceFactorApproximate": true
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
+          "priceFactorApproximate": false
         }
       ],
       "defaultVariant": "hy3"
@@ -1284,18 +1284,18 @@
       "prices": null,
       "allowances": null,
       "scores": {
-        "artificial_analysis_intelligence_index": 42.7,
+        "artificial_analysis_intelligence_index": 28.9,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 49,
-        "artificial_analysis_strategy_and_ops_index": 54.6,
-        "artificial_analysis_legal_index": 46.8,
-        "artificial_analysis_healthcare_and_medical_index": 42.9,
-        "artificial_analysis_engineering_index": 43.4,
-        "artificial_analysis_economics_index": 50
+        "artificial_analysis_finance_and_accounting_index": 39.1,
+        "artificial_analysis_strategy_and_ops_index": 50.8,
+        "artificial_analysis_legal_index": 33,
+        "artificial_analysis_healthcare_and_medical_index": 36.8,
+        "artificial_analysis_engineering_index": 34.1,
+        "artificial_analysis_economics_index": 38.8
       },
-      "listCostPerTask": 0.2201,
-      "costPerTask": 0.2201,
+      "listCostPerTask": 0.491,
+      "costPerTask": 0.491,
       "variants": [
         {
           "aaSlug": "minimax-m3-1-flash",
@@ -1303,18 +1303,18 @@
           "effort": "Default",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 42.7,
+            "artificial_analysis_intelligence_index": 28.9,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 49,
-            "artificial_analysis_strategy_and_ops_index": 54.6,
-            "artificial_analysis_legal_index": 46.8,
-            "artificial_analysis_healthcare_and_medical_index": 42.9,
-            "artificial_analysis_engineering_index": 43.4,
-            "artificial_analysis_economics_index": 50
+            "artificial_analysis_finance_and_accounting_index": 39.1,
+            "artificial_analysis_strategy_and_ops_index": 50.8,
+            "artificial_analysis_legal_index": 33,
+            "artificial_analysis_healthcare_and_medical_index": 36.8,
+            "artificial_analysis_engineering_index": 34.1,
+            "artificial_analysis_economics_index": 38.8
           },
-          "listCostPerTask": 0.2201,
-          "costPerTask": 0.2201,
+          "listCostPerTask": 0.491,
+          "costPerTask": 0.491,
           "priceFactor": null,
           "priceFactorApproximate": false
         }
@@ -1341,18 +1341,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 46.4,
+        "artificial_analysis_intelligence_index": 34.3,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 51.9,
-        "artificial_analysis_strategy_and_ops_index": 54.4,
-        "artificial_analysis_legal_index": 54.1,
-        "artificial_analysis_healthcare_and_medical_index": 47.9,
-        "artificial_analysis_engineering_index": 47.4,
-        "artificial_analysis_economics_index": 55.7
+        "artificial_analysis_finance_and_accounting_index": 51.7,
+        "artificial_analysis_strategy_and_ops_index": 54.8,
+        "artificial_analysis_legal_index": 47.2,
+        "artificial_analysis_healthcare_and_medical_index": 46.6,
+        "artificial_analysis_engineering_index": 41,
+        "artificial_analysis_economics_index": 47.6
       },
-      "listCostPerTask": 3.2367,
-      "costPerTask": 3.2367,
+      "listCostPerTask": 7.5118,
+      "costPerTask": 7.5118,
       "variants": [
         {
           "aaSlug": "grok-4-7-low",
@@ -1360,18 +1360,18 @@
           "effort": "Low",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 42.2,
+            "artificial_analysis_intelligence_index": 30.9,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 48,
-            "artificial_analysis_strategy_and_ops_index": 50.8,
-            "artificial_analysis_legal_index": 50.7,
-            "artificial_analysis_healthcare_and_medical_index": 44.3,
-            "artificial_analysis_engineering_index": 42.5,
-            "artificial_analysis_economics_index": 52.8
+            "artificial_analysis_finance_and_accounting_index": 45.3,
+            "artificial_analysis_strategy_and_ops_index": 49.3,
+            "artificial_analysis_legal_index": 44.4,
+            "artificial_analysis_healthcare_and_medical_index": 42.9,
+            "artificial_analysis_engineering_index": 37.4,
+            "artificial_analysis_economics_index": 42.8
           },
-          "listCostPerTask": 1.0294,
-          "costPerTask": 1.0294,
+          "listCostPerTask": 2.9222,
+          "costPerTask": 2.9222,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1381,18 +1381,18 @@
           "effort": "High",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 46.3,
+            "artificial_analysis_intelligence_index": 35,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 51.7,
-            "artificial_analysis_strategy_and_ops_index": 54.4,
-            "artificial_analysis_legal_index": 54.2,
-            "artificial_analysis_healthcare_and_medical_index": 46.7,
-            "artificial_analysis_engineering_index": 46.6,
-            "artificial_analysis_economics_index": 55.3
+            "artificial_analysis_finance_and_accounting_index": 50.6,
+            "artificial_analysis_strategy_and_ops_index": 53.2,
+            "artificial_analysis_legal_index": 46.6,
+            "artificial_analysis_healthcare_and_medical_index": 46.4,
+            "artificial_analysis_engineering_index": 41.5,
+            "artificial_analysis_economics_index": 47.2
           },
-          "listCostPerTask": 2.3638,
-          "costPerTask": 2.3638,
+          "listCostPerTask": 6.1836,
+          "costPerTask": 6.1836,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1402,18 +1402,18 @@
           "effort": "Xhigh",
           "order": 2,
           "scores": {
-            "artificial_analysis_intelligence_index": 46.4,
+            "artificial_analysis_intelligence_index": 34.3,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 51.9,
-            "artificial_analysis_strategy_and_ops_index": 54.4,
-            "artificial_analysis_legal_index": 54.1,
-            "artificial_analysis_healthcare_and_medical_index": 47.9,
-            "artificial_analysis_engineering_index": 47.4,
-            "artificial_analysis_economics_index": 55.7
+            "artificial_analysis_finance_and_accounting_index": 51.7,
+            "artificial_analysis_strategy_and_ops_index": 54.8,
+            "artificial_analysis_legal_index": 47.2,
+            "artificial_analysis_healthcare_and_medical_index": 46.6,
+            "artificial_analysis_engineering_index": 41,
+            "artificial_analysis_economics_index": 47.6
           },
-          "listCostPerTask": 3.2367,
-          "costPerTask": 3.2367,
+          "listCostPerTask": 7.5118,
+          "costPerTask": 7.5118,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -1440,18 +1440,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 38.1,
+        "artificial_analysis_intelligence_index": 27.8,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 40.3,
-        "artificial_analysis_strategy_and_ops_index": 45.7,
-        "artificial_analysis_legal_index": 40.3,
-        "artificial_analysis_healthcare_and_medical_index": 38.9,
-        "artificial_analysis_engineering_index": 37.1,
-        "artificial_analysis_economics_index": 45.2
+        "artificial_analysis_finance_and_accounting_index": 33.9,
+        "artificial_analysis_strategy_and_ops_index": 43.2,
+        "artificial_analysis_legal_index": 32.2,
+        "artificial_analysis_healthcare_and_medical_index": 34.8,
+        "artificial_analysis_engineering_index": 33.2,
+        "artificial_analysis_economics_index": 35.5
       },
-      "listCostPerTask": 0.0678,
-      "costPerTask": 0.0678,
+      "listCostPerTask": 0.152,
+      "costPerTask": 0.152,
       "variants": [
         {
           "aaSlug": "gpt-6-luna-non-reasoning",
@@ -1459,18 +1459,18 @@
           "effort": "Non-reasoning",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 18.5,
+            "artificial_analysis_intelligence_index": 9.4,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 20.2,
-            "artificial_analysis_strategy_and_ops_index": 19.8,
-            "artificial_analysis_legal_index": 19.3,
-            "artificial_analysis_healthcare_and_medical_index": 20.6,
-            "artificial_analysis_engineering_index": 20.7,
-            "artificial_analysis_economics_index": 24.2
+            "artificial_analysis_finance_and_accounting_index": 19,
+            "artificial_analysis_strategy_and_ops_index": 17,
+            "artificial_analysis_legal_index": 16.6,
+            "artificial_analysis_healthcare_and_medical_index": 15.7,
+            "artificial_analysis_engineering_index": 16.5,
+            "artificial_analysis_economics_index": 20
           },
-          "listCostPerTask": 0.0113,
-          "costPerTask": 0.0113,
+          "listCostPerTask": 0.0714,
+          "costPerTask": 0.0714,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1480,18 +1480,18 @@
           "effort": "Low",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 21.5,
+            "artificial_analysis_intelligence_index": 9.7,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 24.3,
-            "artificial_analysis_strategy_and_ops_index": 22.8,
-            "artificial_analysis_legal_index": 25.5,
-            "artificial_analysis_healthcare_and_medical_index": 23,
-            "artificial_analysis_engineering_index": 22.8,
-            "artificial_analysis_economics_index": 30.1
+            "artificial_analysis_finance_and_accounting_index": 17.2,
+            "artificial_analysis_strategy_and_ops_index": 16.8,
+            "artificial_analysis_legal_index": 16.3,
+            "artificial_analysis_healthcare_and_medical_index": 16.2,
+            "artificial_analysis_engineering_index": 18.7,
+            "artificial_analysis_economics_index": 18.7
           },
-          "listCostPerTask": 0.0045,
-          "costPerTask": 0.0045,
+          "listCostPerTask": 0.0051,
+          "costPerTask": 0.0051,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1501,18 +1501,18 @@
           "effort": "Medium",
           "order": 2,
           "scores": {
-            "artificial_analysis_intelligence_index": 29.9,
+            "artificial_analysis_intelligence_index": 18.3,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 32.9,
-            "artificial_analysis_strategy_and_ops_index": 37.5,
-            "artificial_analysis_legal_index": 33,
-            "artificial_analysis_healthcare_and_medical_index": 32.4,
-            "artificial_analysis_engineering_index": 29.4,
-            "artificial_analysis_economics_index": 37.1
+            "artificial_analysis_finance_and_accounting_index": 26.3,
+            "artificial_analysis_strategy_and_ops_index": 33.8,
+            "artificial_analysis_legal_index": 24.5,
+            "artificial_analysis_healthcare_and_medical_index": 27.4,
+            "artificial_analysis_engineering_index": 24.8,
+            "artificial_analysis_economics_index": 27.5
           },
-          "listCostPerTask": 0.0175,
-          "costPerTask": 0.0175,
+          "listCostPerTask": 0.0422,
+          "costPerTask": 0.0422,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1522,18 +1522,18 @@
           "effort": "High",
           "order": 3,
           "scores": {
-            "artificial_analysis_intelligence_index": 32.9,
+            "artificial_analysis_intelligence_index": 21.4,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 36.4,
-            "artificial_analysis_strategy_and_ops_index": 41.2,
-            "artificial_analysis_legal_index": 35.4,
-            "artificial_analysis_healthcare_and_medical_index": 34.1,
-            "artificial_analysis_engineering_index": 31.8,
-            "artificial_analysis_economics_index": 40
+            "artificial_analysis_finance_and_accounting_index": 29.3,
+            "artificial_analysis_strategy_and_ops_index": 37.8,
+            "artificial_analysis_legal_index": 26.7,
+            "artificial_analysis_healthcare_and_medical_index": 29.2,
+            "artificial_analysis_engineering_index": 27.2,
+            "artificial_analysis_economics_index": 29.8
           },
-          "listCostPerTask": 0.029,
-          "costPerTask": 0.029,
+          "listCostPerTask": 0.0729,
+          "costPerTask": 0.0729,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1543,18 +1543,18 @@
           "effort": "Xhigh",
           "order": 4,
           "scores": {
-            "artificial_analysis_intelligence_index": 34.6,
+            "artificial_analysis_intelligence_index": 23.3,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 37.2,
-            "artificial_analysis_strategy_and_ops_index": 42.6,
-            "artificial_analysis_legal_index": 37.2,
-            "artificial_analysis_healthcare_and_medical_index": 35.9,
-            "artificial_analysis_engineering_index": 33.7,
-            "artificial_analysis_economics_index": 41.6
+            "artificial_analysis_finance_and_accounting_index": 30.6,
+            "artificial_analysis_strategy_and_ops_index": 39.4,
+            "artificial_analysis_legal_index": 28.4,
+            "artificial_analysis_healthcare_and_medical_index": 30.5,
+            "artificial_analysis_engineering_index": 28.8,
+            "artificial_analysis_economics_index": 32.1
           },
-          "listCostPerTask": 0.0422,
-          "costPerTask": 0.0422,
+          "listCostPerTask": 0.1041,
+          "costPerTask": 0.1041,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1564,18 +1564,18 @@
           "effort": "Max",
           "order": 5,
           "scores": {
-            "artificial_analysis_intelligence_index": 38.1,
+            "artificial_analysis_intelligence_index": 27.8,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 40.3,
-            "artificial_analysis_strategy_and_ops_index": 45.7,
-            "artificial_analysis_legal_index": 40.3,
-            "artificial_analysis_healthcare_and_medical_index": 38.9,
-            "artificial_analysis_engineering_index": 37.1,
-            "artificial_analysis_economics_index": 45.2
+            "artificial_analysis_finance_and_accounting_index": 33.9,
+            "artificial_analysis_strategy_and_ops_index": 43.2,
+            "artificial_analysis_legal_index": 32.2,
+            "artificial_analysis_healthcare_and_medical_index": 34.8,
+            "artificial_analysis_engineering_index": 33.2,
+            "artificial_analysis_economics_index": 35.5
           },
-          "listCostPerTask": 0.0678,
-          "costPerTask": 0.0678,
+          "listCostPerTask": 0.152,
+          "costPerTask": 0.152,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -1602,18 +1602,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 37.3,
+        "artificial_analysis_intelligence_index": null,
         "artificial_analysis_coding_index": 71.4,
         "artificial_analysis_agentic_index": 42.1,
-        "artificial_analysis_finance_and_accounting_index": 40.1,
-        "artificial_analysis_strategy_and_ops_index": 44.1,
-        "artificial_analysis_legal_index": 36.9,
-        "artificial_analysis_healthcare_and_medical_index": 35.8,
-        "artificial_analysis_engineering_index": 36.2,
-        "artificial_analysis_economics_index": 42.7
+        "artificial_analysis_finance_and_accounting_index": null,
+        "artificial_analysis_strategy_and_ops_index": null,
+        "artificial_analysis_legal_index": null,
+        "artificial_analysis_healthcare_and_medical_index": null,
+        "artificial_analysis_engineering_index": null,
+        "artificial_analysis_economics_index": null
       },
-      "listCostPerTask": 0.1783,
-      "costPerTask": 0.1783,
+      "listCostPerTask": null,
+      "costPerTask": null,
       "variants": [
         {
           "aaSlug": "gpt-5-6-luna-non-reasoning",
@@ -1621,19 +1621,19 @@
           "effort": "Non-reasoning",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 15.5,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 39.3,
             "artificial_analysis_agentic_index": 13.4,
-            "artificial_analysis_finance_and_accounting_index": 16.1,
-            "artificial_analysis_strategy_and_ops_index": 14.7,
-            "artificial_analysis_legal_index": 17,
-            "artificial_analysis_healthcare_and_medical_index": 15.6,
-            "artificial_analysis_engineering_index": 18.3,
-            "artificial_analysis_economics_index": 21.6
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0101,
-          "costPerTask": 0.0101,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1642,19 +1642,19 @@
           "effort": "Low",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 21,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 44.2,
             "artificial_analysis_agentic_index": 16.1,
-            "artificial_analysis_finance_and_accounting_index": 23,
-            "artificial_analysis_strategy_and_ops_index": 21.7,
-            "artificial_analysis_legal_index": 24,
-            "artificial_analysis_healthcare_and_medical_index": 21.3,
-            "artificial_analysis_engineering_index": 22.7,
-            "artificial_analysis_economics_index": 27.9
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0098,
-          "costPerTask": 0.0098,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1663,19 +1663,19 @@
           "effort": "Medium",
           "order": 2,
           "scores": {
-            "artificial_analysis_intelligence_index": 25,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 50.7,
             "artificial_analysis_agentic_index": 23.9,
-            "artificial_analysis_finance_and_accounting_index": 27,
-            "artificial_analysis_strategy_and_ops_index": 28.5,
-            "artificial_analysis_legal_index": 27.7,
-            "artificial_analysis_healthcare_and_medical_index": 25,
-            "artificial_analysis_engineering_index": 26.2,
-            "artificial_analysis_economics_index": 32
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0156,
-          "costPerTask": 0.0156,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1684,19 +1684,19 @@
           "effort": "High",
           "order": 3,
           "scores": {
-            "artificial_analysis_intelligence_index": 32.1,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 63.3,
             "artificial_analysis_agentic_index": 34.6,
-            "artificial_analysis_finance_and_accounting_index": 34.1,
-            "artificial_analysis_strategy_and_ops_index": 36.8,
-            "artificial_analysis_legal_index": 33,
-            "artificial_analysis_healthcare_and_medical_index": 30.4,
-            "artificial_analysis_engineering_index": 31.7,
-            "artificial_analysis_economics_index": 38
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.044,
-          "costPerTask": 0.044,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1705,19 +1705,19 @@
           "effort": "Xhigh",
           "order": 4,
           "scores": {
-            "artificial_analysis_intelligence_index": 34.6,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 68.6,
             "artificial_analysis_agentic_index": 38.7,
-            "artificial_analysis_finance_and_accounting_index": 37.2,
-            "artificial_analysis_strategy_and_ops_index": 40.6,
-            "artificial_analysis_legal_index": 34.8,
-            "artificial_analysis_healthcare_and_medical_index": 32.8,
-            "artificial_analysis_engineering_index": 34,
-            "artificial_analysis_economics_index": 40.6
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.0853,
-          "costPerTask": 0.0853,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         },
         {
@@ -1726,19 +1726,19 @@
           "effort": "Max",
           "order": 5,
           "scores": {
-            "artificial_analysis_intelligence_index": 37.3,
+            "artificial_analysis_intelligence_index": null,
             "artificial_analysis_coding_index": 71.4,
             "artificial_analysis_agentic_index": 42.1,
-            "artificial_analysis_finance_and_accounting_index": 40.1,
-            "artificial_analysis_strategy_and_ops_index": 44.1,
-            "artificial_analysis_legal_index": 36.9,
-            "artificial_analysis_healthcare_and_medical_index": 35.8,
-            "artificial_analysis_engineering_index": 36.2,
-            "artificial_analysis_economics_index": 42.7
+            "artificial_analysis_finance_and_accounting_index": null,
+            "artificial_analysis_strategy_and_ops_index": null,
+            "artificial_analysis_legal_index": null,
+            "artificial_analysis_healthcare_and_medical_index": null,
+            "artificial_analysis_engineering_index": null,
+            "artificial_analysis_economics_index": null
           },
-          "listCostPerTask": 0.1783,
-          "costPerTask": 0.1783,
-          "priceFactor": 1,
+          "listCostPerTask": null,
+          "costPerTask": null,
+          "priceFactor": null,
           "priceFactorApproximate": false
         }
       ],
@@ -1764,18 +1764,18 @@
         "go-plus": 60
       },
       "scores": {
-        "artificial_analysis_intelligence_index": 43.4,
+        "artificial_analysis_intelligence_index": 36.2,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 43.9,
-        "artificial_analysis_strategy_and_ops_index": 40.4,
-        "artificial_analysis_legal_index": 42.3,
-        "artificial_analysis_healthcare_and_medical_index": 39.9,
-        "artificial_analysis_engineering_index": 44.9,
-        "artificial_analysis_economics_index": 51.2
+        "artificial_analysis_finance_and_accounting_index": 43.6,
+        "artificial_analysis_strategy_and_ops_index": 39.1,
+        "artificial_analysis_legal_index": 38.7,
+        "artificial_analysis_healthcare_and_medical_index": 37.5,
+        "artificial_analysis_engineering_index": 42.3,
+        "artificial_analysis_economics_index": 44.3
       },
-      "listCostPerTask": 0.2128,
-      "costPerTask": 0.2128,
+      "listCostPerTask": 0.411,
+      "costPerTask": 0.411,
       "variants": [
         {
           "aaSlug": "claude-haiku-5-5-low",
@@ -1783,18 +1783,18 @@
           "effort": "Low",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 29.5,
+            "artificial_analysis_intelligence_index": 18.6,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 28.8,
-            "artificial_analysis_strategy_and_ops_index": 28,
-            "artificial_analysis_legal_index": 30.6,
-            "artificial_analysis_healthcare_and_medical_index": 27,
-            "artificial_analysis_engineering_index": 31.2,
-            "artificial_analysis_economics_index": 37.5
+            "artificial_analysis_finance_and_accounting_index": 28.5,
+            "artificial_analysis_strategy_and_ops_index": 27.3,
+            "artificial_analysis_legal_index": 27.1,
+            "artificial_analysis_healthcare_and_medical_index": 24.8,
+            "artificial_analysis_engineering_index": 26.8,
+            "artificial_analysis_economics_index": 29.5
           },
-          "listCostPerTask": 0.0245,
-          "costPerTask": 0.0245,
+          "listCostPerTask": 0.0438,
+          "costPerTask": 0.0438,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1804,18 +1804,18 @@
           "effort": "Medium",
           "order": 1,
           "scores": {
-            "artificial_analysis_intelligence_index": 34.5,
+            "artificial_analysis_intelligence_index": 24.6,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 35.4,
-            "artificial_analysis_strategy_and_ops_index": 33.5,
-            "artificial_analysis_legal_index": 35.5,
-            "artificial_analysis_healthcare_and_medical_index": 32,
-            "artificial_analysis_engineering_index": 35.2,
-            "artificial_analysis_economics_index": 43.3
+            "artificial_analysis_finance_and_accounting_index": 34.9,
+            "artificial_analysis_strategy_and_ops_index": 33,
+            "artificial_analysis_legal_index": 32.6,
+            "artificial_analysis_healthcare_and_medical_index": 30.7,
+            "artificial_analysis_engineering_index": 31.8,
+            "artificial_analysis_economics_index": 35.6
           },
-          "listCostPerTask": 0.047,
-          "costPerTask": 0.047,
+          "listCostPerTask": 0.0918,
+          "costPerTask": 0.0918,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1825,18 +1825,18 @@
           "effort": "High",
           "order": 2,
           "scores": {
-            "artificial_analysis_intelligence_index": 37.8,
+            "artificial_analysis_intelligence_index": 29.6,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 37.7,
-            "artificial_analysis_strategy_and_ops_index": 37.5,
-            "artificial_analysis_legal_index": 37.6,
-            "artificial_analysis_healthcare_and_medical_index": 34.1,
-            "artificial_analysis_engineering_index": 39.2,
-            "artificial_analysis_economics_index": 45.8
+            "artificial_analysis_finance_and_accounting_index": 37.8,
+            "artificial_analysis_strategy_and_ops_index": 37.1,
+            "artificial_analysis_legal_index": 35,
+            "artificial_analysis_healthcare_and_medical_index": 32.2,
+            "artificial_analysis_engineering_index": 36.3,
+            "artificial_analysis_economics_index": 39.4
           },
-          "listCostPerTask": 0.0794,
-          "costPerTask": 0.0794,
+          "listCostPerTask": 0.1586,
+          "costPerTask": 0.1586,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1846,18 +1846,18 @@
           "effort": "Xhigh",
           "order": 3,
           "scores": {
-            "artificial_analysis_intelligence_index": 41.2,
+            "artificial_analysis_intelligence_index": 34.3,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 40.8,
-            "artificial_analysis_strategy_and_ops_index": 39.3,
-            "artificial_analysis_legal_index": 39.9,
-            "artificial_analysis_healthcare_and_medical_index": 35.4,
-            "artificial_analysis_engineering_index": 43.1,
-            "artificial_analysis_economics_index": 48.7
+            "artificial_analysis_finance_and_accounting_index": 41.1,
+            "artificial_analysis_strategy_and_ops_index": 39.1,
+            "artificial_analysis_legal_index": 37.1,
+            "artificial_analysis_healthcare_and_medical_index": 34.1,
+            "artificial_analysis_engineering_index": 40.3,
+            "artificial_analysis_economics_index": 42.6
           },
-          "listCostPerTask": 0.1238,
-          "costPerTask": 0.1238,
+          "listCostPerTask": 0.2484,
+          "costPerTask": 0.2484,
           "priceFactor": 1,
           "priceFactorApproximate": false
         },
@@ -1867,18 +1867,18 @@
           "effort": "Max",
           "order": 4,
           "scores": {
-            "artificial_analysis_intelligence_index": 43.4,
+            "artificial_analysis_intelligence_index": 36.2,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 43.9,
-            "artificial_analysis_strategy_and_ops_index": 40.4,
-            "artificial_analysis_legal_index": 42.3,
-            "artificial_analysis_healthcare_and_medical_index": 39.9,
-            "artificial_analysis_engineering_index": 44.9,
-            "artificial_analysis_economics_index": 51.2
+            "artificial_analysis_finance_and_accounting_index": 43.6,
+            "artificial_analysis_strategy_and_ops_index": 39.1,
+            "artificial_analysis_legal_index": 38.7,
+            "artificial_analysis_healthcare_and_medical_index": 37.5,
+            "artificial_analysis_engineering_index": 42.3,
+            "artificial_analysis_economics_index": 44.3
           },
-          "listCostPerTask": 0.2128,
-          "costPerTask": 0.2128,
+          "listCostPerTask": 0.411,
+          "costPerTask": 0.411,
           "priceFactor": 1,
           "priceFactorApproximate": false
         }
@@ -1897,18 +1897,18 @@
       "prices": null,
       "allowances": null,
       "scores": {
-        "artificial_analysis_intelligence_index": 52.6,
+        "artificial_analysis_intelligence_index": 50.4,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_agentic_index": null,
-        "artificial_analysis_finance_and_accounting_index": 53.8,
-        "artificial_analysis_strategy_and_ops_index": 56.2,
-        "artificial_analysis_legal_index": 60,
-        "artificial_analysis_healthcare_and_medical_index": 47.8,
-        "artificial_analysis_engineering_index": 55.2,
-        "artificial_analysis_economics_index": 60.4
+        "artificial_analysis_finance_and_accounting_index": 55.9,
+        "artificial_analysis_strategy_and_ops_index": 57.2,
+        "artificial_analysis_legal_index": 54.6,
+        "artificial_analysis_healthcare_and_medical_index": 51.3,
+        "artificial_analysis_engineering_index": 57.3,
+        "artificial_analysis_economics_index": 54
       },
-      "listCostPerTask": 1.62,
-      "costPerTask": 1.62,
+      "listCostPerTask": 3.8413,
+      "costPerTask": 3.8413,
       "variants": [
         {
           "aaSlug": "gemini-4-argon",
@@ -1916,18 +1916,18 @@
           "effort": "High",
           "order": 0,
           "scores": {
-            "artificial_analysis_intelligence_index": 52.6,
+            "artificial_analysis_intelligence_index": 50.4,
             "artificial_analysis_coding_index": null,
             "artificial_analysis_agentic_index": null,
-            "artificial_analysis_finance_and_accounting_index": 53.8,
-            "artificial_analysis_strategy_and_ops_index": 56.2,
-            "artificial_analysis_legal_index": 60,
-            "artificial_analysis_healthcare_and_medical_index": 47.8,
-            "artificial_analysis_engineering_index": 55.2,
-            "artificial_analysis_economics_index": 60.4
+            "artificial_analysis_finance_and_accounting_index": 55.9,
+            "artificial_analysis_strategy_and_ops_index": 57.2,
+            "artificial_analysis_legal_index": 54.6,
+            "artificial_analysis_healthcare_and_medical_index": 51.3,
+            "artificial_analysis_engineering_index": 57.3,
+            "artificial_analysis_economics_index": 54
           },
-          "listCostPerTask": 1.62,
-          "costPerTask": 1.62,
+          "listCostPerTask": 3.8413,
+          "costPerTask": 3.8413,
           "priceFactor": null,
           "priceFactorApproximate": false
         }
